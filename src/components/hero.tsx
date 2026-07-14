@@ -111,27 +111,26 @@ export function Hero() {
             animate="visible"
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.06, delayChildren: 0.25 } },
+              visible: { transition: { staggerChildren: 0.05, delayChildren: 0.2 } },
             }}
-            className="hero-shimmer-text inline-flex flex-wrap justify-center"
+            aria-label={siteConfig.name}
+            className="hero-brand inline-flex justify-center"
           >
             {siteConfig.name.split("").map((char, i) => (
               <motion.span
                 key={`${char}-${i}`}
                 variants={{
-                  hidden: { opacity: 0, y: 40, rotateX: -90 },
+                  hidden: { opacity: 0, y: 18 },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    rotateX: 0,
                     transition: {
-                      duration: 0.55,
+                      duration: 0.45,
                       ease: [0.21, 0.47, 0.32, 0.98],
                     },
                   },
                 }}
-                className="inline-block origin-bottom"
-                style={{ perspective: 600 }}
+                className="hero-shimmer-text inline-block"
               >
                 {char}
               </motion.span>

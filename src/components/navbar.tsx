@@ -43,7 +43,7 @@ export function Navbar() {
               alt={siteConfig.name}
               width={240}
               height={77}
-              className="site-logo h-9 w-auto sm:h-12 md:h-14"
+              className="site-logo h-8 w-auto sm:h-9"
               priority
             />
           </Link>

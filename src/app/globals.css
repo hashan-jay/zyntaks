@@ -247,20 +247,30 @@ html[data-theme="day"] .theme-toggle {
   -webkit-text-fill-color: transparent;
 }
 
+.hero-brand {
+  color: var(--foreground);
+}
+
 .hero-shimmer-text {
-  background: linear-gradient(
-    110deg,
-    var(--shimmer-from) 0%,
-    var(--shimmer-from) 35%,
-    var(--shimmer-mid) 50%,
-    var(--shimmer-from) 65%,
-    var(--shimmer-from) 100%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: hero-shimmer 6s ease-in-out infinite;
+  color: var(--foreground);
+}
+
+@media (min-width: 640px) {
+  .hero-shimmer-text {
+    background: linear-gradient(
+      110deg,
+      var(--shimmer-from) 0%,
+      var(--shimmer-from) 35%,
+      var(--shimmer-mid) 50%,
+      var(--shimmer-from) 65%,
+      var(--shimmer-from) 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: hero-shimmer 6s ease-in-out infinite;
+  }
 }
 
 .site-logo {

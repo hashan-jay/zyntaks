@@ -18,7 +18,7 @@ export function Footer() {
               alt={siteConfig.name}
               width={220}
               height={70}
-              className="site-logo h-10 w-auto sm:h-12 md:h-14"
+              className="site-logo h-8 w-auto sm:h-9"
             />
             <p className="mt-3 max-w-xs text-sm text-zinc-500 sm:mt-4">
               {siteConfig.tagline}
