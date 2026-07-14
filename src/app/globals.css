@@ -1,26 +1,779 @@
 @import "tailwindcss";
 
+html[data-theme="night"] {
+  color-scheme: dark;
+  --background: #000000;
+  --foreground: #fafafa;
+  --muted: #a1a1aa;
+  --muted-soft: #71717a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --surface: #0a0a0a;
+  --surface-elevated: #111111;
+  --accent: #ffffff;
+  --accent-yellow: #facc15;
+  --accent-contrast: #000000;
+  --grid-color: rgba(255, 255, 255, 0.03);
+  --hero-cursor: rgba(180, 190, 255, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --nav-scrolled: rgba(0, 0, 0, 0.7);
+  --logo-filter: brightness(1.1) drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+  --btn-primary-bg: #ffffff;
+  --btn-primary-text: #000000;
+  --btn-secondary-border: rgba(255, 255, 255, 0.15);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.2);
+  --btn-secondary-text: #ffffff;
+  --shimmer-from: #ffffff;
+  --shimmer-mid: rgba(255, 255, 255, 0.45);
+  --star-color: #ffffff;
+  --star-glow: rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme="day"] {
+  color-scheme: light;
+  --background: #faf8f4;
+  --foreground: #92400e;
+  --muted: #b45309;
+  --muted-soft: #ca8a04;
+  --border: rgba(180, 83, 9, 0.18);
+  --border-hover: rgba(180, 83, 9, 0.32);
+  --surface: #fffef9;
+  --surface-elevated: #ffffff;
+  --accent: #eab308;
+  --accent-yellow: #facc15;
+  --accent-contrast: #ffffff;
+  --grid-color: rgba(234, 179, 8, 0.06);
+  --hero-cursor: rgba(250, 204, 21, 0.12);
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --nav-scrolled: rgba(250, 248, 244, 0.88);
+  --logo-filter: brightness(0) saturate(100%) invert(42%) sepia(88%) saturate(1200%) hue-rotate(10deg) brightness(95%);
+  --btn-primary-bg: #eab308;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-border: rgba(180, 83, 9, 0.28);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.55);
+  --btn-secondary-text: #92400e;
+  --shimmer-from: #ca8a04;
+  --shimmer-mid: rgba(234, 179, 8, 0.55);
+  --star-color: #facc15;
+  --star-glow: rgba(250, 204, 21, 0.95);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #fafafa;
+  --muted: #a1a1aa;
+  --border: rgba(255, 255, 255, 0.08);
+  --surface: #0a0a0a;
+  --surface-elevated: #111111;
+  --accent-yellow: #facc15;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::selection {
+  background: color-mix(in srgb, var(--accent-yellow) 35%, transparent);
+  color: var(--foreground);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+}
+
+@media (max-width: 639px) {
+  .sky-scene .star-layer-medium,
+  .sky-scene .star-layer-bright {
+    display: none;
+  }
+
+  .sky-scene .sky-horizon {
+    height: 8rem;
+  }
+
+  html[data-theme="night"] .sky-scene .sky-orb--mobile,
+  html[data-theme="day"] .sky-scene .sky-orb--mobile {
+    width: 40px;
+    height: 40px;
+  }
+
+  html[data-theme="day"] .sky-scene .sky-orb--mobile {
+    width: 48px;
+    height: 48px;
+  }
+
+  .sky-scene .sky-orb-wrap--mobile {
+    right: 6%;
+    top: 8%;
+  }
+
+  .shooting-star {
+    width: 56px;
+  }
+}
+
+/* Smooth theme toggle transitions */
+html.theme-transition,
+html.theme-transition body {
+  transition:
+    background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.theme-transition body *:not(.theme-toggle):not(.theme-toggle *),
+html.theme-transition body *::before,
+html.theme-transition body *::after {
+  transition:
+    background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    fill 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.theme-transition .sky-scene .sky-bg,
+html.theme-transition .sky-scene .sky-glow,
+html.theme-transition .sky-scene .sky-horizon,
+html.theme-transition .sky-scene .sky-orb,
+html.theme-transition .sky-scene .star {
+  transition:
+    background 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.theme-transition .hero-shimmer-text {
+  transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.75s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: theme-fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: theme-fade-in;
+}
+
+@keyframes theme-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.theme-toggle {
+  position: fixed;
+  pointer-events: auto;
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  left: max(1rem, env(safe-area-inset-left, 0px));
+  z-index: 9999;
+}
+
+html[data-theme="night"] .theme-toggle {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="day"] .theme-toggle {
+  box-shadow:
+    0 0 0 1px rgba(180, 83, 9, 0.15),
+    0 8px 32px rgba(180, 83, 9, 0.12),
+    0 0 20px rgba(250, 204, 21, 0.2);
+}
+
+.nav-scrolled {
+  background: var(--nav-scrolled);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 70%);
+}
+
+.gradient-text {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.5) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-shimmer-text {
+  background: linear-gradient(
+    110deg,
+    var(--shimmer-from) 0%,
+    var(--shimmer-from) 35%,
+    var(--shimmer-mid) 50%,
+    var(--shimmer-from) 65%,
+    var(--shimmer-from) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-shimmer 6s ease-in-out infinite;
+}
+
+.site-logo {
+  filter: var(--logo-filter);
+}
+
+.theme-surface {
+  background: var(--card-bg);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+.theme-btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+.theme-btn-secondary {
+  background: var(--btn-secondary-bg);
+  border-color: var(--btn-secondary-border);
+  color: var(--btn-secondary-text);
+}
+
+.text-theme-muted {
+  color: var(--muted);
+}
+
+.text-theme-soft {
+  color: var(--muted-soft);
+}
+
+.text-theme-accent {
+  color: var(--accent-yellow);
+}
+
+.bg-theme {
+  background: var(--background);
+}
+
+.border-theme {
+  border-color: var(--border);
+}
+
+@keyframes hero-shimmer {
+  0%,
+  100% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-grid-drift {
+  animation: hero-grid-drift 20s linear infinite;
+}
+
+@keyframes hero-grid-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 64px 64px;
+  }
+}
+
+/* Night sky hero */
+html[data-theme="night"] .sky-scene .sky-bg {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 120%, #0c0c14 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 10%, rgba(30, 30, 45, 0.35) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(20, 20, 35, 0.25) 0%, transparent 45%),
+    linear-gradient(180deg, #020208 0%, #050510 35%, #000000 100%);
+}
+
+html[data-theme="night"] .sky-scene .sky-glow {
+  background: radial-gradient(
+    ellipse 90% 60% at 50% 0%,
+    rgba(120, 130, 180, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+html[data-theme="night"] .sky-scene .sky-orb {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f4f4f5 0%, #a1a1aa 55%, #71717a 100%);
+  box-shadow:
+    0 0 30px rgba(255, 255, 255, 0.25),
+    0 0 80px rgba(200, 210, 255, 0.12);
+  animation: moon-glow 6s ease-in-out infinite;
+}
+
+html[data-theme="night"] .sky-scene .sky-horizon {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(10, 10, 20, 0.4) 40%,
+    transparent 100%
+  );
+}
+
+html[data-theme="night"] .sky-scene .star {
+  background: var(--star-color);
+}
+
+html[data-theme="night"] .sky-scene .shooting-star {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent);
+}
+
+/* Day sky hero */
+html[data-theme="day"] .sky-scene .sky-bg {
+  background:
+    radial-gradient(ellipse 90% 70% at 85% 8%, rgba(254, 240, 138, 0.45) 0%, transparent 45%),
+    radial-gradient(ellipse 100% 80% at 50% 110%, rgba(254, 249, 195, 0.35) 0%, transparent 55%),
+    linear-gradient(180deg, #fffef9 0%, #faf8f4 45%, #f5f0e8 100%);
+}
+
+html[data-theme="day"] .sky-scene .sky-glow {
+  background: radial-gradient(
+    ellipse 60% 50% at 85% 10%,
+    rgba(250, 204, 21, 0.22) 0%,
+    transparent 65%
+  );
+}
+
+html[data-theme="day"] .sky-scene .sky-orb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #fef9c3 0%, #fde047 35%, #facc15 70%, #eab308 100%);
+  box-shadow:
+    0 0 30px rgba(250, 204, 21, 0.65),
+    0 0 80px rgba(253, 224, 71, 0.35),
+    0 0 140px rgba(250, 204, 21, 0.2);
+  animation: sun-glow 5s ease-in-out infinite;
+}
+
+html[data-theme="day"] .sky-scene .sky-orb::before {
+  content: "";
+  position: absolute;
+  inset: -28px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(253, 224, 71, 0.35) 12deg,
+    transparent 24deg,
+    rgba(253, 224, 71, 0.28) 36deg,
+    transparent 48deg,
+    rgba(253, 224, 71, 0.35) 60deg,
+    transparent 72deg,
+    rgba(253, 224, 71, 0.28) 84deg,
+    transparent 96deg,
+    rgba(253, 224, 71, 0.35) 108deg,
+    transparent 120deg,
+    rgba(253, 224, 71, 0.28) 132deg,
+    transparent 144deg,
+    rgba(253, 224, 71, 0.35) 156deg,
+    transparent 168deg,
+    rgba(253, 224, 71, 0.28) 180deg,
+    transparent 192deg,
+    rgba(253, 224, 71, 0.35) 204deg,
+    transparent 216deg,
+    rgba(253, 224, 71, 0.28) 228deg,
+    transparent 240deg,
+    rgba(253, 224, 71, 0.35) 252deg,
+    transparent 264deg,
+    rgba(253, 224, 71, 0.28) 276deg,
+    transparent 288deg,
+    rgba(253, 224, 71, 0.35) 300deg,
+    transparent 312deg,
+    rgba(253, 224, 71, 0.28) 324deg,
+    transparent 336deg,
+    rgba(253, 224, 71, 0.35) 348deg,
+    transparent 360deg
+  );
+  opacity: 0.7;
+}
+
+html[data-theme="day"] .sky-scene .sky-horizon {
+  background: linear-gradient(
+    to top,
+    rgba(250, 248, 244, 0.95) 0%,
+    rgba(254, 249, 195, 0.25) 40%,
+    transparent 100%
+  );
+}
+
+html[data-theme="day"] .sky-scene .star {
+  background: var(--star-color);
+}
+
+html[data-theme="day"] .sky-scene .star-bright {
+  box-shadow:
+    0 0 5px rgba(250, 204, 21, 0.95),
+    0 0 12px rgba(253, 224, 71, 0.55);
+}
+
+html[data-theme="day"] .sky-scene .star-bright::before,
+html[data-theme="day"] .sky-scene .star-bright::after {
+  background: rgba(253, 224, 71, 0.85);
+}
+
+html[data-theme="day"] .sky-scene .shooting-star {
+  display: none;
+}
+
+@keyframes sun-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 30px rgba(250, 204, 21, 0.6),
+      0 0 80px rgba(253, 224, 71, 0.32),
+      0 0 140px rgba(250, 204, 21, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(250, 204, 21, 0.75),
+      0 0 100px rgba(253, 224, 71, 0.42),
+      0 0 160px rgba(250, 204, 21, 0.25);
+  }
+}
+
+.sky-scene .sky-orb {
+  position: relative;
+}
+
+.sky-scene .sky-horizon {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 12rem;
+}
+
+.sky-scene .sky-orb-wrap {
+  position: absolute;
+  right: 8%;
+  top: 12%;
+}
+
+html[data-theme="day"] .sky-scene .sky-orb-wrap {
+  right: 10%;
+  top: 10%;
+}
+
+@keyframes moon-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 30px rgba(255, 255, 255, 0.22),
+      0 0 80px rgba(200, 210, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(255, 255, 255, 0.35),
+      0 0 100px rgba(200, 210, 255, 0.18);
+  }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  animation: star-twinkle ease-in-out infinite;
+  transform: translate(-50%, -50%);
+  --star-min: 0.15;
+  --star-max: 0.85;
+}
+
+.star-bright {
+  box-shadow:
+    0 0 4px rgba(255, 255, 255, 0.9),
+    0 0 10px rgba(255, 255, 255, 0.45);
+}
+
+.star-bright::before,
+.star-bright::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, -50%);
+}
+
+.star-bright::before {
+  width: 200%;
+  height: 1px;
+}
+
+.star-bright::after {
+  width: 1px;
+  height: 200%;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: var(--star-min);
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  50% {
+    opacity: var(--star-max);
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent);
+  opacity: 0;
+  transform: rotate(-35deg);
+  animation: shooting-star linear infinite;
+}
+
+@keyframes shooting-star {
+  0%,
+  78%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(-35deg);
+  }
+  80% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 0;
+    transform: translateX(180px) translateY(120px) rotate(-35deg);
+  }
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    color-mix(in srgb, var(--accent-yellow) 12%, transparent),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-shine:hover::before {
+  opacity: 1;
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.code-window {
+  background: linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--border) 50%, transparent),
+    0 24px 80px color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+html[data-theme="day"] .code-window {
+  background: linear-gradient(180deg, #ffffff 0%, #fffef9 100%);
+}
+
+html[data-theme="day"] .glow-orb {
+  background: rgba(250, 204, 21, 0.08) !important;
+}
+
+.theme-card {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.theme-card:hover {
+  border-color: var(--border-hover);
+}
+
+html[data-theme="day"] .text-zinc-400,
+html[data-theme="day"] .text-zinc-500,
+html[data-theme="day"] .text-zinc-600 {
+  color: var(--muted);
+}
+
+html[data-theme="day"] .text-zinc-700 {
+  color: color-mix(in srgb, var(--foreground) 70%, var(--muted));
+}
+
+html[data-theme="day"] .text-zinc-300 {
+  color: var(--muted-soft);
+}
+
+html[data-theme="day"] .hover\:text-zinc-300:hover {
+  color: var(--foreground);
+}
+
+html[data-theme="day"] .hover\:text-white:hover,
+html[data-theme="day"] .group-hover\:text-white {
+  color: var(--foreground);
+}
+
+html[data-theme="day"] .group:hover .group-hover\:text-white {
+  color: var(--foreground);
+}
+
+html[data-theme="day"] .bg-black,
+html[data-theme="day"] .bg-black\/95 {
+  background-color: color-mix(in srgb, var(--background) 95%, transparent) !important;
+}
+
+html[data-theme="day"] .border-white\/8,
+html[data-theme="day"] .border-white\/10,
+html[data-theme="day"] .border-white\/15,
+html[data-theme="day"] .border-white\/20 {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="day"] .bg-white\/\[0\.02\],
+html[data-theme="day"] .bg-white\/5,
+html[data-theme="day"] .bg-white\/\[0\.04\] {
+  background-color: var(--card-bg) !important;
+}
+
+html[data-theme="day"] .bg-zinc-600 {
+  background-color: var(--muted-soft) !important;
+}
+
+html[data-theme="day"] .marquee-fade-l {
+  background: linear-gradient(to right, var(--background), transparent) !important;
+}
+
+html[data-theme="day"] .marquee-fade-r {
+  background: linear-gradient(to left, var(--background), transparent) !important;
+}
+
+html[data-theme="night"] .marquee-fade-l {
+  background: linear-gradient(to right, #000, transparent);
+}
+
+html[data-theme="night"] .marquee-fade-r {
+  background: linear-gradient(to left, #000, transparent);
+}
+
+.dot-red {
+  background: #ff5f57;
+}
+.dot-yellow {
+  background: #febc2e;
+}
+.dot-green {
+  background: #28c840;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border) 20%,
+    var(--border) 80%,
+    transparent
+  );
 }
