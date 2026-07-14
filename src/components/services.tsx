@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
 import {
@@ -7,8 +8,14 @@ import {
   StaggerContainer,
   staggerItem,
 } from "@/components/ui/animated-section";
+import {
+  ServiceDetailPanel,
+  type ServiceItem,
+} from "@/components/service-detail-panel";
 
 export function Services() {
+  const [activeService, setActiveService] = useState<ServiceItem | null>(null);
+
   return (
     <AnimatedSection id="services" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -28,10 +35,12 @@ export function Services() {
 
         <StaggerContainer className="mt-10 grid gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {siteConfig.services.map((service) => (
-            <motion.div
-              key={service.title}
+            <motion.button
+              key={service.id}
+              type="button"
               variants={staggerItem}
-              className="card-shine theme-card group relative rounded-2xl p-5 sm:p-6"
+              onClick={() => setActiveService(service)}
+              className="card-shine theme-card group relative rounded-2xl p-5 text-left sm:p-6"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 e.currentTarget.style.setProperty(
@@ -53,16 +62,21 @@ export function Services() {
               <p className="mt-2 text-sm leading-relaxed text-zinc-500">
                 {service.description}
               </p>
-              <div className="mt-5 flex items-center gap-1 text-sm text-zinc-600 transition-colors group-hover:text-white sm:mt-6">
+              <span className="mt-5 flex items-center gap-1 text-sm text-zinc-600 transition-colors group-hover:text-white sm:mt-6">
                 Learn more
                 <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
-              </div>
-            </motion.div>
+              </span>
+            </motion.button>
           ))}
         </StaggerContainer>
       </div>
+
+      <ServiceDetailPanel
+        service={activeService}
+        onClose={() => setActiveService(null)}
+      />
     </AnimatedSection>
   );
 }
