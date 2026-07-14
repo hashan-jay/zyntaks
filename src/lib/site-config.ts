@@ -11,7 +11,7 @@ export const siteConfig = {
   whatsappNumber: "94741950145",
   whatsappMessage: "Hi Zyntaks! I'd like to discuss a project.",
 
-  email: "hello@zyntaks.com",
+  email: "zyntakslabs@gmail.com",
   location: "Global · Remote-first",
 
   nav: [
