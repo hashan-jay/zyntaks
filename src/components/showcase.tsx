@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
 const codeLines = [
   { tokens: [{ t: "import", c: "text-purple-400" }, { t: " { createApp } ", c: "text-zinc-300" }, { t: "from", c: "text-purple-400" }, { t: ' "@zyntaks/core"', c: "text-emerald-400" }] },
@@ -38,17 +39,16 @@ export function Showcase() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="order-2 lg:order-1">
-            <p className="text-xs font-medium uppercase tracking-widest text-zinc-500 sm:text-sm">
+            <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
               Our approach
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:mt-4 sm:text-3xl md:text-4xl lg:text-5xl">
-              Code that speaks{" "}
-              <span className="text-zinc-500">for itself</span>
-            </h2>
-            <p className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
+            <TextReveal className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] sm:mt-4 sm:text-3xl md:text-4xl lg:text-5xl">
+              Code that speaks for itself
+            </TextReveal>
+            <FadeUp className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
               Clean architecture, modern tooling, and obsessive attention to detail
               — the foundation of every Zyntaks project.
-            </p>
+            </FadeUp>
 
             <ul className="mt-8 space-y-5 sm:mt-10 sm:space-y-6">
               {features.map((feature, i) => (

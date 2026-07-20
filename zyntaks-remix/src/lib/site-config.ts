@@ -157,7 +157,7 @@ export const siteConfig = {
   ],
 
   stats: [
-    { value: "10+", label: "Projects delivered" },
+    { value: "50+", label: "Projects delivered" },
     { value: "99.9%", label: "Uptime average" },
     { value: "24/7", label: "Support available" },
     { value: "100%", label: "Client satisfaction" },

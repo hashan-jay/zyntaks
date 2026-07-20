@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { siteConfig, getWhatsAppUrl } from "@/lib/site-config";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -22,53 +23,63 @@ export function Contact() {
   const whatsappUrl = getWhatsAppUrl();
 
   return (
-    <AnimatedSection id="contact" className="relative py-16 sm:py-24 lg:py-32">
+    <AnimatedSection id="contact" className="relative py-20 sm:py-28 lg:py-36">
       <div className="section-divider absolute top-0 right-0 left-0" />
 
-      <div className="glow-orb top-1/2 left-1/2 h-[280px] w-[min(100vw,420px)] -translate-x-1/2 -translate-y-1/2 bg-white/3 sm:h-[400px] sm:w-[600px]" />
+      <motion.div
+        aria-hidden
+        className="glow-orb top-1/2 left-1/2 h-[320px] w-[min(100vw,520px)] -translate-x-1/2 -translate-y-1/2 bg-cyan-400/10 sm:h-[420px] sm:w-[640px]"
+        animate={{ scale: [1, 1.08, 1], opacity: [0.35, 0.55, 0.35] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
-            Contact
-          </p>
-          <TextReveal className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] sm:mt-4 sm:text-3xl md:text-4xl lg:text-5xl">
-            Let's build something remarkable
+          <FadeUp>
+            <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
+              04 — Contact
+            </p>
+          </FadeUp>
+          <TextReveal className="mt-4 font-display text-[clamp(2rem,5.5vw,4rem)] font-semibold leading-[1.05] tracking-[-0.04em]">
+            {"Let's build something remarkable"}
           </TextReveal>
-          <FadeUp className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
-            Tell us about your project. We typically respond within 24 hours.
+          <FadeUp delay={0.12}>
+            <p className="mt-4 text-base leading-relaxed text-zinc-400 sm:text-lg">
+              Tell us about your project. We typically respond within 24 hours.
+            </p>
           </FadeUp>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto mt-10 max-w-xl sm:mt-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto mt-12 max-w-xl sm:mt-16"
         >
-          <div className="theme-card rounded-2xl p-5 backdrop-blur-sm sm:p-8 md:p-10">
-            <div className="space-y-5 sm:space-y-6">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <span className="text-sm">✉</span>
+          <div className="theme-card overflow-hidden rounded-3xl p-6 backdrop-blur-sm sm:p-9">
+            <div className="space-y-6">
+              <motion.a
+                href={`mailto:${siteConfig.email}`}
+                whileHover={{ x: 4 }}
+                className="flex items-start gap-4 rounded-2xl border border-transparent p-3 transition-colors hover:border-theme hover:bg-white/[0.02]"
+              >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 font-mono text-xs text-[var(--accent-yellow)]">
+                  @
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 text-left">
                   <p className="text-sm text-zinc-500">Email</p>
-                  <a
-                    href={`mailto:${siteConfig.email}`}
-                    className="mt-1 block break-all text-sm font-medium transition-colors hover:text-zinc-300 sm:text-base"
-                  >
+                  <p className="mt-1 break-all text-sm font-medium sm:text-base">
                     {siteConfig.email}
-                  </a>
+                  </p>
                 </div>
-              </div>
+              </motion.a>
 
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <span className="text-sm">◎</span>
+              <div className="flex items-start gap-4 p-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 font-mono text-xs text-[var(--accent-yellow)]">
+                  ◉
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 text-left">
                   <p className="text-sm text-zinc-500">Location</p>
                   <p className="mt-1 text-sm font-medium sm:text-base">
                     {siteConfig.location}
@@ -76,20 +87,18 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="section-divider my-6 sm:my-8" />
+              <div className="section-divider my-2" />
 
-              <a
+              <MagneticButton
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-medium text-white transition-all hover:bg-[#20bd5a] hover:shadow-[0_0_40px_rgba(37,211,102,0.3)] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
+                className="group w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#20bd5a] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
               >
                 <WhatsAppIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
                 Chat on WhatsApp
-                <span className="transition-transform group-hover:translate-x-0.5">
-                  →
-                </span>
-              </a>
+                <span className="transition-transform group-hover:translate-x-0.5">→</span>
+              </MagneticButton>
 
               <p className="text-center text-[11px] leading-relaxed text-zinc-600 sm:text-xs">
                 Opens WhatsApp with a pre-filled message — edit before sending.

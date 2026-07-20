@@ -34,7 +34,7 @@ export function ThemeToggle() {
         className={cn(
           "pointer-events-none absolute inset-y-1 left-1 w-8 rounded-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] sm:inset-y-1.5 sm:left-1.5 sm:w-9",
           isDay
-            ? "translate-x-[calc(100%+0.125rem)] bg-[var(--accent-yellow)] shadow-[0_0_20px_rgba(103,232,249,0.55)]"
+            ? "translate-x-[calc(100%+0.125rem)] bg-[var(--accent-yellow)] shadow-[0_0_18px_rgba(8,145,178,0.45)]"
             : "translate-x-0 bg-foreground shadow-[0_0_12px_rgba(255,255,255,0.25)]"
         )}
       />

@@ -12,6 +12,7 @@ import {
 import { siteConfig } from "@/lib/site-config";
 import { HeroStarfield } from "@/components/hero-starfield";
 import { useTheme } from "@/components/theme-provider";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -21,7 +22,7 @@ function MottoWords() {
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % siteConfig.motto.length);
-    }, 2600);
+    }, 2200);
     return () => clearInterval(timer);
   }, []);
 
@@ -31,27 +32,27 @@ function MottoWords() {
       animate="visible"
       variants={{
         hidden: {},
-        visible: { transition: { staggerChildren: 0.12, delayChildren: 0.85 } },
+        visible: { transition: { staggerChildren: 0.1, delayChildren: 1.55 } },
       }}
-      className="hero-display mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-medium lowercase tracking-[-0.03em] text-2xl sm:mt-3 sm:gap-x-4 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+      className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-display text-[clamp(1.5rem,4.5vw,3.75rem)] font-medium lowercase tracking-[-0.03em] sm:mt-4 sm:gap-x-5"
     >
       {siteConfig.motto.map((word, i) => (
         <motion.span
           key={word}
           variants={{
-            hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+            hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
             visible: {
               opacity: 1,
               y: 0,
               filter: "blur(0px)",
-              transition: { duration: 0.5, ease },
+              transition: { duration: 0.65, ease },
             },
           }}
           className="relative"
         >
           <span
             className={`transition-colors duration-500 ${
-              activeIndex === i ? "font-semibold text-foreground" : "font-normal text-theme-soft"
+              activeIndex === i ? "text-foreground" : "text-theme-soft"
             }`}
           >
             {word}
@@ -98,11 +99,13 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.8 }}
+        transition={{ duration: 1.6, delay: 0.4 }}
         style={{ y: heroY }}
       >
         <HeroStarfield />
       </motion.div>
+
+      <div className="pointer-events-none absolute inset-0 z-[1] grid-bg hero-grid-drift opacity-70" />
 
       <motion.div
         aria-hidden
@@ -114,46 +117,32 @@ export function Hero() {
         style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
         className="relative z-10 mx-auto flex min-h-[calc(100dvh-3.5rem)] max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[calc(100dvh-4rem)] sm:px-6 sm:py-20 lg:px-8 lg:py-24"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15, type: "spring", stiffness: 200 }}
-          whileHover={{ scale: 1.03 }}
-          className="theme-surface mb-6 inline-flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full border px-3 py-1.5 text-xs backdrop-blur-md transition-colors duration-500 sm:mb-8 sm:max-w-none sm:px-4 sm:text-sm"
-        >
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent-yellow)] opacity-40" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--accent-yellow)]" />
-          </span>
-          <span className="truncate sm:whitespace-normal">{siteConfig.heroBadge}</span>
-        </motion.div>
-
-        <h1 className="hero-display max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
+        <h1 className="max-w-5xl font-display font-semibold tracking-[-0.05em] text-foreground">
           <motion.span
             initial="hidden"
             animate="visible"
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.05, delayChildren: 0.2 } },
+              visible: { transition: { staggerChildren: 0.045, delayChildren: 0.85 } },
             }}
             aria-label={siteConfig.name}
-            className="hero-brand inline-flex justify-center"
+            className="hero-brand inline-flex justify-center text-[clamp(3.5rem,14vw,9.5rem)] leading-[0.9]"
           >
             {siteConfig.name.split("").map((char, i) => (
               <motion.span
                 key={`${char}-${i}`}
                 variants={{
-                  hidden: { opacity: 0, y: 18 },
+                  hidden: { opacity: 0, y: 80, rotateX: -40, filter: "blur(10px)" },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: {
-                      duration: 0.45,
-                      ease,
-                    },
+                    rotateX: 0,
+                    filter: "blur(0px)",
+                    transition: { duration: 0.8, ease },
                   },
                 }}
                 className="hero-shimmer-text inline-block"
+                style={{ transformStyle: "preserve-3d" }}
               >
                 {char}
               </motion.span>
@@ -164,47 +153,58 @@ export function Hero() {
         </h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          initial={{ opacity: 0, y: 28, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: 1 }}
-          className="mt-6 max-w-2xl text-base leading-relaxed text-theme-muted sm:mt-8 sm:text-lg md:text-xl"
+          transition={{ duration: 0.8, delay: 1.85, ease }}
+          className="mt-7 max-w-2xl text-base leading-relaxed text-theme-muted sm:mt-9 sm:text-lg md:text-xl"
         >
           {siteConfig.description}
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.15 }}
-          className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4"
+          transition={{ duration: 0.7, delay: 2.05, ease }}
+          className="mt-9 flex w-full max-w-md flex-col gap-3 sm:mt-11 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4"
         >
-          <motion.a
+          <MagneticButton
             href="#contact"
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            className="theme-btn-primary group relative inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-full px-8 text-sm font-semibold transition-colors duration-500 sm:w-auto"
+            className="theme-btn-primary group relative h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-full px-8 text-sm font-semibold transition-colors duration-500 sm:w-auto"
           >
             <motion.span
               aria-hidden
               className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent"
               initial={{ x: "-100%" }}
               whileHover={{ x: "100%" }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.7 }}
             />
             <span className="relative">Start a project</span>
-            <span className="relative transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </motion.a>
+            <span className="relative transition-transform group-hover:translate-x-1">→</span>
+          </MagneticButton>
 
-          <motion.a
+          <MagneticButton
             href="#work"
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            className="theme-btn-secondary inline-flex h-12 w-full items-center justify-center rounded-full border px-8 text-sm font-semibold backdrop-blur-sm transition-all duration-500 hover:border-[var(--border-hover)] sm:w-auto"
+            className="theme-btn-secondary h-12 w-full items-center justify-center rounded-full border px-8 text-sm font-semibold backdrop-blur-sm transition-all duration-500 hover:border-[var(--border-hover)] sm:w-auto"
           >
             View our work
-          </motion.a>
+          </MagneticButton>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.4, duration: 0.8 }}
+          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-soft">
+            Scroll
+          </span>
+          <motion.span
+            aria-hidden
+            className="h-10 w-px origin-top bg-gradient-to-b from-[var(--accent-yellow)] to-transparent"
+            animate={{ scaleY: [0.4, 1, 0.4], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          />
         </motion.div>
       </motion.div>
     </section>

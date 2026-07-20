@@ -12,6 +12,7 @@ import {
   ServiceDetailPanel,
   type ServiceItem,
 } from "@/components/service-detail-panel";
+import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
 export function Services() {
   const [activeService, setActiveService] = useState<ServiceItem | null>(null);
@@ -20,17 +21,16 @@ export function Services() {
     <AnimatedSection id="services" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <p className="text-xs font-medium uppercase tracking-widest text-zinc-500 sm:text-sm">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
             Services
           </p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:mt-4 sm:text-3xl md:text-4xl lg:text-5xl">
-            Everything you need to{" "}
-            <span className="text-zinc-500">go from idea to production</span>
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
+          <TextReveal className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] sm:mt-4 sm:text-3xl md:text-4xl lg:text-5xl">
+            Everything you need to go from idea to production
+          </TextReveal>
+          <FadeUp className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
             From MVPs to enterprise platforms — we deliver software that performs
             under real-world pressure.
-          </p>
+          </FadeUp>
         </div>
 
         <StaggerContainer className="mt-10 grid gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
@@ -56,7 +56,7 @@ export function Services() {
               <span className="text-2xl text-zinc-600 transition-colors group-hover:text-white">
                 {service.icon}
               </span>
-              <h3 className="mt-3 text-base font-medium sm:mt-4 sm:text-lg">
+              <h3 className="mt-3 font-display text-base font-semibold tracking-tight sm:mt-4 sm:text-lg">
                 {service.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-500">

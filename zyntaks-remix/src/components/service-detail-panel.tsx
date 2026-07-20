@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
-import { setLenisScrollLocked } from "@/components/smooth-scroll";
 
 export type ServiceItem = (typeof siteConfig.services)[number];
 
@@ -20,18 +19,12 @@ export function ServiceDetailPanel({ service, onClose }: ServiceDetailPanelProps
       if (event.key === "Escape") onClose();
     };
 
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    const previousBodyOverflow = document.body.style.overflow;
-
-    setLenisScrollLocked(true);
-    document.documentElement.style.overflow = "hidden";
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      setLenisScrollLocked(false);
-      document.documentElement.style.overflow = previousHtmlOverflow;
-      document.body.style.overflow = previousBodyOverflow;
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [service, onClose]);
@@ -46,8 +39,6 @@ export function ServiceDetailPanel({ service, onClose }: ServiceDetailPanelProps
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          onWheel={(event) => event.stopPropagation()}
-          onTouchMove={(event) => event.stopPropagation()}
         >
           <button
             type="button"
@@ -60,20 +51,18 @@ export function ServiceDetailPanel({ service, onClose }: ServiceDetailPanelProps
             role="dialog"
             aria-modal="true"
             aria-labelledby={`service-title-${service.id}`}
-            data-lenis-prevent
-            initial={{ opacity: 0, y: 40, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.98 }}
-            transition={{ duration: 0.28, ease: [0.21, 0.47, 0.32, 0.98] }}
+            initial={{ opacity: 0, y: 56, scale: 0.96, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 32, scale: 0.98, filter: "blur(6px)" }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="theme-card relative z-10 flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-hidden rounded-t-3xl border bg-[var(--surface)] shadow-2xl sm:max-h-[85vh] sm:rounded-3xl"
-            onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-theme px-5 py-4 sm:px-7 sm:py-5">
+            <div className="flex items-start justify-between gap-4 border-b border-theme px-5 py-4 sm:px-7 sm:py-5">
               <div className="min-w-0">
                 <span className="text-2xl text-zinc-500">{service.icon}</span>
                 <h3
                   id={`service-title-${service.id}`}
-                  className="mt-2 font-display text-xl font-semibold tracking-tight sm:text-2xl"
+                  className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl"
                 >
                   {service.title}
                 </h3>
@@ -89,10 +78,7 @@ export function ServiceDetailPanel({ service, onClose }: ServiceDetailPanelProps
               </button>
             </div>
 
-            <div
-              data-lenis-prevent
-              className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-7 sm:py-6"
-            >
+            <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-7 sm:py-6">
               <p className="text-base leading-relaxed text-zinc-400">
                 {service.overview}
               </p>
@@ -128,7 +114,7 @@ export function ServiceDetailPanel({ service, onClose }: ServiceDetailPanelProps
               </div>
             </div>
 
-            <div className="flex shrink-0 flex-col gap-3 border-t border-theme px-5 py-4 sm:flex-row sm:justify-end sm:px-7">
+            <div className="flex flex-col gap-3 border-t border-theme px-5 py-4 sm:flex-row sm:justify-end sm:px-7">
               <button
                 type="button"
                 onClick={onClose}

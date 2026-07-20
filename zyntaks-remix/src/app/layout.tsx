@@ -5,7 +5,9 @@ import { siteConfig } from "@/lib/site-config";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { IntroLoader } from "@/components/intro-loader";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { CustomCursor } from "@/components/custom-cursor";
 
 const display = Syne({
   variable: "--font-display",
@@ -76,7 +78,9 @@ export default function RootLayout({
       <body className="flex min-h-dvh flex-col bg-background text-foreground transition-colors duration-500">
         <ThemeProvider>
           <SmoothScroll>
+            <IntroLoader />
             <ScrollProgress />
+            <CustomCursor />
             {children}
             <ThemeToggle />
           </SmoothScroll>
