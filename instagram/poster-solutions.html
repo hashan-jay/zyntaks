@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1015, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #050505;
+        --fg: #f4f4f5;
+        --muted: #a1a1aa;
+        --soft: #71717a;
+        --cyan: #67e8f9;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 1015px;
+        height: 1350px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "DM Sans", system-ui, sans-serif;
+      }
+
+      .poster {
+        position: relative;
+        width: 1015px;
+        height: 1350px;
+        padding: 80px 68px 72px;
+        display: flex;
+        flex-direction: column;
+        background:
+          radial-gradient(ellipse 85% 50% at 75% 10%, rgba(103, 232, 249, 0.14) 0%, transparent 55%),
+          radial-gradient(ellipse 60% 40% at 15% 90%, rgba(103, 232, 249, 0.06) 0%, transparent 50%),
+          #050505;
+      }
+
+      .stars {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          radial-gradient(1.2px 1.2px at 12% 16%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
+          radial-gradient(1px 1px at 30% 40%, rgba(255, 255, 255, 0.32) 50%, transparent 51%),
+          radial-gradient(1.4px 1.4px at 58% 12%, rgba(103, 232, 249, 0.7) 50%, transparent 51%),
+          radial-gradient(1px 1px at 82% 26%, rgba(255, 255, 255, 0.42) 50%, transparent 51%),
+          radial-gradient(1.2px 1.2px at 18% 70%, rgba(255, 255, 255, 0.3) 50%, transparent 51%),
+          radial-gradient(1px 1px at 70% 62%, rgba(255, 255, 255, 0.38) 50%, transparent 51%),
+          radial-gradient(1px 1px at 88% 78%, rgba(103, 232, 249, 0.5) 50%, transparent 51%),
+          radial-gradient(1.2px 1.2px at 44% 84%, rgba(255, 255, 255, 0.28) 50%, transparent 51%);
+      }
+
+      .header {
+        position: relative;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        margin-bottom: 22px;
+      }
+
+      .brand {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 78px;
+        line-height: 0.95;
+        letter-spacing: -0.05em;
+        background: linear-gradient(
+          165deg,
+          #67e8f9 0%,
+          #a5f3fc 35%,
+          #ecfeff 70%,
+          #ffffff 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .title {
+        margin-top: 28px;
+        font-family: "Syne", sans-serif;
+        font-weight: 600;
+        font-size: 44px;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        margin-top: 16px;
+        max-width: 780px;
+        font-size: 22px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .solutions {
+        position: relative;
+        z-index: 1;
+        margin-top: 56px;
+        display: grid;
+        gap: 22px;
+        flex: 1;
+      }
+
+      .card {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.035) 0%,
+          rgba(255, 255, 255, 0.015) 100%
+        );
+        padding: 32px 34px;
+        box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.04);
+      }
+
+      .card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      .num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+        color: var(--cyan);
+      }
+
+      .icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        border: 1px solid rgba(103, 232, 249, 0.28);
+        background: rgba(103, 232, 249, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cyan);
+        font-size: 18px;
+      }
+
+      .card h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        font-size: 18px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .footer {
+        position: relative;
+        z-index: 1;
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .footer-note {
+        font-size: 17px;
+        color: var(--soft);
+      }
+
+      .footer-url {
+        font-family: "Syne", sans-serif;
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        color: var(--cyan);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="poster">
+      <div class="stars"></div>
+
+      <div class="header">
+        <div class="eyebrow">What we build</div>
+        <div class="brand">Zyntaks</div>
+        <h1 class="title">Three core solutions.<br />Built for real business.</h1>
+        <p class="subtitle">
+          From browser to mobile to on-ground operations — Zyntaks delivers
+          software that ships and scales.
+        </p>
+      </div>
+
+      <div class="solutions">
+        <div class="card">
+          <div class="card-top">
+            <span class="num">01</span>
+            <div class="icon">◈</div>
+          </div>
+          <h3>Web Applications</h3>
+          <p>
+            Full-stack products with modern frameworks — fast, accessible, and
+            built to grow with your users.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <span class="num">02</span>
+            <div class="icon">▣</div>
+          </div>
+          <h3>Cross Platform Mobile Applications</h3>
+          <p>
+            One codebase for iOS and Android — native-feel apps that stay in
+            sync with your product and brand.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <span class="num">03</span>
+            <div class="icon">⬡</div>
+          </div>
+          <h3>Standalone Systems</h3>
+          <p>
+            Management systems, POS, and operational tools — reliable software
+            for day-to-day business workflows.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="footer-note">think. build. evolve.</div>
+        <div class="footer-url">zyntaks.lk</div>
+      </div>
+    </div>
+  </body>
+</html>

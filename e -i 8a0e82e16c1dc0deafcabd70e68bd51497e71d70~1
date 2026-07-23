@@ -1,0 +1,31 @@
+[33mcommit 8a0e82e16c1dc0deafcabd70e68bd51497e71d70[m
+Author: Ryan Hashan <hashanjayy@gmail.com>
+Date:   Wed Jul 15 00:59:27 2026 +0530
+
+    Update contact email to zyntakslabs@gmail.com.
+    
+    [1;31mCo-authored-by[m: Cursor <cursoragent@cursor.com>
+
+[33mcommit 828d4827b11b7f4420330b19a51f7ad912d9efd4[m
+Author: Ryan Hashan <hashanjayy@gmail.com>
+Date:   Wed Jul 15 00:54:58 2026 +0530
+
+    Add service detail panels for Learn more clicks.
+    
+    [1;31mCo-authored-by[m: Cursor <cursoragent@cursor.com>
+
+[33mcommit 7816f971f3caef3425cb4e4679d620792fb9cddf[m
+Author: Ryan Hashan <hashanjayy@gmail.com>
+Date:   Wed Jul 15 00:35:09 2026 +0530
+
+    Fix oversized desktop logo and missing mobile Hero brand text.
+    
+    [1;31mCo-authored-by[m: Cursor <cursoragent@cursor.com>
+
+[33mcommit 80cd00645a338062fa67459a3f4f4f2d05f79ab0[m
+Author: Ryan Hashan <hashanjayy@gmail.com>
+Date:   Wed Jul 15 00:08:45 2026 +0530
+
+    Add Zyntaks marketing site with day/night theme and mobile-responsive UI.
+    
+    [1;31mCo-authored-by[m: Cursor <cursoragent@cursor.com>
