@@ -83,9 +83,10 @@ export function ServicesScrollBg() {
           </div>
 
           <svg
-            className="services-cyber-network"
+            className="services-cyber-network hidden md:block"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
+            aria-hidden
           >
             <g stroke="rgba(186,156,255,0.35)" strokeWidth="0.25" fill="none">
               <line x1="78" y1="22" x2="86" y2="30" />
