@@ -3,6 +3,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import {
+  SectionScrollBg,
+  type SectionAtmosphere,
+} from "@/components/section-scroll-bg";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -11,6 +15,8 @@ type AnimatedSectionProps = {
   className?: string;
   delay?: number;
   id?: string;
+  /** Unique scroll-reactive background (not the Services cyber scene). */
+  atmosphere?: SectionAtmosphere;
 };
 
 export function AnimatedSection({
@@ -18,8 +24,9 @@ export function AnimatedSection({
   className,
   delay = 0,
   id,
+  atmosphere,
 }: AnimatedSectionProps) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
 
   return (
@@ -29,8 +36,11 @@ export function AnimatedSection({
       initial={{ opacity: 0, y: 56 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 56 }}
       transition={{ duration: 0.9, delay, ease }}
-      className={cn(className)}
+      className={cn("relative", atmosphere && "overflow-hidden", className)}
     >
+      {atmosphere ? (
+        <SectionScrollBg targetRef={ref} variant={atmosphere} />
+      ) : null}
       {children}
     </motion.section>
   );
@@ -67,12 +77,10 @@ export function StaggerContainer({
 }
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 36, scale: 0.98, filter: "blur(6px)" },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease },
+    transition: { duration: 0.55, ease },
   },
 };

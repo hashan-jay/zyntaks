@@ -63,10 +63,13 @@ function AnimatedValue({ value }: { value: string }) {
 
 export function Stats() {
   return (
-    <AnimatedSection className="relative py-12 sm:py-20 lg:py-24">
-      <div className="section-divider absolute top-0 right-0 left-0" />
+    <AnimatedSection
+      atmosphere="rings"
+      className="relative py-12 sm:py-20 lg:py-24"
+    >
+      <div className="section-divider absolute top-0 right-0 left-0 z-10" />
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4">
           {siteConfig.stats.map((stat, i) => (
             <motion.div

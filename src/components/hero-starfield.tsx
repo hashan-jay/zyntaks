@@ -61,9 +61,9 @@ function createStars(count: number, layer: number): Star[] {
   });
 }
 
-const smallStars = createStars(140, 1);
-const mediumStars = createStars(45, 2);
-const brightStars = createStars(12, 3).map((s) => {
+const smallStars = createStars(70, 1);
+const mediumStars = createStars(22, 2);
+const brightStars = createStars(8, 3).map((s) => {
   const size = 2.5 + pseudoRandom(s.id) * 2;
   return {
     ...s,
@@ -72,7 +72,7 @@ const brightStars = createStars(12, 3).map((s) => {
   };
 });
 
-const shootingStars = Array.from({ length: 3 }, (_, i) => ({
+const shootingStars = Array.from({ length: 2 }, (_, i) => ({
   id: i,
   top: pct(8 + pseudoRandom(i + 20) * 35),
   left: pct(pseudoRandom(i + 30) * 70),

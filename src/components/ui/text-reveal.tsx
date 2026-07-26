@@ -82,13 +82,9 @@ export function FadeUp({ children, className, delay = 0 }: FadeUpProps) {
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 36, filter: "blur(8px)" }}
-      animate={
-        isInView
-          ? { opacity: 1, y: 0, filter: "blur(0px)" }
-          : { opacity: 0, y: 36, filter: "blur(8px)" }
-      }
-      transition={{ duration: 0.9, delay, ease }}
+      initial={{ opacity: 0, y: 28 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      transition={{ duration: 0.7, delay, ease }}
     >
       {children}
     </motion.div>

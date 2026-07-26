@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
 import {
-  AnimatedSection,
   StaggerContainer,
   staggerItem,
 } from "@/components/ui/animated-section";
@@ -13,13 +12,21 @@ import {
   type ServiceItem,
 } from "@/components/service-detail-panel";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
+import { ServicesScrollBg } from "@/components/services-scroll-bg";
 
 export function Services() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeService, setActiveService] = useState<ServiceItem | null>(null);
 
   return (
-    <AnimatedSection id="services" className="relative py-16 sm:py-24 lg:py-32">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section
+      ref={sectionRef}
+      id="services"
+      className="relative overflow-hidden py-16 sm:py-24 lg:py-32"
+    >
+      <ServicesScrollBg targetRef={sectionRef} />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
             Services
@@ -77,6 +84,6 @@ export function Services() {
         service={activeService}
         onClose={() => setActiveService(null)}
       />
-    </AnimatedSection>
+    </section>
   );
 }

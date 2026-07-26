@@ -22,12 +22,14 @@ export function Contact() {
   const whatsappUrl = getWhatsAppUrl();
 
   return (
-    <AnimatedSection id="contact" className="relative py-16 sm:py-24 lg:py-32">
-      <div className="section-divider absolute top-0 right-0 left-0" />
+    <AnimatedSection
+      id="contact"
+      atmosphere="signal"
+      className="relative py-16 sm:py-24 lg:py-32"
+    >
+      <div className="section-divider absolute top-0 right-0 left-0 z-10" />
 
-      <div className="glow-orb top-1/2 left-1/2 h-[280px] w-[min(100vw,420px)] -translate-x-1/2 -translate-y-1/2 bg-white/3 sm:h-[400px] sm:w-[600px]" />
-
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
             Contact

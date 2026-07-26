@@ -16,11 +16,20 @@ export function setLenisScrollLocked(locked: boolean) {
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // Native scroll is smoother when the page has heavy animated layers
+    if (reduceMotion) return;
+
     const lenis = new Lenis({
-      duration: 0.9,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // Snappier than before — long lerp felt like sticky / stuck scrolling
+      duration: 0.55,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      touchMultiplier: 1.2,
+      touchMultiplier: 1.4,
+      wheelMultiplier: 1,
     });
 
     lenisInstance = lenis;

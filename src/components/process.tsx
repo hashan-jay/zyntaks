@@ -19,10 +19,14 @@ export function Process() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <AnimatedSection id="process" className="relative py-16 sm:py-24 lg:py-32">
-      <div className="section-divider absolute top-0 right-0 left-0" />
+    <AnimatedSection
+      id="process"
+      atmosphere="flow"
+      className="relative py-16 sm:py-24 lg:py-32"
+    >
+      <div className="section-divider absolute top-0 right-0 left-0 z-10" />
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
             Process

@@ -33,10 +33,14 @@ const features = [
 
 export function Showcase() {
   return (
-    <AnimatedSection id="work" className="relative py-16 sm:py-24 lg:py-32">
-      <div className="section-divider absolute top-0 right-0 left-0" />
+    <AnimatedSection
+      id="work"
+      atmosphere="aurora"
+      className="relative py-16 sm:py-24 lg:py-32"
+    >
+      <div className="section-divider absolute top-0 right-0 left-0 z-10" />
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="order-2 lg:order-1">
             <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">

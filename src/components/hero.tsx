@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
+  useMotionValueEvent,
   useSpring,
   useMotionTemplate,
   useScroll,
@@ -39,11 +40,10 @@ function MottoWords() {
         <motion.span
           key={word}
           variants={{
-            hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+            hidden: { opacity: 0, y: 20 },
             visible: {
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
               transition: { duration: 0.5, ease },
             },
           }}
@@ -71,14 +71,26 @@ function MottoWords() {
 
 export function Hero() {
   const { theme } = useTheme();
+  const heroRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
   const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
   const { scrollYProgress } = useScroll();
+  const { scrollYProgress: heroScrollProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 120]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.96]);
+  // Stars stay pinned and ease from 100% → 0% while the hero leaves the viewport
+  const starsOpacity = useTransform(heroScrollProgress, [0, 1], [1, 0]);
+  const [showStars, setShowStars] = useState(true);
+
+  useMotionValueEvent(starsOpacity, "change", (value) => {
+    setShowStars(value > 0.02);
+  });
 
   const nightCursor = useMotionTemplate`radial-gradient(560px circle at ${springX}px ${springY}px, rgba(103,232,249,0.08), transparent 55%)`;
   const dayCursor = useMotionTemplate`radial-gradient(560px circle at ${springX}px ${springY}px, rgba(8,145,178,0.12), transparent 55%)`;
@@ -94,15 +106,26 @@ export function Hero() {
   }, [mouseX, mouseY]);
 
   return (
-    <section className="relative min-h-dvh overflow-hidden bg-background pt-14 transition-colors duration-500 sm:pt-16">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.8 }}
-        style={{ y: heroY }}
-      >
-        <HeroStarfield />
-      </motion.div>
+    <section
+      ref={heroRef}
+      className="relative min-h-dvh overflow-hidden bg-background pt-14 transition-colors duration-500 sm:pt-16"
+    >
+      {showStars ? (
+        <motion.div
+          aria-hidden
+          style={{ opacity: starsOpacity }}
+          className="pointer-events-none fixed inset-0 z-[1]"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.8 }}
+            className="h-full w-full"
+          >
+            <HeroStarfield />
+          </motion.div>
+        </motion.div>
+      ) : null}
 
       <motion.div
         aria-hidden

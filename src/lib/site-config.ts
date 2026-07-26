@@ -1,18 +1,40 @@
 export const siteConfig = {
   name: "Zyntaks",
+  legalName: "Zyntaks",
   tagline: "think. build. evolve.",
   motto: ["think.", "build.", "evolve."] as const,
   heroBadge: "Innovation studio · Ideas that shine",
   description:
-    "We close the gap between the initial spark and shipping — modern web apps, cloud platforms, and digital products built with precision and lasting impact.",
-  url: "https://zyntaks.com",
+    "Zyntaks is a software development studio building modern web applications, cloud platforms, and digital products — from idea to production, with precision and lasting impact.",
+  /** Short entity line for AI / knowledge-graph disambiguation */
+  entitySummary:
+    "Zyntaks (zyntaks.lk) is a software development and digital product studio. We design and ship web apps, cloud infrastructure, UI/UX engineering, APIs, and mobile experiences for startups and growing businesses. We are not related to any hypnosis, trance, or entertainment creator projects that share a similar name.",
+  seoTitle:
+    "Zyntaks — Software Development Studio | Web Apps, Cloud & Digital Products",
+  keywords: [
+    "Zyntaks",
+    "zyntaks.lk",
+    "Zyntaks software development",
+    "software development studio",
+    "web application development",
+    "Next.js development",
+    "React development company",
+    "cloud and DevOps",
+    "UI UX engineering",
+    "API development",
+    "digital product studio",
+    "custom software Sri Lanka",
+    "remote software team",
+  ],
+  url: "https://www.zyntaks.lk",
 
   /** WhatsApp number (country code + number, no + or spaces) */
   whatsappNumber: "94741950145",
   whatsappMessage: "Hi Zyntaks! I'd like to discuss a project.",
 
   email: "zyntakslabs@gmail.com",
-  location: "Global · Remote-first",
+  location: "Sri Lanka · Global remote-first",
+  areaServed: ["Sri Lanka", "Global"],
 
   nav: [
     { label: "Services", href: "#services" },
