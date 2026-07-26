@@ -1575,6 +1575,29 @@ html[data-theme="day"] .section-atm-radar-sweep {
   }
 }
 
+/* Pause heavy decorative motion while the user is actively scrolling */
+html.is-scrolling .services-cyber-nebula,
+html.is-scrolling .services-cyber-grid,
+html.is-scrolling .services-cyber-panel,
+html.is-scrolling .services-cyber-node,
+html.is-scrolling .services-cyber-hex,
+html.is-scrolling .services-cyber-dust,
+html.is-scrolling .section-atm-aurora-band,
+html.is-scrolling .section-atm-sweep,
+html.is-scrolling .section-atm-ring,
+html.is-scrolling .section-atm-stream,
+html.is-scrolling .section-atm-dot,
+html.is-scrolling .section-atm-core,
+html.is-scrolling .section-atm-signal-orb,
+html.is-scrolling .section-atm-radar-ring,
+html.is-scrolling .section-atm-radar-sweep,
+html.is-scrolling .section-atm-specks,
+html.is-scrolling .star,
+html.is-scrolling .shooting-star,
+html.is-scrolling .hero-grid-drift {
+  animation-play-state: paused !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .services-cyber-nebula,
   .services-cyber-grid,

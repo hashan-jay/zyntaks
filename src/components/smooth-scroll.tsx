@@ -15,8 +15,8 @@ export function setLenisScrollLocked(locked: boolean) {
 }
 
 /**
- * Snappy Lenis — short duration so scroll feels real-time,
- * without the sticky lag of longer smooth-scroll settings.
+ * Responsive Lenis on fine-pointer devices (mouse/trackpad).
+ * Touch / coarse pointers keep native scrolling — smoother and cheaper.
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -25,25 +25,42 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     ).matches;
     if (reduceMotion) return;
 
+    // Phones/tablets: native momentum scrolling feels better and avoids jank.
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (!finePointer) return;
+
+    const root = document.documentElement;
+    let scrollEndTimer = 0;
+
     const lenis = new Lenis({
-      duration: 0.4,
-      easing: (t) => 1 - Math.pow(1 - t, 4),
+      autoRaf: true,
+      // Higher lerp = closer to native; avoids the "lagging behind" feel.
+      lerp: 0.16,
       smoothWheel: true,
-      touchMultiplier: 1.6,
-      wheelMultiplier: 1.15,
+      syncTouch: false,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
+      anchors: {
+        offset: 72,
+        lerp: 0.14,
+      },
     });
 
+    const onScroll = () => {
+      root.classList.add("is-scrolling");
+      window.clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(() => {
+        root.classList.remove("is-scrolling");
+      }, 140);
+    };
+
+    lenis.on("scroll", onScroll);
     lenisInstance = lenis;
 
-    let frame = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      frame = requestAnimationFrame(raf);
-    };
-    frame = requestAnimationFrame(raf);
-
     return () => {
-      cancelAnimationFrame(frame);
+      window.clearTimeout(scrollEndTimer);
+      root.classList.remove("is-scrolling");
+      lenis.off("scroll", onScroll);
       lenis.destroy();
       if (lenisInstance === lenis) lenisInstance = null;
     };

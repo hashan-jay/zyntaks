@@ -7,12 +7,11 @@ export const siteConfig = {
   description:
     "Zyntaks is a software development and SEO company in Sri Lanka. We build Next.js web apps and deliver website SEO, technical SEO services, and website optimization that improve rankings, speed, and conversions.",
   heroDescription:
-    "Software engineered for what comes next — web apps, SEO & performance, cloud, and digital products from idea to production.",
+    "Zyntaks is a software development studio building modern web applications, cloud platforms, digital products, and SEO optimization — from idea to production, with precision and lasting impact.",
   /** Short entity line for AI / knowledge-graph disambiguation */
   entitySummary:
     "Zyntaks (zyntaks.lk) is a software development and SEO company in Sri Lanka. We design and ship web apps, Next.js SEO, technical SEO services, website optimization, cloud infrastructure, UI/UX engineering, APIs, and AI automation for startups and growing businesses. We are not related to any hypnosis, trance, or entertainment creator projects that share a similar name.",
-  seoTitle:
-    "Zyntaks — SEO Company Sri Lanka | Next.js SEO, Web Apps & Technical SEO",
+  seoTitle: "Zyntaks - think. build. evolve.",
   keywords: [
     "Zyntaks",
     "zyntaks.lk",

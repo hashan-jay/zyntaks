@@ -6,9 +6,7 @@ import { siteConfig } from "@/lib/site-config";
 import { seoPageContent } from "@/lib/seo-page";
 
 export const metadata: Metadata = {
-  title: {
-    absolute: seoPageContent.title,
-  },
+  title: "SEO",
   description: seoPageContent.description,
   keywords: [
     "SEO company Sri Lanka",
@@ -24,7 +22,7 @@ export const metadata: Metadata = {
     canonical: seoPageContent.path,
   },
   openGraph: {
-    title: seoPageContent.title,
+    title: `SEO | ${siteConfig.seoTitle}`,
     description: seoPageContent.description,
     url: `${siteConfig.url}${seoPageContent.path}`,
     type: "website",
@@ -35,13 +33,13 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Zyntaks — SEO company Sri Lanka",
+        alt: siteConfig.seoTitle,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: seoPageContent.title,
+    title: `SEO | ${siteConfig.seoTitle}`,
     description: seoPageContent.description,
     images: ["/og.png"],
   },

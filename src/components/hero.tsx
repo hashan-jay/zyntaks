@@ -76,14 +76,13 @@ export function Hero() {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
   const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
-  const { scrollYProgress } = useScroll();
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 120]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.96]);
+  const heroY = useTransform(heroScrollProgress, [0, 1], [0, 100]);
+  const heroOpacity = useTransform(heroScrollProgress, [0, 0.85], [1, 0]);
+  const heroScale = useTransform(heroScrollProgress, [0, 1], [1, 0.97]);
   // Stars stay pinned and ease from 100% → 0% while the hero leaves the viewport
   const starsOpacity = useTransform(heroScrollProgress, [0, 1], [1, 0]);
   const [showStars, setShowStars] = useState(true);
@@ -221,7 +220,7 @@ export function Hero() {
           </motion.a>
 
           <motion.a
-            href="#work"
+            href="/portfolio"
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.98 }}
             className="theme-btn-secondary inline-flex h-12 w-full items-center justify-center rounded-full border px-8 text-sm font-semibold backdrop-blur-sm transition-all duration-500 hover:border-[var(--border-hover)] sm:w-auto"

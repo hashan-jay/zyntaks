@@ -1,7 +1,6 @@
 export const seoPageContent = {
   path: "/seo",
-  title:
-    "SEO Company Sri Lanka | Website SEO, Next.js SEO & Technical SEO Services",
+  title: "SEO",
   description:
     "Zyntaks is an SEO company in Sri Lanka offering website SEO, technical SEO services, Next.js SEO, and website optimization — so your pages rank higher, load faster, and convert better.",
   heading: "SEO company in Sri Lanka for websites that need to rank",

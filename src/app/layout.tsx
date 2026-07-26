@@ -8,6 +8,9 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { JsonLd } from "@/components/json-ld";
+import faviconMeta from "../../public/favicon-meta.json";
+
+const faviconV = faviconMeta.cacheKey;
 
 const display = Syne({
   variable: "--font-display",
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.seoTitle,
-    template: `%s | ${siteConfig.name}`,
+    template: `%s | ${siteConfig.seoTitle}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -45,18 +48,44 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "technology",
-  classification: "Software Development Studio & SEO Company",
+  classification: "Software Development Studio",
   manifest: "/site.webmanifest",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
-      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      {
+        url: `/favicon.ico?v=${faviconV}`,
+        sizes: "48x48",
+        type: "image/x-icon",
+      },
+      {
+        url: `/favicon-48x48.png?v=${faviconV}`,
+        sizes: "48x48",
+        type: "image/png",
+      },
+      {
+        url: `/favicon-96x96.png?v=${faviconV}`,
+        sizes: "96x96",
+        type: "image/png",
+      },
+      {
+        url: `/icon-192.png?v=${faviconV}`,
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: `/icon-512.png?v=${faviconV}`,
+        sizes: "512x512",
+        type: "image/png",
+      },
     ],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
-    shortcut: ["/favicon.ico"],
+    apple: [
+      {
+        url: `/apple-icon.png?v=${faviconV}`,
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+    shortcut: [`/favicon.ico?v=${faviconV}`],
   },
   openGraph: {
     type: "website",

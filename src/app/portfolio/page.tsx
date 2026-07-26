@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     canonical: "/portfolio",
   },
   openGraph: {
-    title: `Portfolio | ${siteConfig.name}`,
+    title: `Portfolio | ${siteConfig.seoTitle}`,
     description:
       "Case studies of products shipped by Zyntaks developers — problem, solution, and live results.",
     url: `${siteConfig.url}/portfolio`,
