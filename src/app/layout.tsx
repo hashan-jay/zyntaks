@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, JetBrains_Mono, Syne } from "next/font/google";
 import "./globals.css";
@@ -74,6 +75,7 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-dvh flex-col bg-background text-foreground transition-colors duration-500">
+        <GoogleAnalytics gaId="G-GPTZ6TNJR6" />
         <ThemeProvider>
           <SmoothScroll>
             <ScrollProgress />
