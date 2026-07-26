@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { SiteLogo } from "@/components/site-logo";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -13,14 +13,7 @@ export function Footer() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-8 sm:gap-10 md:flex-row md:items-center">
           <div className="w-full md:w-auto md:max-w-xl">
-            <Image
-              src="/images/zyntaks-logo-new.png"
-              alt={siteConfig.name}
-              width={549}
-              height={180}
-              className="site-logo h-8 w-auto sm:h-9"
-              unoptimized
-            />
+            <SiteLogo className="site-logo h-9 w-auto sm:h-11" />
             <p className="mt-3 max-w-xs text-sm text-zinc-500 sm:mt-4">
               {siteConfig.tagline}
             </p>

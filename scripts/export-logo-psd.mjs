@@ -6,49 +6,75 @@ import sharp from "sharp";
 
 initializeCanvas((width, height) => createCanvas(width, height));
 
-const src = "d:\\Zyntaks\\zyntaks-logo.psd";
-const outDir = path.resolve("public/images");
-const outPng = path.join(outDir, "zyntaks-logo-new.png");
-const outLegacy = path.join(outDir, "zyntaks-logo.png");
+const brandDir = path.resolve("public/brand");
+fs.mkdirSync(brandDir, { recursive: true });
 
-fs.mkdirSync(outDir, { recursive: true });
+const psdPath = "d:\\Zyntaks\\zyntaks-logo-new.psd";
+const psd = readPsd(fs.readFileSync(psdPath));
 
-const psd = readPsd(fs.readFileSync(src));
-if (!psd.canvas) throw new Error("No composite canvas");
+const layer =
+  psd.children?.find((c) => c.name === "Layer 2" && c.canvas) ||
+  psd.children?.find((c) => !c.hidden && c.canvas && c.name !== "Background") ||
+  null;
 
-let pngBuffer = psd.canvas.toBuffer("image/png");
+const canvas = layer?.canvas ?? psd.canvas;
+if (!canvas) throw new Error("No canvas in zyntaks-logo-new.psd");
 
+console.log("Using", layer?.name ?? "composite", "from zyntaks-logo-new.psd");
+
+let pngBuffer = canvas.toBuffer("image/png");
 const { data, info } = await sharp(pngBuffer)
   .ensureAlpha()
   .raw()
   .toBuffer({ resolveWithObject: true });
 
 for (let i = 0; i < data.length; i += 4) {
-  const r = data[i];
-  const g = data[i + 1];
-  const b = data[i + 2];
-  if (r <= 18 && g <= 18 && b <= 18) data[i + 3] = 0;
+  if (data[i] <= 18 && data[i + 1] <= 18 && data[i + 2] <= 18) {
+    data[i + 3] = 0;
+  }
 }
 
 pngBuffer = await sharp(data, {
   raw: { width: info.width, height: info.height, channels: 4 },
 })
+  .trim({ threshold: 2 })
+  .extend({
+    top: 4,
+    bottom: 4,
+    left: 8,
+    right: 8,
+    background: { r: 0, g: 0, b: 0, alpha: 0 },
+  })
+  .resize({ height: 200, fit: "inside", withoutEnlargement: false })
   .png()
   .toBuffer();
 
-// Mild trim + small padding so accent mark isn't clipped
-const trimmed = await sharp(pngBuffer)
-  .trim({ threshold: 1 })
-  .extend({ top: 8, bottom: 8, left: 12, right: 12, background: { r: 0, g: 0, b: 0, alpha: 0 } })
-  .png()
-  .toBuffer();
+const targets = [
+  path.join(brandDir, "logo.png"),
+  path.resolve("public/images/zyntaks-logo-new.png"),
+  path.resolve("public/images/zyntaks-logo.png"),
+];
 
-await sharp(trimmed)
-  .resize({ height: 180, fit: "inside", withoutEnlargement: false })
-  .png()
-  .toFile(outPng);
+for (const file of targets) {
+  await sharp(pngBuffer).toFile(file);
+}
 
-await sharp(outPng).toFile(outLegacy);
+const meta = await sharp(pngBuffer).metadata();
+const cacheKey = Date.now().toString(36);
+fs.writeFileSync(
+  path.join(brandDir, "logo-meta.json"),
+  JSON.stringify(
+    {
+      source: "d:\\\\Zyntaks\\\\zyntaks-logo-new.psd",
+      layer: layer?.name ?? "composite",
+      width: meta.width,
+      height: meta.height,
+      exportedAt: new Date().toISOString(),
+      cacheKey,
+    },
+    null,
+    2
+  )
+);
 
-const final = await sharp(outPng).metadata();
-console.log("Wrote", outPng, final.width, "x", final.height);
+console.log("Wrote", meta.width, "x", meta.height, "cacheKey", cacheKey);
