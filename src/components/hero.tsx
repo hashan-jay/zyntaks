@@ -192,7 +192,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 1 }}
           className="mt-6 max-w-2xl text-base leading-relaxed text-theme-muted sm:mt-8 sm:text-lg md:text-xl"
         >
-          {siteConfig.description}
+          {siteConfig.heroDescription}
         </motion.p>
 
         <motion.div

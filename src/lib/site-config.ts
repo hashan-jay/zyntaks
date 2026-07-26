@@ -5,25 +5,30 @@ export const siteConfig = {
   motto: ["think.", "build.", "evolve."] as const,
   heroBadge: "Innovation studio · Ideas that shine",
   description:
-    "Zyntaks is a software development studio building modern web applications, cloud platforms, and digital products — from idea to production, with precision and lasting impact.",
+    "Zyntaks is a software development and SEO company in Sri Lanka. We build Next.js web apps and deliver website SEO, technical SEO services, and website optimization that improve rankings, speed, and conversions.",
+  heroDescription:
+    "Software engineered for what comes next — web apps, SEO & performance, cloud, and digital products from idea to production.",
   /** Short entity line for AI / knowledge-graph disambiguation */
   entitySummary:
-    "Zyntaks (zyntaks.lk) is a software development and digital product studio. We design and ship web apps, cloud infrastructure, UI/UX engineering, APIs, and mobile experiences for startups and growing businesses. We are not related to any hypnosis, trance, or entertainment creator projects that share a similar name.",
+    "Zyntaks (zyntaks.lk) is a software development and SEO company in Sri Lanka. We design and ship web apps, Next.js SEO, technical SEO services, website optimization, cloud infrastructure, UI/UX engineering, APIs, and AI automation for startups and growing businesses. We are not related to any hypnosis, trance, or entertainment creator projects that share a similar name.",
   seoTitle:
-    "Zyntaks — Software Development Studio | Web Apps, Cloud & Digital Products",
+    "Zyntaks — SEO Company Sri Lanka | Next.js SEO, Web Apps & Technical SEO",
   keywords: [
     "Zyntaks",
     "zyntaks.lk",
-    "Zyntaks software development",
+    "SEO company Sri Lanka",
+    "Website SEO Sri Lanka",
+    "Next.js SEO",
+    "Technical SEO services",
+    "Website optimization Sri Lanka",
+    "SEO services Sri Lanka",
+    "technical SEO Sri Lanka",
+    "Next.js development Sri Lanka",
     "software development studio",
     "web application development",
-    "Next.js development",
     "React development company",
-    "cloud and DevOps",
-    "UI UX engineering",
-    "API development",
-    "digital product studio",
     "custom software Sri Lanka",
+    "Core Web Vitals optimization",
     "remote software team",
   ],
   url: "https://www.zyntaks.lk",
@@ -175,6 +180,72 @@ export const siteConfig = {
         "Auth and permission model",
         "OpenAPI/GraphQL documentation",
         "Test coverage and monitoring setup",
+      ],
+    },
+    {
+      id: "seo-performance",
+      title: "SEO & Performance Optimization",
+      description:
+        "Website SEO in Sri Lanka — technical SEO, Next.js SEO, and performance optimization that turn search traffic into customers.",
+      icon: "⟡",
+      overview:
+        "As an SEO company in Sri Lanka, Zyntaks combines technical SEO services with website optimization: crawlability, structured data, Core Web Vitals, and Next.js SEO so your product ranks higher and loads faster.",
+      whatWeDo: [
+        "Technical SEO audits: crawlability, indexation, metadata, sitemaps, and structured data",
+        "Next.js SEO: App Router metadata, canonical URLs, SSR/SSG strategy, and edge-ready delivery",
+        "Core Web Vitals tuning — LCP, CLS, INP — with measurable before/after targets",
+        "On-page website SEO: content structure, internal linking, and search intent alignment",
+        "Ongoing monitoring so regressions are caught before they cost traffic in Sri Lanka and globally",
+      ],
+      deliverables: [
+        "Performance & SEO audit report with prioritized fixes",
+        "Implemented website optimization in production",
+        "Baseline metrics dashboard (CWV, Lighthouse, key SEO checks)",
+        "Playbook for keeping speed and rankings healthy",
+      ],
+    },
+    {
+      id: "ai-automation",
+      title: "AI Automation",
+      description:
+        "Intelligent workflows, assistants, and integrations that remove busywork from your operations.",
+      icon: "✦",
+      overview:
+        "Zyntaks builds practical AI into your stack — automating repetitive work, surfacing insights, and connecting tools so your team ships more with less friction.",
+      whatWeDo: [
+        "Process discovery to find high-ROI automation opportunities",
+        "LLM-powered assistants, chatbots, and internal knowledge tools",
+        "Document, email, and CRM workflow automation with human-in-the-loop controls",
+        "Secure API integrations between your product and AI providers",
+        "Evaluation, prompt/version control, and cost-aware model selection",
+      ],
+      deliverables: [
+        "Working automation or AI feature in production",
+        "Integration docs and runbooks for your team",
+        "Guardrails for privacy, quality, and cost control",
+        "Iteration plan based on real usage metrics",
+      ],
+    },
+    {
+      id: "custom-software",
+      title: "Custom Software Development",
+      description:
+        "Tailored systems built around your workflows — not off-the-shelf compromises.",
+      icon: "⬢",
+      overview:
+        "When SaaS templates fall short, we engineer custom software that matches how your business actually works — from internal tools to customer-facing platforms.",
+      whatWeDo: [
+        "Requirements workshops and domain modeling with your stakeholders",
+        "Custom web platforms, admin portals, and operational dashboards",
+        "Legacy modernization and greenfield builds with a clear migration path",
+        "Integrations with payment, ERP, CRM, and third-party systems",
+        "Long-term maintainability: tests, docs, and ownership-friendly architecture",
+      ],
+      deliverables: [
+        "Production custom software aligned to your workflows",
+        "Source code, documentation, and deployment setup",
+        "Admin/ops tooling where needed",
+        "Support options for continued evolution",
       ],
     },
     {

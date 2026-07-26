@@ -35,6 +35,11 @@ export function JsonLd() {
         knowsAbout: [
           "Software development",
           "Web application development",
+          "SEO company Sri Lanka",
+          "Website SEO Sri Lanka",
+          "Next.js SEO",
+          "Technical SEO services",
+          "Website optimization Sri Lanka",
           "Next.js",
           "React",
           "TypeScript",
@@ -43,6 +48,7 @@ export function JsonLd() {
           "UI/UX engineering",
           "API development",
           "Mobile solutions",
+          "AI automation",
         ],
         makesOffer: siteConfig.services.map((service) => ({
           "@type": "Offer",
@@ -50,6 +56,22 @@ export function JsonLd() {
             "@type": "Service",
             name: service.title,
             description: service.description,
+            ...(service.id === "seo-performance"
+              ? {
+                  url: `${siteConfig.url}/seo`,
+                  areaServed: [
+                    { "@type": "Country", name: "Sri Lanka" },
+                    { "@type": "Place", name: "Global" },
+                  ],
+                  serviceType: [
+                    "SEO company Sri Lanka",
+                    "Website SEO Sri Lanka",
+                    "Next.js SEO",
+                    "Technical SEO services",
+                    "Website optimization Sri Lanka",
+                  ],
+                }
+              : {}),
           },
         })),
         contactPoint: [

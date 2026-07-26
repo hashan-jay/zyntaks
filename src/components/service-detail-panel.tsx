@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 import { setLenisScrollLocked } from "@/components/smooth-scroll";
@@ -136,6 +137,15 @@ export function ServiceDetailPanel({ service, onClose }: ServiceDetailPanelProps
               >
                 Close
               </button>
+              {service.id === "seo-performance" ? (
+                <Link
+                  href="/seo"
+                  onClick={onClose}
+                  className="theme-btn-secondary inline-flex h-11 items-center justify-center rounded-full border px-5 text-sm font-medium"
+                >
+                  SEO details →
+                </Link>
+              ) : null}
               <a
                 href={getWhatsAppUrl(
                   `Hi Zyntaks! I'd like to discuss ${service.title}.`

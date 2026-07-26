@@ -45,10 +45,7 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "technology",
-  classification: "Software Development Studio",
-  alternates: {
-    canonical: "/",
-  },
+  classification: "Software Development Studio & SEO Company",
   manifest: "/site.webmanifest",
   icons: {
     icon: [

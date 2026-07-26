@@ -35,6 +35,14 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/seo"
+                className="inline-block py-1 text-sm text-zinc-500 transition-colors hover:text-white"
+              >
+                SEO
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
