@@ -7,39 +7,31 @@ export function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden border-t border-theme bg-background py-12 transition-colors duration-500 sm:py-16"
-      style={{ paddingBottom: "max(3rem, env(safe-area-inset-bottom, 0px))" }}
+      className="relative overflow-hidden border-t border-theme bg-background pt-12 transition-colors duration-500 sm:pt-16"
+      style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom, 0px))" }}
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-8 sm:gap-10 md:flex-row md:items-center">
-          <div className="relative w-full md:w-auto md:max-w-xl">
-            <p
-              aria-hidden
-              className="pointer-events-none absolute top-1/2 left-0 z-0 -translate-y-1/2 select-none font-display text-[clamp(3.5rem,14vw,7.5rem)] font-semibold leading-none tracking-[-0.06em] text-foreground opacity-20"
-            >
-              {siteConfig.name}
+          <div className="w-full md:w-auto md:max-w-xl">
+            <Image
+              src="/images/zyntaks-logo-new.png"
+              alt={siteConfig.name}
+              width={549}
+              height={180}
+              className="site-logo h-8 w-auto sm:h-9"
+              unoptimized
+            />
+            <p className="mt-3 max-w-xs text-sm text-zinc-500 sm:mt-4">
+              {siteConfig.tagline}
             </p>
-
-            <div className="relative z-10">
-              <Image
-                src="/images/zyntaks-logo.png"
-                alt={siteConfig.name}
-                width={220}
-                height={70}
-                className="site-logo h-8 w-auto sm:h-9"
-              />
-              <p className="mt-3 max-w-xs text-sm text-zinc-500 sm:mt-4">
-                {siteConfig.tagline}
-              </p>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-zinc-600">
-                Zyntaks is a software development studio on zyntaks.lk — we build
-                web applications, cloud platforms, UI/UX, APIs, and digital
-                products for teams that need to ship with confidence.
-              </p>
-            </div>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-zinc-600">
+              Zyntaks is a software development studio on zyntaks.lk — we build
+              web applications, cloud platforms, UI/UX, APIs, and digital
+              products for teams that need to ship with confidence.
+            </p>
           </div>
 
-          <ul className="relative z-10 flex w-full flex-wrap gap-x-6 gap-y-3 sm:w-auto sm:gap-8">
+          <ul className="flex w-full flex-wrap gap-x-6 gap-y-3 sm:w-auto sm:gap-8">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
                 <a
@@ -52,10 +44,18 @@ export function Footer() {
             ))}
           </ul>
         </div>
+      </div>
 
-        <div className="section-divider mt-10 mb-6 sm:mt-12 sm:mb-8" />
+      <p
+        aria-hidden
+        className="pointer-events-none relative z-0 mx-auto mt-2 w-full select-none text-center font-display text-[clamp(5.5rem,28vw,18rem)] font-semibold leading-[0.75] tracking-[-0.07em] text-foreground opacity-10 sm:mt-3"
+      >
+        {siteConfig.name}
+      </p>
 
-        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="section-divider mt-2 sm:mt-3" />
+        <div className="mt-4 flex flex-col items-start justify-between gap-3 sm:mt-6 sm:flex-row sm:items-center sm:gap-4">
           <p className="text-xs text-zinc-600 sm:text-sm">
             © {year} {siteConfig.name}. All rights reserved.
           </p>

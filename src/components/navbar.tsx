@@ -39,12 +39,13 @@ export function Navbar() {
         <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
           <Link href="/" className="relative flex shrink-0 items-center gap-2">
             <Image
-              src="/images/zyntaks-logo.png"
+              src="/images/zyntaks-logo-new.png"
               alt={siteConfig.name}
-              width={240}
-              height={77}
+              width={549}
+              height={180}
               className="site-logo h-8 w-auto sm:h-9"
               priority
+              unoptimized
             />
           </Link>
 
