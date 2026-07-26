@@ -13,14 +13,9 @@ export function Footer() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-8 sm:gap-10 md:flex-row md:items-center">
           <div className="w-full md:w-auto md:max-w-xl">
-            <SiteLogo className="site-logo h-9 w-auto sm:h-11" />
+            <SiteLogo className="site-logo h-6 w-auto sm:h-7" />
             <p className="mt-3 max-w-xs text-sm text-zinc-500 sm:mt-4">
               {siteConfig.tagline}
-            </p>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-zinc-600">
-              Zyntaks is a software development studio on zyntaks.lk — we build
-              web applications, cloud platforms, UI/UX, APIs, and digital
-              products for teams that need to ship with confidence.
             </p>
           </div>
 
@@ -41,7 +36,7 @@ export function Footer() {
 
       <p
         aria-hidden
-        className="pointer-events-none relative z-0 mx-auto mt-2 w-full select-none text-center font-display text-[clamp(5.5rem,28vw,18rem)] font-semibold leading-[0.75] tracking-[-0.07em] text-foreground opacity-10 sm:mt-3"
+        className="pointer-events-none relative z-0 mx-auto mt-2 w-full select-none text-center font-display text-[clamp(3.5rem,18vw,11rem)] font-semibold leading-[0.75] tracking-[-0.07em] text-foreground opacity-10 sm:mt-3"
       >
         {siteConfig.name}
       </p>

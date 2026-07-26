@@ -84,10 +84,10 @@ export function Contact() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-medium text-white transition-all hover:bg-[#20bd5a] hover:shadow-[0_0_40px_rgba(37,211,102,0.3)] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
+                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#39ff88]/35 bg-[#00e676]/70 px-6 py-3.5 text-sm font-medium text-[#04140c] transition-all hover:bg-[#00e676]/85 hover:shadow-[0_0_40px_rgba(0,230,118,0.35)] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
               >
                 <WhatsAppIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
-                Chat on WhatsApp
+                Start a Project
                 <span className="transition-transform group-hover:translate-x-0.5">
                   →
                 </span>

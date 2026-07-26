@@ -14,22 +14,23 @@ export function setLenisScrollLocked(locked: boolean) {
   }
 }
 
+/**
+ * Snappy Lenis — short duration so scroll feels real-time,
+ * without the sticky lag of longer smooth-scroll settings.
+ */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-
-    // Native scroll is smoother when the page has heavy animated layers
     if (reduceMotion) return;
 
     const lenis = new Lenis({
-      // Snappier than before — long lerp felt like sticky / stuck scrolling
-      duration: 0.55,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
+      duration: 0.4,
+      easing: (t) => 1 - Math.pow(1 - t, 4),
       smoothWheel: true,
-      touchMultiplier: 1.4,
-      wheelMultiplier: 1,
+      touchMultiplier: 1.6,
+      wheelMultiplier: 1.15,
     });
 
     lenisInstance = lenis;
@@ -44,9 +45,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     return () => {
       cancelAnimationFrame(frame);
       lenis.destroy();
-      if (lenisInstance === lenis) {
-        lenisInstance = null;
-      }
+      if (lenisInstance === lenis) lenisInstance = null;
     };
   }, []);
 

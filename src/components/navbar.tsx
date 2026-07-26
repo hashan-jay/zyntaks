@@ -38,7 +38,7 @@ export function Navbar() {
       >
         <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
           <Link href="/" className="relative flex shrink-0 items-center gap-2">
-            <SiteLogo className="site-logo h-9 w-auto sm:h-11" priority />
+            <SiteLogo className="site-logo h-6 w-auto sm:h-7" priority />
           </Link>
 
           <ul className="hidden items-center gap-6 lg:gap-8 md:flex">

@@ -388,6 +388,7 @@ html[data-theme="day"] .services-cyber-sky {
   height: min(460px, 65vw);
   background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, transparent 68%);
   animation: services-nebula-drift 16s ease-in-out infinite;
+  will-change: transform;
 }
 
 .services-cyber-nebula--b {
@@ -397,6 +398,26 @@ html[data-theme="day"] .services-cyber-sky {
   height: min(560px, 75vw);
   background: radial-gradient(circle, rgba(103, 232, 249, 0.22) 0%, transparent 68%);
   animation: services-nebula-drift 20s ease-in-out infinite reverse;
+  will-change: transform;
+}
+
+/* Flat soft grid — no 3D perspective (keeps Services scrolling smooth) */
+.services-cyber-soft-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(103, 232, 249, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 139, 250, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 20%, transparent 75%);
+}
+
+html[data-theme="day"] .services-cyber-soft-grid {
+  background-image:
+    linear-gradient(rgba(8, 145, 178, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 145, 178, 0.06) 1px, transparent 1px);
+  opacity: 0.28;
 }
 
 html[data-theme="day"] .services-cyber-nebula--a {
@@ -650,6 +671,8 @@ html[data-theme="day"] .services-cyber-panel__kw {
     right: 3%;
     top: 8%;
     width: min(200px, 54vw);
+    transform: scale(0.92);
+    transform-origin: top right;
   }
 
   .services-cyber-panel--chart {
@@ -660,7 +683,14 @@ html[data-theme="day"] .services-cyber-panel__kw {
   }
 
   .services-cyber-panel--tile {
-    display: none;
+    right: 8%;
+    top: 42%;
+    width: min(120px, 28vw);
+    height: min(80px, 18vw);
+  }
+
+  .services-cyber-network {
+    opacity: 0.75;
   }
 }
 
@@ -1537,19 +1567,14 @@ html[data-theme="day"] .section-atm-radar-sweep {
   }
 }
 
-/* Scroll performance: pause decorative motion when not active / on small screens */
+/* Mobile keeps the same decorative layers (scaled via panel rules above) */
 @media (max-width: 768px) {
-  .services-cyber-panel--chart,
-  .services-cyber-network,
-  .section-atm-sweep,
-  .section-atm-flow-dots,
-  .section-atm-radar-sweep {
-    display: none;
+  .services-cyber-grid {
+    opacity: 0.55;
   }
 
-  .services-cyber-grid {
-    animation: none;
-    opacity: 0.45;
+  .section-atm-aurora-band--a {
+    animation-duration: 36s;
   }
 }
 

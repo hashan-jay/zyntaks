@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
 import {
@@ -15,16 +15,14 @@ import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 import { ServicesScrollBg } from "@/components/services-scroll-bg";
 
 export function Services() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [activeService, setActiveService] = useState<ServiceItem | null>(null);
 
   return (
     <section
-      ref={sectionRef}
       id="services"
       className="relative overflow-hidden py-16 sm:py-24 lg:py-32"
     >
-      <ServicesScrollBg targetRef={sectionRef} />
+      <ServicesScrollBg />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
