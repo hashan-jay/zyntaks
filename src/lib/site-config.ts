@@ -40,8 +40,31 @@ export const siteConfig = {
     { label: "Services", href: "#services" },
     { label: "Work", href: "#work" },
     { label: "Process", href: "#process" },
+    { label: "Portfolio", href: "/portfolio" },
     { label: "Contact", href: "#contact" },
   ],
+
+  portfolio: [
+    {
+      slug: "fit-with-shyama",
+      name: "Fit with Shyama",
+      url: "https://fitwithshyama.xyz",
+      year: "2026",
+      role: "Product design & full-stack build",
+      category: "Web Application",
+      stack: ["React", "Vite", "TypeScript", "Responsive UI", "WhatsApp CTA"],
+      heroImage: "/portfolio/fitwithshyama-hero.jpg",
+      heroAlt:
+        "Fit with Shyama homepage hero — Zumba and women's fitness in Wattala",
+      intro:
+        "A brand website for Fitness with Shyama — a women-focused Zumba and fitness studio in Nayakakanda, Wattala. The product helps prospective members discover classes, packages, and location details, then convert through WhatsApp.",
+      problem:
+        "Shyama’s studio relied on informal social messaging and word of mouth. Interested members had no clear digital home to understand the brand, see class energy, compare packages, or get directions — so inquiries were scattered and hard to convert into booked members.",
+      solution:
+        "Zyntaks designed and shipped a focused marketing web app with a high-energy hero, studio storytelling, package cards, social proof, map/location context, and a direct WhatsApp join flow. The result is a single shareable destination that turns curiosity into conversations with Shyama.",
+    },
+  ],
+
 
   services: [
     {

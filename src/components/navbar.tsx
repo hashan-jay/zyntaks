@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
+import { resolveNavHref } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { SiteLogo } from "@/components/site-logo";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -23,6 +26,8 @@ export function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  const contactHref = resolveNavHref("#contact", pathname);
 
   return (
     <>
@@ -42,25 +47,38 @@ export function Navbar() {
           </Link>
 
           <ul className="hidden items-center gap-6 lg:gap-8 md:flex">
-            {siteConfig.nav.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="text-sm text-theme-muted transition-colors hover:text-foreground"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
+            {siteConfig.nav.map((item) => {
+              const href = resolveNavHref(item.href, pathname);
+              const isActive =
+                item.href === "/portfolio"
+                  ? pathname === "/portfolio"
+                  : false;
+
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={href}
+                    className={cn(
+                      "text-sm transition-colors hover:text-foreground",
+                      isActive
+                        ? "text-foreground"
+                        : "text-theme-muted"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="hidden md:block">
-            <a
-              href="#contact"
+            <Link
+              href={contactHref}
               className="inline-flex h-9 items-center rounded-full border border-theme bg-surface/50 px-4 text-sm font-medium text-foreground transition-all hover:border-[var(--border-hover)] hover:bg-surface"
             >
               Get in touch
-            </a>
+            </Link>
           </div>
 
           <button
@@ -118,13 +136,13 @@ export function Navbar() {
               animate={mobileOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: i * 0.08 }}
             >
-              <a
-                href={item.href}
+              <Link
+                href={resolveNavHref(item.href, pathname)}
                 onClick={() => setMobileOpen(false)}
                 className="block py-2 text-2xl font-medium text-foreground"
               >
                 {item.label}
-              </a>
+              </Link>
             </motion.li>
           ))}
           <motion.li
@@ -133,13 +151,13 @@ export function Navbar() {
             animate={mobileOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: 0.4 }}
           >
-            <a
-              href="#contact"
+            <Link
+              href={contactHref}
               onClick={() => setMobileOpen(false)}
               className="flex h-12 w-full items-center justify-center rounded-full border border-theme px-8 text-lg"
             >
               Get in touch
-            </a>
+            </Link>
           </motion.li>
         </ul>
       </motion.div>

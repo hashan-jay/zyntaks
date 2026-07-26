@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
+import { resolveNavHref } from "@/lib/nav";
 import { SiteLogo } from "@/components/site-logo";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
 
   return (
     <footer
@@ -22,12 +27,12 @@ export function Footer() {
           <ul className="flex w-full flex-wrap gap-x-6 gap-y-3 sm:w-auto sm:gap-8">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
+                <Link
+                  href={resolveNavHref(item.href, pathname)}
                   className="inline-block py-1 text-sm text-zinc-500 transition-colors hover:text-white"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
