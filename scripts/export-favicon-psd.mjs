@@ -22,11 +22,9 @@ const canvas = layer?.canvas ?? psd.canvas;
 if (!canvas) throw new Error("No canvas in zyntaks-favicon.psd");
 
 console.log("Using", layer?.name ?? "composite", "from zyntaks-favicon.psd");
-console.log("PSD size", psd.width, "x", psd.height);
 
 let pngBuffer = canvas.toBuffer("image/png");
 
-// Prefer a square crop centered on opaque content, then pad to square.
 const trimmed = await sharp(pngBuffer)
   .ensureAlpha()
   .trim({ threshold: 4 })
@@ -37,6 +35,9 @@ const side = Math.max(trimmed.info.width, trimmed.info.height);
 const padX = Math.floor((side - trimmed.info.width) / 2);
 const padY = Math.floor((side - trimmed.info.height) / 2);
 
+// Solid brand background — Google often skips mostly-transparent favicons.
+const BG = { r: 5, g: 5, b: 5, alpha: 1 };
+
 pngBuffer = await sharp(trimmed.data)
   .extend({
     top: padY,
@@ -45,6 +46,7 @@ pngBuffer = await sharp(trimmed.data)
     right: side - trimmed.info.width - padX,
     background: { r: 0, g: 0, b: 0, alpha: 0 },
   })
+  .flatten({ background: BG })
   .png()
   .toBuffer();
 
@@ -52,8 +54,9 @@ async function writePng(file, size) {
   await sharp(pngBuffer)
     .resize(size, size, {
       fit: "contain",
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
+      background: BG,
     })
+    .flatten({ background: BG })
     .png()
     .toFile(file);
   console.log("Wrote", file, `${size}x${size}`);
@@ -67,6 +70,7 @@ await writePng(path.join(publicDir, "favicon-96x96.png"), 96);
 await writePng(path.join(publicDir, "icon-192.png"), 192);
 await writePng(path.join(publicDir, "icon-512.png"), 512);
 await writePng(path.join(publicDir, "brand-mark.png"), 512);
+await writePng(path.join(publicDir, "apple-icon.png"), 180);
 await writePng(path.join(appDir, "icon.png"), 96);
 await writePng(path.join(appDir, "apple-icon.png"), 180);
 
@@ -76,20 +80,19 @@ const icoPngs = await Promise.all(
     sharp(pngBuffer)
       .resize(size, size, {
         fit: "contain",
-        background: { r: 0, g: 0, b: 0, alpha: 0 },
+        background: BG,
       })
+      .flatten({ background: BG })
       .png()
       .toBuffer()
   )
 );
 
 const icoBuffer = await pngToIco(icoPngs);
-const icoTargets = [
+for (const file of [
   path.join(publicDir, "favicon.ico"),
   path.join(appDir, "favicon.ico"),
-];
-
-for (const file of icoTargets) {
+]) {
   fs.writeFileSync(file, icoBuffer);
   console.log("Wrote", file);
 }
@@ -97,6 +100,7 @@ for (const file of icoTargets) {
 const meta = {
   source: psdPath,
   layer: layer?.name ?? "composite",
+  background: "#050505",
   exportedAt: new Date().toISOString(),
   cacheKey: Date.now().toString(36),
 };

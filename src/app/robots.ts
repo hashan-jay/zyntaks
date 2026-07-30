@@ -12,6 +12,11 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "Googlebot",
         allow: "/",
       },
+      // Favicon crawler used for Google Search result icons
+      {
+        userAgent: "Googlebot-Image",
+        allow: "/",
+      },
       // AI crawlers — allow indexing of this canonical entity
       { userAgent: "GPTBot", allow: "/" },
       { userAgent: "ChatGPT-User", allow: "/" },
