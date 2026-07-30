@@ -5,7 +5,6 @@ import {
   motion,
   useMotionValue,
   useMotionValueEvent,
-  useSpring,
   useMotionTemplate,
   useScroll,
   useTransform,
@@ -74,15 +73,11 @@ export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
+  // Direct values (no spring) — springs fight Lenis and feel like scroll lag.
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroY = useTransform(heroScrollProgress, [0, 1], [0, 100]);
-  const heroOpacity = useTransform(heroScrollProgress, [0, 0.85], [1, 0]);
-  const heroScale = useTransform(heroScrollProgress, [0, 1], [1, 0.97]);
   // Stars stay pinned and ease from 100% → 0% while the hero leaves the viewport
   const starsOpacity = useTransform(heroScrollProgress, [0, 1], [1, 0]);
   const [showStars, setShowStars] = useState(true);
@@ -91,17 +86,35 @@ export function Hero() {
     setShowStars(value > 0.02);
   });
 
-  const nightCursor = useMotionTemplate`radial-gradient(560px circle at ${springX}px ${springY}px, rgba(103,232,249,0.08), transparent 55%)`;
-  const dayCursor = useMotionTemplate`radial-gradient(560px circle at ${springX}px ${springY}px, rgba(8,145,178,0.12), transparent 55%)`;
+  const nightCursor = useMotionTemplate`radial-gradient(560px circle at ${mouseX}px ${mouseY}px, rgba(103,232,249,0.08), transparent 55%)`;
+  const dayCursor = useMotionTemplate`radial-gradient(560px circle at ${mouseX}px ${mouseY}px, rgba(8,145,178,0.12), transparent 55%)`;
   const cursorGlow = theme === "day" ? dayCursor : nightCursor;
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+    let raf = 0;
+    let latestX = 0;
+    let latestY = 0;
+    let pending = false;
+
+    const flush = () => {
+      pending = false;
+      mouseX.set(latestX);
+      mouseY.set(latestY);
     };
+
+    const onMove = (e: MouseEvent) => {
+      latestX = e.clientX;
+      latestY = e.clientY;
+      if (pending) return;
+      pending = true;
+      raf = requestAnimationFrame(flush);
+    };
+
     window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+    };
   }, [mouseX, mouseY]);
 
   return (
@@ -113,7 +126,7 @@ export function Hero() {
         <motion.div
           aria-hidden
           style={{ opacity: starsOpacity }}
-          className="pointer-events-none fixed inset-0 z-[1]"
+          className="pointer-events-none fixed inset-0 z-[1] will-change-[opacity]"
         >
           <motion.div
             initial={{ opacity: 0 }}
@@ -132,10 +145,7 @@ export function Hero() {
         style={{ background: cursorGlow }}
       />
 
-      <motion.div
-        style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
-        className="relative z-10 mx-auto flex min-h-[calc(100dvh-3.5rem)] max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[calc(100dvh-4rem)] sm:px-6 sm:py-20 lg:px-8 lg:py-24"
-      >
+      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-3.5rem)] max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[calc(100dvh-4rem)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -228,7 +238,7 @@ export function Hero() {
             View our work
           </motion.a>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

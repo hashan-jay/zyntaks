@@ -15,8 +15,8 @@ export function setLenisScrollLocked(locked: boolean) {
 }
 
 /**
- * Responsive Lenis on fine-pointer devices (mouse/trackpad).
- * Touch / coarse pointers keep native scrolling — smoother and cheaper.
+ * Near-native Lenis on desktop trackpads/mice.
+ * Touch devices keep browser momentum scrolling (no Lenis overhead).
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -25,33 +25,37 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     ).matches;
     if (reduceMotion) return;
 
-    // Phones/tablets: native momentum scrolling feels better and avoids jank.
     const finePointer = window.matchMedia("(pointer: fine)").matches;
     if (!finePointer) return;
 
     const root = document.documentElement;
     let scrollEndTimer = 0;
+    let isScrolling = false;
 
     const lenis = new Lenis({
       autoRaf: true,
-      // Higher lerp = closer to native; avoids the "lagging behind" feel.
-      lerp: 0.16,
+      // Near-native response — high lerp removes the “scroll lag” feel.
+      lerp: 0.32,
       smoothWheel: true,
       syncTouch: false,
       wheelMultiplier: 1,
       touchMultiplier: 1,
       anchors: {
         offset: 72,
-        lerp: 0.14,
+        lerp: 0.28,
       },
     });
 
     const onScroll = () => {
-      root.classList.add("is-scrolling");
+      if (!isScrolling) {
+        isScrolling = true;
+        root.classList.add("is-scrolling");
+      }
       window.clearTimeout(scrollEndTimer);
       scrollEndTimer = window.setTimeout(() => {
+        isScrolling = false;
         root.classList.remove("is-scrolling");
-      }, 140);
+      }, 100);
     };
 
     lenis.on("scroll", onScroll);

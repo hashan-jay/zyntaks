@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/site-config";
+import { servicePages } from "@/lib/service-pages";
 
 export function JsonLd() {
   const orgId = `${siteConfig.url}/#organization`;
@@ -34,46 +35,48 @@ export function JsonLd() {
         })),
         knowsAbout: [
           "Software development",
-          "Web application development",
+          "Web development",
+          "AI automation",
+          "Mobile app development",
+          "UI/UX design",
+          "Digital transformation",
           "SEO company Sri Lanka",
           "Website SEO Sri Lanka",
           "Next.js SEO",
           "Technical SEO services",
-          "Website optimization Sri Lanka",
           "Next.js",
           "React",
           "TypeScript",
-          "Cloud infrastructure",
-          "DevOps",
-          "UI/UX engineering",
-          "API development",
-          "Mobile solutions",
-          "AI automation",
         ],
-        makesOffer: siteConfig.services.map((service) => ({
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: service.title,
-            description: service.description,
-            ...(service.id === "seo-performance"
-              ? {
-                  url: `${siteConfig.url}/seo`,
-                  areaServed: [
-                    { "@type": "Country", name: "Sri Lanka" },
-                    { "@type": "Place", name: "Global" },
-                  ],
-                  serviceType: [
-                    "SEO company Sri Lanka",
-                    "Website SEO Sri Lanka",
-                    "Next.js SEO",
-                    "Technical SEO services",
-                    "Website optimization Sri Lanka",
-                  ],
-                }
-              : {}),
+        makesOffer: [
+          ...servicePages.map((service) => ({
+            "@type": "Offer" as const,
+            itemOffered: {
+              "@type": "Service" as const,
+              name: service.title,
+              description: service.description,
+              url: `${siteConfig.url}/services/${service.slug}`,
+              areaServed: [
+                { "@type": "Country", name: "Sri Lanka" },
+                { "@type": "Place", name: "Global" },
+              ],
+            },
+          })),
+          {
+            "@type": "Offer" as const,
+            itemOffered: {
+              "@type": "Service" as const,
+              name: "SEO & Performance Optimization",
+              description:
+                "Website SEO, technical SEO services, Next.js SEO, and website optimization.",
+              url: `${siteConfig.url}/seo`,
+              areaServed: [
+                { "@type": "Country", name: "Sri Lanka" },
+                { "@type": "Place", name: "Global" },
+              ],
+            },
           },
-        })),
+        ],
         contactPoint: [
           {
             "@type": "ContactPoint",
