@@ -154,6 +154,11 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('zyntaks-theme');if(t==='day'||t==='night')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
           }}
         />
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="G2psoI9BSN2vxLpOD8eBvg"
+          async
+        />
       </head>
       <body
         className={`${body.className} flex min-h-dvh flex-col bg-background text-foreground transition-colors duration-500`}
