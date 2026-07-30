@@ -1,6 +1,7 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, JetBrains_Mono, Syne } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -154,17 +155,17 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('zyntaks-theme');if(t==='day'||t==='night')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
           }}
         />
-        <script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key="G2psoI9BSN2vxLpOD8eBvg"
-          async
-        />
       </head>
       <body
         className={`${body.className} flex min-h-dvh flex-col bg-background text-foreground transition-colors duration-500`}
       >
         <JsonLd />
         <GoogleAnalytics gaId="G-GPTZ6TNJR6" />
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          strategy="afterInteractive"
+          data-key="G2psoI9BSN2vxLpOD8eBvg"
+        />
         <ThemeProvider>
           <SmoothScroll>
             <ScrollProgress />
