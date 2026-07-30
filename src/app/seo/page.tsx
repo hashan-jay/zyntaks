@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SeoLanding } from "@/components/seo/seo-landing";
+import { organizationNode, websiteNode, serializeJsonLd } from "@/components/json-ld";
 import { siteConfig } from "@/lib/site-config";
 import { seoPageContent } from "@/lib/seo-page";
 
@@ -48,51 +49,51 @@ export const metadata: Metadata = {
 function SeoJsonLd() {
   const pageUrl = `${siteConfig.url}${seoPageContent.path}`;
   const orgId = `${siteConfig.url}/#organization`;
+  const websiteId = `${siteConfig.url}/#website`;
 
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
+      organizationNode(orgId),
+      websiteNode(websiteId, orgId),
       {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: seoPageContent.title,
+        name: "SEO & Website Optimization | Zyntaks",
         description: seoPageContent.description,
         inLanguage: "en",
-        isPartOf: { "@id": `${siteConfig.url}/#website` },
+        isPartOf: { "@id": websiteId },
         about: { "@id": orgId },
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: `${siteConfig.url}/og.png`,
+          width: 1200,
+          height: 630,
         },
       },
       {
         "@type": "Service",
         "@id": `${pageUrl}#service`,
         name: "SEO & Website Optimization",
-        serviceType: [
-          "SEO company Sri Lanka",
-          "Website SEO Sri Lanka",
-          "Next.js SEO",
-          "Technical SEO services",
-          "Website optimization Sri Lanka",
-        ],
+        serviceType: "Technical SEO",
         description: seoPageContent.description,
         provider: { "@id": orgId },
-        areaServed: [
-          { "@type": "Country", name: "Sri Lanka" },
-          { "@type": "Place", name: "Global" },
-        ],
+        areaServed: {
+          "@type": "Country",
+          name: "Sri Lanka",
+        },
         url: pageUrl,
       },
       {
         "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: siteConfig.url,
+            item: `${siteConfig.url}/`,
           },
           {
             "@type": "ListItem",
@@ -120,7 +121,7 @@ function SeoJsonLd() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(graph) }}
     />
   );
 }

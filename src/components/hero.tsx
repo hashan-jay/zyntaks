@@ -118,7 +118,7 @@ export function Hero() {
   }, [mouseX, mouseY]);
 
   return (
-    <section
+    <header
       ref={heroRef}
       className="relative min-h-dvh overflow-hidden bg-background pt-14 transition-colors duration-500 sm:pt-16"
     >
@@ -239,6 +239,6 @@ export function Hero() {
           </motion.a>
         </motion.div>
       </div>
-    </section>
+    </header>
   );
 }

@@ -10,12 +10,12 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export function SeoLanding() {
   const whatsappUrl = getWhatsAppUrl(
-    "Hi Zyntaks! I'm interested in SEO & website optimization services."
+    "Hi Zyntaks! I am interested in SEO and website optimization services."
   );
 
   return (
     <main className="relative flex-1">
-      <section className="relative overflow-hidden pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-36">
+      <header className="relative overflow-hidden pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-36">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -55,7 +55,7 @@ export function SeoLanding() {
             </Link>
           </FadeUp>
         </div>
-      </section>
+      </header>
 
       <section className="relative border-t border-theme py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -119,26 +119,46 @@ export function SeoLanding() {
       <section className="relative border-t border-theme py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+            Why technical SEO matters for modern sites
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-zinc-400">
+            Beautiful design alone does not rank. Search engines need crawlable
+            HTML, clear metadata, stable URLs, fast Core Web Vitals, and
+            structured data that matches what visitors see. When those layers are
+            weak, even strong content underperforms — especially on JavaScript-
+            heavy frameworks if rendering and indexing are not handled carefully.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-zinc-400">
+            Zyntaks pairs SEO strategy with hands-on engineering so fixes land in
+            production: metadata, schema, performance, and page structure. That
+            is how Sri Lankan businesses and remote-first teams get durable gains
+            instead of audit PDFs that never get implemented.
+          </p>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="seo-faq-heading"
+        className="relative border-t border-theme py-16 sm:py-24"
+      >
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <h2
+            id="seo-faq-heading"
+            className="font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl"
+          >
             SEO questions we hear most
           </h2>
           <div className="mt-8 space-y-4 sm:mt-10">
             {seoPageContent.faqs.map((faq) => (
-              <details
+              <article
                 key={faq.question}
-                className="group rounded-2xl border border-theme px-5 py-4 open:bg-surface/40"
+                className="rounded-2xl border border-theme px-5 py-4"
               >
-                <summary className="cursor-pointer list-none font-medium text-foreground marker:content-none [&::-webkit-details-marker]:hidden">
-                  <span className="flex items-start justify-between gap-4">
-                    {faq.question}
-                    <span className="text-zinc-500 transition-transform group-open:rotate-45">
-                      +
-                    </span>
-                  </span>
-                </summary>
+                <h3 className="font-medium text-foreground">{faq.question}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-400">
                   {faq.answer}
                 </p>
-              </details>
+              </article>
             ))}
           </div>
         </div>

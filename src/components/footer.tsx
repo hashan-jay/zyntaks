@@ -63,7 +63,7 @@ export function Footer() {
           <p className="text-xs text-zinc-600 sm:text-sm">
             Built with{" "}
             <Link
-              href="https://nextjs.org"
+              href="https://nextjs.org/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-400 transition-colors hover:text-white"

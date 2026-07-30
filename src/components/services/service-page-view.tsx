@@ -25,13 +25,13 @@ type ServicePageViewProps = {
 
 export function ServicePageView({ service }: ServicePageViewProps) {
   const whatsappUrl = getWhatsAppUrl(
-    `Hi Zyntaks! I'd like to discuss ${service.title}.`
+    `Hi Zyntaks! I would like to discuss ${service.title}.`
   );
   const related = servicePages.filter((item) => item.slug !== service.slug);
 
   return (
     <main className="relative flex-1">
-      <section className="relative overflow-hidden pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-36">
+      <header className="relative overflow-hidden pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-36">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -71,7 +71,7 @@ export function ServicePageView({ service }: ServicePageViewProps) {
             </Link>
           </FadeUp>
         </div>
-      </section>
+      </header>
 
       <section className="relative border-t border-theme py-16 sm:py-24">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
@@ -144,26 +144,46 @@ export function ServicePageView({ service }: ServicePageViewProps) {
       <section className="relative border-t border-theme py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+            How we approach {service.shortTitle.toLowerCase()}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-zinc-400">
+            Every engagement starts with clarity: who the product is for, what
+            success looks like, and which constraints matter most. From there we
+            design the experience, build in iterative milestones, and ship a
+            production-ready result you can measure. You stay close to progress
+            through demos and written updates, so decisions stay practical and
+            the roadmap stays honest.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-zinc-400">
+            After launch we can hand off cleanly or continue with improvements —
+            performance, SEO foundations, new features, and maintenance — so the
+            product keeps matching your business as it grows.
+          </p>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="service-faq-heading"
+        className="relative border-t border-theme py-16 sm:py-24"
+      >
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <h2
+            id="service-faq-heading"
+            className="font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl"
+          >
             FAQs
           </h2>
           <div className="mt-8 space-y-4 sm:mt-10">
             {service.faqs.map((faq) => (
-              <details
+              <article
                 key={faq.question}
-                className="group rounded-2xl border border-theme px-5 py-4 open:bg-surface/40"
+                className="rounded-2xl border border-theme px-5 py-4"
               >
-                <summary className="cursor-pointer list-none font-medium text-foreground marker:content-none [&::-webkit-details-marker]:hidden">
-                  <span className="flex items-start justify-between gap-4">
-                    {faq.question}
-                    <span className="text-zinc-500 transition-transform group-open:rotate-45">
-                      +
-                    </span>
-                  </span>
-                </summary>
+                <h3 className="font-medium text-foreground">{faq.question}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-400">
                   {faq.answer}
                 </p>
-              </details>
+              </article>
             ))}
           </div>
         </div>
@@ -225,8 +245,8 @@ export function ServicePageView({ service }: ServicePageViewProps) {
             Ready to start with {service.shortTitle.toLowerCase()}?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-zinc-500 sm:text-base">
-            Tell us what you&apos;re building — we&apos;ll map the approach and
-            get you to a clear next step.
+            Tell us what you are building — we will map the approach and get you
+            to a clear next step.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
