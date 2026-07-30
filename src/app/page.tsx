@@ -17,6 +17,12 @@ export const metadata: Metadata = {
   openGraph: {
     url: siteConfig.url,
   },
+  verification: {
+    other: {
+      "ahrefs-site-verification":
+        "3d730dbb6ae151775e7f2cad1f95f82d8d2c1948268ebd2fdcdcc1657e459b91",
+    },
+  },
 };
 
 export default function Home() {
