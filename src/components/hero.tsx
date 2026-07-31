@@ -83,7 +83,8 @@ export function Hero() {
   const [showStars, setShowStars] = useState(true);
 
   useMotionValueEvent(starsOpacity, "change", (value) => {
-    setShowStars(value > 0.02);
+    const next = value > 0.02;
+    setShowStars((prev) => (prev === next ? prev : next));
   });
 
   const nightCursor = useMotionTemplate`radial-gradient(560px circle at ${mouseX}px ${mouseY}px, rgba(103,232,249,0.08), transparent 55%)`;

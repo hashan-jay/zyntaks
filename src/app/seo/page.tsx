@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SeoLanding } from "@/components/seo/seo-landing";
-import { organizationNode, websiteNode, serializeJsonLd } from "@/components/json-ld";
+import { ORG_ID, WEBSITE_ID, JsonLdScript } from "@/components/json-ld";
 import { siteConfig } from "@/lib/site-config";
 import { seoPageContent } from "@/lib/seo-page";
 
 export const metadata: Metadata = {
-  title: "SEO",
+  title: "SEO Services Sri Lanka",
   description: seoPageContent.description,
   keywords: [
     "SEO company Sri Lanka",
@@ -18,12 +18,13 @@ export const metadata: Metadata = {
     "SEO services Sri Lanka",
     "technical SEO Sri Lanka",
     "Zyntaks SEO",
+    "Core Web Vitals Sri Lanka",
   ],
   alternates: {
     canonical: seoPageContent.path,
   },
   openGraph: {
-    title: `SEO | ${siteConfig.seoTitle}`,
+    title: `SEO Services Sri Lanka | ${siteConfig.titleBrand}`,
     description: seoPageContent.description,
     url: `${siteConfig.url}${seoPageContent.path}`,
     type: "website",
@@ -34,13 +35,13 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: siteConfig.seoTitle,
+        alt: `SEO services — ${siteConfig.name}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `SEO | ${siteConfig.seoTitle}`,
+    title: `SEO Services Sri Lanka | ${siteConfig.titleBrand}`,
     description: seoPageContent.description,
     images: ["/og.png"],
   },
@@ -48,23 +49,19 @@ export const metadata: Metadata = {
 
 function SeoJsonLd() {
   const pageUrl = `${siteConfig.url}${seoPageContent.path}`;
-  const orgId = `${siteConfig.url}/#organization`;
-  const websiteId = `${siteConfig.url}/#website`;
 
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
-      organizationNode(orgId),
-      websiteNode(websiteId, orgId),
       {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: "SEO & Website Optimization | Zyntaks",
+        name: `SEO Services Sri Lanka | ${siteConfig.titleBrand}`,
         description: seoPageContent.description,
-        inLanguage: "en",
-        isPartOf: { "@id": websiteId },
-        about: { "@id": orgId },
+        inLanguage: "en-LK",
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORG_ID },
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: `${siteConfig.url}/og.png`,
@@ -78,11 +75,17 @@ function SeoJsonLd() {
         name: "SEO & Website Optimization",
         serviceType: "Technical SEO",
         description: seoPageContent.description,
-        provider: { "@id": orgId },
-        areaServed: {
-          "@type": "Country",
-          name: "Sri Lanka",
-        },
+        provider: { "@id": ORG_ID },
+        areaServed: [
+          {
+            "@type": "Country",
+            name: "Sri Lanka",
+          },
+          {
+            "@type": "Place",
+            name: "Global",
+          },
+        ],
         url: pageUrl,
       },
       {
@@ -118,12 +121,7 @@ function SeoJsonLd() {
     ],
   };
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serializeJsonLd(graph) }}
-    />
-  );
+  return <JsonLdScript data={graph} />;
 }
 
 export default function SeoPage() {

@@ -15,8 +15,9 @@ export function setLenisScrollLocked(locked: boolean) {
 }
 
 /**
- * Near-native Lenis on desktop trackpads/mice.
- * Touch devices keep browser momentum scrolling (no Lenis overhead).
+ * Snappy Lenis on desktop — high lerp + slightly boosted wheel travel
+ * so scroll feels smooth without the “lagging behind” feel.
+ * Touch devices keep native browser scrolling.
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -31,22 +32,24 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const root = document.documentElement;
     let scrollEndTimer = 0;
     let isScrolling = false;
+    let rafId = 0;
 
     const lenis = new Lenis({
       autoRaf: true,
-      // Near-native response — high lerp removes the “scroll lag” feel.
-      lerp: 0.32,
+      // Higher lerp = catches the target faster (less sluggish trail).
+      lerp: 0.42,
       smoothWheel: true,
       syncTouch: false,
-      wheelMultiplier: 1,
+      // Slightly more distance per wheel tick so the page doesn’t feel heavy.
+      wheelMultiplier: 1.28,
       touchMultiplier: 1,
       anchors: {
         offset: 72,
-        lerp: 0.28,
+        lerp: 0.38,
       },
     });
 
-    const onScroll = () => {
+    const markScrolling = () => {
       if (!isScrolling) {
         isScrolling = true;
         root.classList.add("is-scrolling");
@@ -55,7 +58,15 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       scrollEndTimer = window.setTimeout(() => {
         isScrolling = false;
         root.classList.remove("is-scrolling");
-      }, 100);
+      }, 120);
+    };
+
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        markScrolling();
+      });
     };
 
     lenis.on("scroll", onScroll);
@@ -63,6 +74,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     return () => {
       window.clearTimeout(scrollEndTimer);
+      if (rafId) cancelAnimationFrame(rafId);
       root.classList.remove("is-scrolling");
       lenis.off("scroll", onScroll);
       lenis.destroy();

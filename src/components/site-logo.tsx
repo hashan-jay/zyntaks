@@ -16,7 +16,7 @@ export function SiteLogo({ className, priority = false }: SiteLogoProps) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
-      alt="Zyntaks"
+      alt="Zyntaks — software development and SEO company"
       width={logoMeta.width}
       height={logoMeta.height}
       className={className}

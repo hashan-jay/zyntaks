@@ -12,7 +12,7 @@ export function PortfolioView() {
   const projects = siteConfig.portfolio;
 
   return (
-    <main className="relative flex-1">
+    <main id="main-content" className="relative flex-1">
       <header className="relative overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20">
         <div
           aria-hidden

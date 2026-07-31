@@ -8,14 +8,39 @@ import { Stats } from "@/components/stats";
 import { Process } from "@/components/process";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { HomeJsonLd } from "@/components/json-ld";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
+  title: {
+    absolute: siteConfig.defaultTitle,
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
   alternates: {
     canonical: "/",
   },
   openGraph: {
+    title: siteConfig.seoTitle,
+    description: siteConfig.description,
     url: siteConfig.url,
+    type: "website",
+    locale: "en_LK",
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.seoTitle,
+    description: siteConfig.description,
+    images: ["/og.png"],
   },
   verification: {
     other: {
@@ -28,8 +53,9 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <HomeJsonLd />
       <Navbar />
-      <main>
+      <main id="main-content">
         <Hero />
         <Marquee />
         <Services />

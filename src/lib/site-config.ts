@@ -11,7 +11,13 @@ export const siteConfig = {
   /** Short entity line for AI / knowledge-graph disambiguation */
   entitySummary:
     "Zyntaks (zyntaks.lk) is a software development and SEO company in Sri Lanka. We design and ship web apps, Next.js SEO, technical SEO services, website optimization, cloud infrastructure, UI/UX engineering, APIs, and AI automation for startups and growing businesses. We are not related to any hypnosis, trance, or entertainment creator projects that share a similar name.",
+  /** Brand + motto — used for Open Graph / social share titles */
   seoTitle: "Zyntaks - think. build. evolve.",
+  /** SERP-oriented default <title> (kept under ~60 characters) */
+  defaultTitle:
+    "Zyntaks | Software Development & SEO Company Sri Lanka",
+  /** Short brand suffix for page title template */
+  titleBrand: "Zyntaks",
   keywords: [
     "Zyntaks",
     "zyntaks.lk",
@@ -23,14 +29,21 @@ export const siteConfig = {
     "SEO services Sri Lanka",
     "technical SEO Sri Lanka",
     "Next.js development Sri Lanka",
+    "software development company Sri Lanka",
     "software development studio",
     "web application development",
+    "web development Sri Lanka",
     "React development company",
     "custom software Sri Lanka",
+    "AI automation Sri Lanka",
+    "mobile app development Sri Lanka",
+    "UI UX design Sri Lanka",
     "Core Web Vitals optimization",
     "remote software team",
   ],
   url: "https://www.zyntaks.lk",
+  /** Prefer empty over inventing profiles — populate when accounts exist */
+  sameAs: [] as readonly string[],
 
   /** WhatsApp number (country code + number, no + or spaces) */
   whatsappNumber: "94741950145",

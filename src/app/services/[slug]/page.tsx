@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ServicePageView } from "@/components/services/service-page-view";
-import { organizationNode, websiteNode, serializeJsonLd } from "@/components/json-ld";
+import { ORG_ID, WEBSITE_ID, JsonLdScript } from "@/components/json-ld";
 import { siteConfig } from "@/lib/site-config";
 import {
   getServicePage,
@@ -27,15 +27,23 @@ export async function generateMetadata({
   if (!service) return {};
 
   const path = `/services/${service.slug}`;
+  const title = `${service.title} Sri Lanka`;
 
   return {
-    title: service.title,
+    title,
     description: service.description,
+    keywords: [
+      service.title,
+      `${service.title} Sri Lanka`,
+      "Zyntaks",
+      "software development Sri Lanka",
+      ...service.technologies.slice(0, 6),
+    ],
     alternates: {
       canonical: path,
     },
     openGraph: {
-      title: `${service.title} | ${siteConfig.seoTitle}`,
+      title: `${title} | ${siteConfig.titleBrand}`,
       description: service.description,
       url: `${siteConfig.url}${path}`,
       type: "website",
@@ -52,7 +60,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${service.title} | ${siteConfig.seoTitle}`,
+      title: `${title} | ${siteConfig.titleBrand}`,
       description: service.description,
       images: ["/og.png"],
     },
@@ -61,23 +69,19 @@ export async function generateMetadata({
 
 function ServiceJsonLd({ service }: { service: ServicePage }) {
   const pageUrl = `${siteConfig.url}/services/${service.slug}`;
-  const orgId = `${siteConfig.url}/#organization`;
-  const websiteId = `${siteConfig.url}/#website`;
 
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
-      organizationNode(orgId),
-      websiteNode(websiteId, orgId),
       {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: service.title,
+        name: `${service.title} Sri Lanka | ${siteConfig.titleBrand}`,
         description: service.description,
-        isPartOf: { "@id": websiteId },
-        about: { "@id": orgId },
-        inLanguage: "en",
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORG_ID },
+        inLanguage: "en-LK",
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: `${siteConfig.url}/og.png`,
@@ -90,12 +94,19 @@ function ServiceJsonLd({ service }: { service: ServicePage }) {
         "@id": `${pageUrl}#service`,
         name: service.title,
         description: service.description,
-        provider: { "@id": orgId },
-        areaServed: {
-          "@type": "Country",
-          name: "Sri Lanka",
-        },
+        provider: { "@id": ORG_ID },
+        areaServed: [
+          {
+            "@type": "Country",
+            name: "Sri Lanka",
+          },
+          {
+            "@type": "Place",
+            name: "Global",
+          },
+        ],
         url: pageUrl,
+        serviceType: service.title,
       },
       {
         "@type": "BreadcrumbList",
@@ -110,6 +121,12 @@ function ServiceJsonLd({ service }: { service: ServicePage }) {
           {
             "@type": "ListItem",
             position: 2,
+            name: "Services",
+            item: `${siteConfig.url}/#services`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
             name: service.title,
             item: pageUrl,
           },
@@ -130,12 +147,7 @@ function ServiceJsonLd({ service }: { service: ServicePage }) {
     ],
   };
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serializeJsonLd(graph) }}
-    />
-  );
+  return <JsonLdScript data={graph} />;
 }
 
 export default async function ServiceDetailPage({ params }: ServicePageProps) {

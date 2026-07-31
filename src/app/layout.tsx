@@ -36,8 +36,8 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.seoTitle,
-    template: `%s | ${siteConfig.seoTitle}`,
+    default: siteConfig.defaultTitle,
+    template: `%s | ${siteConfig.titleBrand}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -48,6 +48,11 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "Software Development Studio",
   manifest: "/site.webmanifest",
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
   // Stable icon URLs (no query strings) — required for Google Favicon crawler / SERPs.
   icons: {
     icon: [
@@ -99,6 +104,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+        type: "image/png",
       },
     ],
   },
@@ -106,7 +112,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.seoTitle,
     description: siteConfig.description,
-    images: ["/og.png"],
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+      },
+    ],
   },
   robots: {
     index: true,
@@ -117,6 +130,11 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
       "max-video-preview": -1,
+    },
+  },
+  alternates: {
+    types: {
+      "text/plain": [{ url: "/llms.txt", title: "llms.txt" }],
     },
   },
   other: {
@@ -142,7 +160,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-LK"
       data-theme="night"
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
       suppressHydrationWarning
@@ -168,10 +186,17 @@ export default function RootLayout({
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
+        <link rel="llms-txt" href="/llms.txt" />
       </head>
       <body
         className={`${body.className} flex min-h-dvh flex-col bg-background text-foreground transition-colors duration-500`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-background"
+        >
+          Skip to content
+        </a>
         <JsonLd />
         <GoogleAnalytics gaId="G-GPTZ6TNJR6" />
         <Script

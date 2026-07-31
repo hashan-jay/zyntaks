@@ -1,9 +1,12 @@
 {
-  "name": "Zyntaks",
+  "name": "Zyntaks — Software Development & SEO",
   "short_name": "Zyntaks",
-  "description": "Software development studio — think. build. evolve.",
+  "description": "Software development and SEO company in Sri Lanka. think. build. evolve.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "lang": "en-LK",
+  "dir": "ltr",
   "background_color": "#050505",
   "theme_color": "#050505",
   "icons": [

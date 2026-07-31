@@ -30,7 +30,7 @@ export function ServicePageView({ service }: ServicePageViewProps) {
   const related = servicePages.filter((item) => item.slug !== service.slug);
 
   return (
-    <main className="relative flex-1">
+    <main id="main-content" className="relative flex-1">
       <header className="relative overflow-hidden pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-36">
         <div
           aria-hidden
