@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     },
   },
 };
-
+// Comment default
 export default function Home() {
   return (
     <>
