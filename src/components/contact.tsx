@@ -6,6 +6,10 @@ import { siteConfig, getWhatsAppUrl } from "@/lib/site-config";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+
 const serviceOptions = [
   ...siteConfig.services.map((service) => service.title),
   "Other / Not sure yet",
@@ -35,6 +39,7 @@ type FormState = {
   budget: string;
   timeline: string;
   message: string;
+  botcheck: string;
 };
 
 const initialForm: FormState = {
@@ -46,26 +51,8 @@ const initialForm: FormState = {
   budget: "",
   timeline: "",
   message: "",
+  botcheck: "",
 };
-
-function buildInquiryBody(data: FormState) {
-  const lines = [
-    "New project inquiry from zyntaks.lk",
-    "",
-    `Name: ${data.name}`,
-    `Email: ${data.email}`,
-    data.phone ? `Phone / WhatsApp: ${data.phone}` : null,
-    data.company ? `Company: ${data.company}` : null,
-    `Service: ${data.service}`,
-    data.budget ? `Budget: ${data.budget}` : null,
-    data.timeline ? `Timeline: ${data.timeline}` : null,
-    "",
-    "Project details:",
-    data.message,
-  ];
-
-  return lines.filter((line) => line !== null).join("\n");
-}
 
 function formatWhatsAppDisplay(number: string) {
   if (number.length < 11) return `+${number}`;
@@ -76,16 +63,24 @@ export function Contact() {
   const whatsappUrl = getWhatsAppUrl();
   const whatsappDisplay = formatWhatsAppDisplay(siteConfig.whatsappNumber);
   const [form, setForm] = useState<FormState>(initialForm);
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "sent" | "validation" | "error"
+  >("idle");
 
   function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    if (status === "validation" || status === "error") {
+      setStatus("idle");
+    }
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (form.botcheck) {
+      setStatus("sent");
+      return;
+    }
 
     if (
       !form.name.trim() ||
@@ -93,30 +88,56 @@ export function Contact() {
       !form.service ||
       !form.message.trim()
     ) {
+      setStatus("validation");
+      return;
+    }
+
+    if (!WEB3FORMS_ACCESS_KEY) {
       setStatus("error");
       return;
     }
 
     setStatus("sending");
 
-    const subject = `Project inquiry — ${form.name.trim()}${
-      form.service ? ` · ${form.service}` : ""
-    }`;
-    const body = buildInquiryBody({
-      ...form,
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `Project inquiry — ${form.name.trim()} · ${form.service}`,
+      from_name: "Zyntaks Website",
       name: form.name.trim(),
       email: form.email.trim(),
-      phone: form.phone.trim(),
-      company: form.company.trim(),
+      phone: form.phone.trim() || "Not provided",
+      company: form.company.trim() || "Not provided",
+      service: form.service,
+      budget: form.budget || "Not provided",
+      timeline: form.timeline || "Not provided",
       message: form.message.trim(),
-    });
+    };
 
-    const mailto = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-    window.location.href = mailto;
-    setStatus("sent");
+      const result = (await response.json()) as {
+        success?: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !result.success) {
+        setStatus("error");
+        return;
+      }
+
+      setForm(initialForm);
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -178,7 +199,24 @@ export function Contact() {
 
               <div className="section-divider my-6 sm:my-8" />
 
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5" noValidate>
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4 sm:space-y-5"
+                noValidate
+              >
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  checked={!!form.botcheck}
+                  onChange={(e) =>
+                    updateField("botcheck", e.target.checked ? "1" : "")
+                  }
+                  className="hidden"
+                  aria-hidden="true"
+                />
+
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
                   <div>
                     <label htmlFor="inquiry-name" className="theme-label">
@@ -331,7 +369,7 @@ export function Contact() {
                   disabled={status === "sending"}
                   className="theme-btn-primary group flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:h-[3.25rem] sm:px-8 sm:text-base"
                 >
-                  {status === "sending" ? "Preparing inquiry…" : "Send inquiry"}
+                  {status === "sending" ? "Sending inquiry…" : "Send inquiry"}
                   {status !== "sending" && (
                     <span className="transition-transform group-hover:translate-x-0.5">
                       →
@@ -341,22 +379,28 @@ export function Contact() {
 
                 {status === "sent" && (
                   <p className="text-center text-[11px] leading-relaxed text-[var(--accent)] sm:text-xs">
-                    Your email app should open with the inquiry ready to send.
-                    If it didn&apos;t, email us at {siteConfig.email}.
+                    Inquiry sent. We&apos;ll get back to you within 24 hours.
                   </p>
                 )}
 
-                {status === "error" && (
+                {status === "validation" && (
                   <p className="text-center text-[11px] leading-relaxed text-red-400 sm:text-xs">
                     Please fill in your name, email, service, and project
                     details.
                   </p>
                 )}
 
+                {status === "error" && (
+                  <p className="text-center text-[11px] leading-relaxed text-red-400 sm:text-xs">
+                    Something went wrong. Please try again or email us at{" "}
+                    {siteConfig.email}.
+                  </p>
+                )}
+
                 {status === "idle" && (
                   <p className="text-center text-[11px] leading-relaxed text-zinc-600 sm:text-xs">
-                    Opens your email app with a structured project brief — edit
-                    before sending.
+                    Your inquiry is delivered straight to our inbox — no email
+                    app required.
                   </p>
                 )}
               </form>
