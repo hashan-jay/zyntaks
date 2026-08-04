@@ -1,25 +1,30 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
 /**
- * Services atmosphere — layered orbits, traveling lights, soft aurora.
- * Distinct from the old cyber panels / network scene.
+ * Services atmosphere — orbits, arcs, sparks, soft glow.
+ * Mounted after hydrate; heavy motion pauses while scrolling.
  */
 export function ServicesAtmosphere() {
   const ref = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
   const isNear = useInView(ref, { margin: "20% 0px", amount: 0.05 });
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  const active = ready && isNear;
 
   return (
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="svc-atm-root pointer-events-none absolute inset-0 overflow-hidden"
     >
-      {!isNear ? (
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/40" />
-      ) : (
+      {active ? (
         <>
           <div className="svc-atm absolute inset-0">
             <span className="svc-atm-aurora svc-atm-aurora--a" />
@@ -51,23 +56,20 @@ export function ServicesAtmosphere() {
 
             <span className="svc-atm-comet svc-atm-comet--1" />
             <span className="svc-atm-comet svc-atm-comet--2" />
-            <span className="svc-atm-comet svc-atm-comet--3" />
 
             <span className="svc-atm-spark svc-atm-spark--1" />
             <span className="svc-atm-spark svc-atm-spark--2" />
             <span className="svc-atm-spark svc-atm-spark--3" />
             <span className="svc-atm-spark svc-atm-spark--4" />
             <span className="svc-atm-spark svc-atm-spark--5" />
-            <span className="svc-atm-spark svc-atm-spark--6" />
-            <span className="svc-atm-spark svc-atm-spark--7" />
-            <span className="svc-atm-spark svc-atm-spark--8" />
 
             <span className="svc-atm-glyph svc-atm-glyph--a" />
-            <span className="svc-atm-glyph svc-atm-glyph--b" />
           </div>
 
           <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/8 to-background/60" />
         </>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/40" />
       )}
     </div>
   );

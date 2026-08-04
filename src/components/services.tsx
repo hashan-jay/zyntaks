@@ -24,11 +24,12 @@ export function Services() {
             Services
           </p>
           <TextReveal className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] sm:mt-4 sm:text-3xl md:text-4xl lg:text-5xl">
-            Everything you need to go from idea to production
+            Everything you need to turn ideas into real results
           </TextReveal>
           <FadeUp className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
-            From MVPs to enterprise platforms — we deliver software that performs
-            under real-world pressure.
+            From your first website to tools that run your business — we build
+            digital solutions that are clear, reliable, and ready to grow with
+            you.
           </FadeUp>
         </div>
 

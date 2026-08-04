@@ -1751,16 +1751,21 @@ html[data-theme="day"] .section-atm-radar-sweep {
   }
 }
 
-/* ── Services atmosphere (aurora, arcs, comets — not old cyber scene) ── */
+/* ── Services atmosphere (orbits/arcs — no costly blur filters) ── */
+.svc-atm-root {
+  contain: paint;
+}
+
 .svc-atm {
   pointer-events: none;
+  contain: paint;
+  transform: translateZ(0);
 }
 
 .svc-atm-aurora {
   position: absolute;
   border-radius: 50%;
-  filter: blur(48px);
-  will-change: transform, opacity;
+  /* Soft glow via gradient falloff — avoids filter:blur paint cost */
 }
 
 .svc-atm-aurora--a {
@@ -1770,10 +1775,11 @@ html[data-theme="day"] .section-atm-radar-sweep {
   height: min(70vw, 560px);
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--accent-yellow) 34%, transparent) 0%,
-    transparent 68%
+    color-mix(in srgb, var(--accent-yellow) 32%, transparent) 0%,
+    color-mix(in srgb, var(--accent-yellow) 12%, transparent) 36%,
+    transparent 70%
   );
-  animation: svc-atm-aurora-drift 18s ease-in-out infinite;
+  animation: svc-atm-aurora-drift 22s ease-in-out infinite;
 }
 
 .svc-atm-aurora--b {
@@ -1783,10 +1789,11 @@ html[data-theme="day"] .section-atm-radar-sweep {
   height: min(55vw, 440px);
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--accent-yellow) 22%, transparent) 0%,
-    transparent 70%
+    color-mix(in srgb, var(--accent-yellow) 20%, transparent) 0%,
+    color-mix(in srgb, var(--accent-yellow) 8%, transparent) 38%,
+    transparent 72%
   );
-  animation: svc-atm-aurora-drift 22s ease-in-out infinite reverse;
+  animation: svc-atm-aurora-drift 28s ease-in-out infinite reverse;
 }
 
 .svc-atm-aurora--c {
@@ -1796,10 +1803,11 @@ html[data-theme="day"] .section-atm-radar-sweep {
   height: min(48vw, 380px);
   background: radial-gradient(
     ellipse,
-    color-mix(in srgb, var(--accent-yellow) 16%, transparent) 0%,
+    color-mix(in srgb, var(--accent-yellow) 14%, transparent) 0%,
+    color-mix(in srgb, var(--accent-yellow) 5%, transparent) 40%,
     transparent 72%
   );
-  animation: svc-atm-aurora-drift 26s ease-in-out infinite;
+  animation: svc-atm-aurora-drift 32s ease-in-out infinite;
   animation-delay: -6s;
 }
 
@@ -1808,26 +1816,22 @@ html[data-theme="day"] .section-atm-radar-sweep {
   inset: -20% -30%;
   background: linear-gradient(
     115deg,
-    transparent 30%,
-    color-mix(in srgb, var(--accent-yellow) 10%, transparent) 46%,
-    rgba(255, 255, 255, 0.08) 50%,
-    color-mix(in srgb, var(--accent-yellow) 10%, transparent) 54%,
-    transparent 70%
+    transparent 34%,
+    color-mix(in srgb, var(--accent-yellow) 8%, transparent) 48%,
+    rgba(255, 255, 255, 0.06) 50%,
+    color-mix(in srgb, var(--accent-yellow) 8%, transparent) 52%,
+    transparent 66%
   );
   background-size: 220% 100%;
-  opacity: 0.55;
-  animation: svc-atm-sheen-sweep 10s ease-in-out infinite;
+  opacity: 0.45;
+  animation: svc-atm-sheen-sweep 14s ease-in-out infinite;
 }
 
 .svc-atm-ring {
   position: absolute;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--accent-yellow) 22%, transparent);
-  box-shadow:
-    inset 0 0 24px color-mix(in srgb, var(--accent-yellow) 8%, transparent),
-    0 0 30px color-mix(in srgb, var(--accent-yellow) 6%, transparent);
-  opacity: 0.55;
-  will-change: transform;
+  opacity: 0.5;
 }
 
 .svc-atm-ring--lg {
@@ -1837,7 +1841,7 @@ html[data-theme="day"] .section-atm-radar-sweep {
   height: min(42vw, 340px);
   border-style: dashed;
   border-color: color-mix(in srgb, var(--accent-yellow) 28%, transparent);
-  animation: svc-atm-ring-spin 36s linear infinite;
+  animation: svc-atm-ring-spin 40s linear infinite;
 }
 
 .svc-atm-ring--md {
@@ -1845,8 +1849,8 @@ html[data-theme="day"] .section-atm-radar-sweep {
   right: 10%;
   width: min(28vw, 220px);
   height: min(28vw, 220px);
-  opacity: 0.4;
-  animation: svc-atm-ring-spin 24s linear infinite reverse;
+  opacity: 0.38;
+  animation: svc-atm-ring-spin 28s linear infinite reverse;
 }
 
 .svc-atm-ring--sm {
@@ -1854,9 +1858,9 @@ html[data-theme="day"] .section-atm-radar-sweep {
   bottom: 12%;
   width: min(16vw, 130px);
   height: min(16vw, 130px);
-  opacity: 0.35;
+  opacity: 0.32;
   border-color: color-mix(in srgb, var(--accent-yellow) 35%, transparent);
-  animation: svc-atm-ring-spin 16s linear infinite;
+  animation: svc-atm-ring-spin 18s linear infinite;
 }
 
 .svc-atm-arcs {
@@ -1864,7 +1868,7 @@ html[data-theme="day"] .section-atm-radar-sweep {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 .svc-atm-arc {
@@ -1872,107 +1876,80 @@ html[data-theme="day"] .section-atm-radar-sweep {
   stroke-width: 0.35;
   stroke-linecap: round;
   stroke-dasharray: 8 14;
-  animation: svc-atm-arc-dash 18s linear infinite;
+  animation: svc-atm-arc-dash 22s linear infinite;
 }
 
 .svc-atm-arc--2 {
   stroke: color-mix(in srgb, var(--accent-yellow) 22%, transparent);
   stroke-dasharray: 4 10;
-  animation-duration: 24s;
+  animation-duration: 28s;
   animation-direction: reverse;
 }
 
 .svc-atm-comet {
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--accent-yellow);
-  box-shadow:
-    0 0 10px color-mix(in srgb, var(--accent-yellow) 70%, transparent),
-    -18px 0 20px color-mix(in srgb, var(--accent-yellow) 25%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-yellow) 55%, transparent);
   opacity: 0;
-  will-change: transform, opacity;
 }
 
 .svc-atm-comet--1 {
   top: 30%;
   left: -5%;
-  animation: svc-atm-comet-path-a 9s ease-in-out infinite;
+  animation: svc-atm-comet-path-a 12s ease-in-out infinite;
 }
 
 .svc-atm-comet--2 {
   top: 58%;
   left: -8%;
-  width: 5px;
-  height: 5px;
-  animation: svc-atm-comet-path-b 12s ease-in-out infinite;
-  animation-delay: 2.4s;
-}
-
-.svc-atm-comet--3 {
-  top: 18%;
-  left: -6%;
   width: 4px;
   height: 4px;
-  animation: svc-atm-comet-path-c 14s ease-in-out infinite;
-  animation-delay: 5s;
+  animation: svc-atm-comet-path-b 16s ease-in-out infinite;
+  animation-delay: 3s;
 }
 
 .svc-atm-spark {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 2px;
+  height: 2px;
   border-radius: 50%;
   background: color-mix(in srgb, var(--accent-yellow) 90%, white);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-yellow) 50%, transparent);
-  animation: svc-atm-spark-twinkle 4.5s ease-in-out infinite;
+  animation: svc-atm-spark-twinkle 5.5s ease-in-out infinite;
 }
 
 .svc-atm-spark--1 { top: 16%; left: 18%; animation-delay: 0s; }
-.svc-atm-spark--2 { top: 28%; left: 62%; width: 2px; height: 2px; animation-delay: 0.6s; }
-.svc-atm-spark--3 { top: 46%; left: 34%; animation-delay: 1.2s; }
-.svc-atm-spark--4 { top: 58%; left: 78%; width: 2px; height: 2px; animation-delay: 1.8s; }
-.svc-atm-spark--5 { top: 72%; left: 22%; animation-delay: 2.2s; }
-.svc-atm-spark--6 { top: 38%; left: 88%; width: 2px; height: 2px; animation-delay: 0.3s; }
-.svc-atm-spark--7 { top: 68%; left: 54%; animation-delay: 2.8s; }
-.svc-atm-spark--8 { top: 22%; left: 44%; width: 2px; height: 2px; animation-delay: 3.4s; }
+.svc-atm-spark--2 { top: 28%; left: 62%; animation-delay: 0.8s; }
+.svc-atm-spark--3 { top: 46%; left: 34%; animation-delay: 1.6s; }
+.svc-atm-spark--4 { top: 58%; left: 78%; animation-delay: 2.4s; }
+.svc-atm-spark--5 { top: 72%; left: 22%; animation-delay: 3.2s; }
 
 .svc-atm-glyph {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border: 1px solid color-mix(in srgb, var(--accent-yellow) 40%, transparent);
-  opacity: 0.45;
-  animation: svc-atm-glyph-pulse 7s ease-in-out infinite;
+  opacity: 0.4;
+  animation: svc-atm-glyph-pulse-diamond 8s ease-in-out infinite;
 }
 
 .svc-atm-glyph--a {
   top: 24%;
   left: 12%;
   border-radius: 2px;
-  animation-name: svc-atm-glyph-pulse-diamond;
-}
-
-.svc-atm-glyph--b {
-  right: 18%;
-  bottom: 22%;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  animation-delay: 1.8s;
-  animation-duration: 9s;
 }
 
 @keyframes svc-atm-aurora-drift {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.5;
+    opacity: 0.55;
   }
   50% {
-    transform: translate3d(28px, -24px, 0) scale(1.12);
-    opacity: 0.85;
+    transform: translate3d(14px, -12px, 0) scale(1.05);
+    opacity: 0.8;
   }
 }
 
@@ -1980,11 +1957,11 @@ html[data-theme="day"] .section-atm-radar-sweep {
   0%,
   100% {
     background-position: 120% 0;
-    opacity: 0.25;
+    opacity: 0.2;
   }
   50% {
     background-position: -20% 0;
-    opacity: 0.65;
+    opacity: 0.5;
   }
 }
 
@@ -2009,10 +1986,10 @@ html[data-theme="day"] .section-atm-radar-sweep {
     opacity: 0;
   }
   8% {
-    opacity: 1;
+    opacity: 0.9;
   }
   70% {
-    opacity: 0.85;
+    opacity: 0.75;
   }
   100% {
     transform: translate3d(110vw, 18vh, 0);
@@ -2026,24 +2003,10 @@ html[data-theme="day"] .section-atm-radar-sweep {
     opacity: 0;
   }
   10% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate3d(115vw, -22vh, 0);
-    opacity: 0;
-  }
-}
-
-@keyframes svc-atm-comet-path-c {
-  0% {
-    transform: translate3d(0, 10vh, 0);
-    opacity: 0;
-  }
-  12% {
     opacity: 0.8;
   }
   100% {
-    transform: translate3d(108vw, 28vh, 0);
+    transform: translate3d(115vw, -22vh, 0);
     opacity: 0;
   }
 }
@@ -2052,23 +2015,11 @@ html[data-theme="day"] .section-atm-radar-sweep {
   0%,
   100% {
     opacity: 0.15;
-    transform: scale(0.7);
+    transform: scale(0.8);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.35);
-  }
-}
-
-@keyframes svc-atm-glyph-pulse {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: scale(0.92);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.08);
+    opacity: 0.9;
+    transform: scale(1.2);
   }
 }
 
@@ -2079,16 +2030,15 @@ html[data-theme="day"] .section-atm-radar-sweep {
     transform: rotate(45deg) scale(0.92);
   }
   50% {
-    opacity: 0.7;
-    transform: rotate(45deg) scale(1.08);
+    opacity: 0.65;
+    transform: rotate(45deg) scale(1.06);
   }
 }
 
 html[data-theme="day"] .svc-atm-aurora--a,
 html[data-theme="day"] .svc-atm-aurora--b,
 html[data-theme="day"] .svc-atm-aurora--c {
-  opacity: 0.55;
-  filter: blur(42px);
+  opacity: 0.5;
 }
 
 html[data-theme="day"] .svc-atm-ring {
@@ -2096,42 +2046,43 @@ html[data-theme="day"] .svc-atm-ring {
 }
 
 html[data-theme="day"] .svc-atm-sheen {
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 @media (max-width: 640px) {
   .svc-atm-ring--lg {
     width: min(56vw, 220px);
     height: min(56vw, 220px);
-    opacity: 0.35;
+    opacity: 0.32;
   }
 
-  .svc-atm-ring--md {
-    display: none;
-  }
-
-  .svc-atm-comet--3,
-  .svc-atm-spark--6,
-  .svc-atm-spark--7,
-  .svc-atm-spark--8,
-  .svc-atm-glyph--b {
+  .svc-atm-ring--md,
+  .svc-atm-comet--2,
+  .svc-atm-spark--4,
+  .svc-atm-spark--5,
+  .svc-atm-sheen {
     display: none;
   }
 
   .svc-atm-aurora--a,
-  .svc-atm-aurora--b {
-    filter: blur(36px);
+  .svc-atm-aurora--b,
+  .svc-atm-aurora--c {
+    animation: none;
+    opacity: 0.55;
   }
 }
 
-/* Pause heavy decorative motion while the user is actively scrolling */
-html.is-scrolling .svc-atm-aurora,
+/* Freeze decorative motion while scrolling for smooth Services scroll */
 html.is-scrolling .svc-atm-sheen,
 html.is-scrolling .svc-atm-ring,
 html.is-scrolling .svc-atm-arc,
 html.is-scrolling .svc-atm-comet,
 html.is-scrolling .svc-atm-spark,
-html.is-scrolling .svc-atm-glyph,
+html.is-scrolling .svc-atm-glyph {
+  visibility: hidden;
+}
+
+html.is-scrolling .svc-atm-aurora,
 html.is-scrolling .section-atm-aurora-band,
 html.is-scrolling .section-atm-sweep,
 html.is-scrolling .section-atm-ring,
@@ -2144,7 +2095,8 @@ html.is-scrolling .section-atm-radar-sweep,
 html.is-scrolling .section-atm-specks,
 html.is-scrolling .star,
 html.is-scrolling .shooting-star,
-html.is-scrolling .hero-grid-drift {
+html.is-scrolling .hero-grid-drift,
+html.is-scrolling .marquee-track {
   animation-play-state: paused !important;
 }
 

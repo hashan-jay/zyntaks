@@ -33,7 +33,7 @@ export const servicePages = [
     title: "Web Development",
     shortTitle: "Web Development",
     description:
-      "Custom web development with Next.js and React — fast, secure, SEO-ready products built to scale.",
+      "Modern websites and web apps that look great, load fast, and help customers find and trust your business online.",
     icon: "◈",
     eyebrow: "Web development",
     heading: "Web development that ships products people actually use",
@@ -105,7 +105,7 @@ export const servicePages = [
     title: "AI Automation",
     shortTitle: "AI Automation",
     description:
-      "Practical AI automation for workflows, assistants, and integrations that cut busywork and speed up operations.",
+      "Smart tools that handle repetitive work for you — saving time, reducing errors, and helping your team focus on what matters.",
     icon: "✦",
     eyebrow: "AI automation",
     heading: "AI automation that removes busywork — not invents more of it",
@@ -177,7 +177,7 @@ export const servicePages = [
     title: "Custom Software Development",
     shortTitle: "Custom Software Development",
     description:
-      "Custom software development tailored to your workflows — portals, platforms, and internal tools built to last.",
+      "Software built around how your business actually works — portals, platforms, and internal tools made for your needs.",
     icon: "⬢",
     eyebrow: "Software development",
     heading: "Custom software built around your business — not the other way around",
@@ -249,7 +249,7 @@ export const servicePages = [
     title: "Mobile App Development",
     shortTitle: "Mobile App Development",
     description:
-      "Mobile app development for iOS, Android, and mobile-first web — polished experiences that feel native.",
+      "Apps for phones and tablets that feel smooth and simple — so your customers can use your service anytime, anywhere.",
     icon: "▣",
     eyebrow: "Mobile app development",
     heading: "Mobile experiences that feel native wherever your users are",
@@ -321,7 +321,7 @@ export const servicePages = [
     title: "UI/UX Design",
     shortTitle: "UI/UX Design",
     description:
-      "UI/UX design and engineering — clear flows, polished interfaces, and production-ready implementation.",
+      "Clear, attractive designs that make your product easy to understand and enjoyable to use — on every screen.",
     icon: "◇",
     eyebrow: "UI/UX design",
     heading: "UI/UX design that makes complex products feel simple",
@@ -393,7 +393,7 @@ export const servicePages = [
     title: "Digital Transformation",
     shortTitle: "Digital Transformation",
     description:
-      "Digital transformation services — modernize processes, platforms, and cloud delivery so your business can scale.",
+      "Upgrade outdated processes and systems into modern digital tools that help your business run smoother and grow faster.",
     icon: "◎",
     eyebrow: "Digital transformation",
     heading: "Digital transformation that modernizes how your business runs",
