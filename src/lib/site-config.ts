@@ -310,22 +310,26 @@ export const siteConfig = {
     {
       step: "01",
       title: "Discover",
-      description: "We map your goals, users, and constraints into a clear product vision.",
+      description:
+        "We listen to your goals, audience, and challenges — then turn them into a clear plan.",
     },
     {
       step: "02",
       title: "Design",
-      description: "Wireframes and prototypes that validate ideas before a single line of code.",
+      description:
+        "We shape how it looks and works, so you can review and refine the idea before we build.",
     },
     {
       step: "03",
       title: "Build",
-      description: "Iterative development with transparent milestones and weekly demos.",
+      description:
+        "We bring it to life in clear stages, with regular updates so you always know the progress.",
     },
     {
       step: "04",
       title: "Launch",
-      description: "Deployment, monitoring, and handoff — plus ongoing support when you need it.",
+      description:
+        "We go live with care, make sure everything runs smoothly, and stay available when you need us.",
     },
   ],
 } as const;

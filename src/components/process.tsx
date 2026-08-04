@@ -35,8 +35,8 @@ export function Process() {
             How we work
           </TextReveal>
           <FadeUp className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
-            A proven framework that keeps projects on track and stakeholders
-            in the loop.
+            A simple, clear process that keeps every project on track — and you
+            involved from start to finish.
           </FadeUp>
         </div>
 

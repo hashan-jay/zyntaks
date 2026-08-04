@@ -18,16 +18,19 @@ const codeLines = [
 
 const features = [
   {
-    title: "Performance-first",
-    description: "Sub-second loads, optimized bundles, and edge-ready deployments.",
+    title: "Websites & apps people enjoy using",
+    description:
+      "From websites and mobile apps to clear UI/UX design — we build digital experiences that feel simple for your customers and team.",
   },
   {
-    title: "Type-safe by default",
-    description: "End-to-end TypeScript for fewer bugs and faster iteration.",
+    title: "Software that fits the way you work",
+    description:
+      "Custom software, AI automation, and digital transformation that cut busywork and match how your business actually runs — not generic one-size-fits-all tools.",
   },
   {
-    title: "Built to scale",
-    description: "Architecture that grows with your users, not against them.",
+    title: "Built to grow with your business",
+    description:
+      "Fast, reliable platforms that stay easy to find online and scale smoothly as your audience, products, and operations expand.",
   },
 ];
 
@@ -50,8 +53,9 @@ export function Showcase() {
               Code that speaks for itself
             </TextReveal>
             <FadeUp className="mt-3 text-base leading-relaxed text-zinc-400 sm:mt-4 sm:text-lg">
-              Clean architecture, modern tooling, and obsessive attention to detail
-              — the foundation of every Zyntaks project.
+              From websites and mobile apps to custom software, design, AI
+              automation, and digital transformation — we make technology clear,
+              useful, and built to last.
             </FadeUp>
 
             <ul className="mt-8 space-y-5 sm:mt-10 sm:space-y-6">
