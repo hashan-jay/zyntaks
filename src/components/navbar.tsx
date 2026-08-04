@@ -32,6 +32,7 @@ export function Navbar() {
   }, [mobileOpen]);
 
   const contactHref = resolveNavHref("#contact", pathname);
+  const navItems = siteConfig.nav.filter((item) => item.href !== "#contact");
 
   return (
     <>
@@ -51,7 +52,7 @@ export function Navbar() {
           </Link>
 
           <ul className="hidden items-center gap-6 lg:gap-8 md:flex">
-            {siteConfig.nav.map((item) => {
+            {navItems.map((item) => {
               const href = resolveNavHref(item.href, pathname);
               const isActive =
                 item.href === "/portfolio"
@@ -63,10 +64,10 @@ export function Navbar() {
                   <Link
                     href={href}
                     className={cn(
-                      "text-sm transition-colors hover:text-foreground",
+                      "text-[15px] transition-colors hover:text-[var(--brand-cyan)]",
                       isActive
                         ? "text-foreground"
-                        : "text-theme-muted"
+                        : "text-[color:color-mix(in_srgb,var(--foreground)_72%,transparent)]"
                     )}
                   >
                     {item.label}
@@ -79,9 +80,16 @@ export function Navbar() {
           <div className="hidden md:block">
             <Link
               href={contactHref}
-              className="inline-flex h-9 items-center rounded-full border border-theme bg-surface/50 px-4 text-sm font-medium text-foreground transition-all hover:border-[var(--border-hover)] hover:bg-surface"
+              className="nav-cta group h-9 px-4"
             >
-              Get in touch
+              <span className="nav-cta-dot" aria-hidden />
+              <span className="relative">Get in touch</span>
+              <span
+                aria-hidden
+                className="relative transition-transform duration-300 group-hover:translate-x-0.5"
+              >
+                →
+              </span>
             </Link>
           </div>
 
@@ -132,7 +140,7 @@ export function Navbar() {
         }}
       >
         <ul className="flex w-full max-w-sm flex-col items-center gap-6">
-          {siteConfig.nav.map((item, i) => (
+          {navItems.map((item, i) => (
             <motion.li
               key={item.href}
               className="w-full text-center"
@@ -153,14 +161,21 @@ export function Navbar() {
             className="w-full pt-2"
             initial={{ opacity: 0, y: 20 }}
             animate={mobileOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: navItems.length * 0.08 }}
           >
             <Link
               href={contactHref}
               onClick={() => setMobileOpen(false)}
-              className="flex h-12 w-full items-center justify-center rounded-full border border-theme px-8 text-lg"
+              className="nav-cta group h-12 w-full px-8 text-base"
             >
-              Get in touch
+              <span className="nav-cta-dot" aria-hidden />
+              <span className="relative">Get in touch</span>
+              <span
+                aria-hidden
+                className="relative transition-transform duration-300 group-hover:translate-x-0.5"
+              >
+                →
+              </span>
             </Link>
           </motion.li>
         </ul>
