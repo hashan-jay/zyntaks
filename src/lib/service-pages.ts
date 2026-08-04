@@ -175,7 +175,7 @@ export const servicePages = [
   {
     slug: "software-development",
     title: "Custom Software Development",
-    shortTitle: "Software Development",
+    shortTitle: "Custom Software Development",
     description:
       "Custom software development tailored to your workflows — portals, platforms, and internal tools built to last.",
     icon: "⬢",

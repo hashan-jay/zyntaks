@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { siteConfig, getWhatsAppUrl } from "@/lib/site-config";
+import { servicePages } from "@/lib/service-pages";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
@@ -10,25 +11,7 @@ const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const WEB3FORMS_ACCESS_KEY =
   process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 
-const serviceOptions = [
-  ...siteConfig.services.map((service) => service.title),
-  "Other / Not sure yet",
-];
-
-const budgetOptions = [
-  "Under $1,000",
-  "$1,000 – $5,000",
-  "$5,000 – $15,000",
-  "$15,000+",
-  "Not sure yet",
-] as const;
-
-const timelineOptions = [
-  "ASAP",
-  "1 – 2 months",
-  "3 – 6 months",
-  "Flexible",
-] as const;
+const serviceOptions = servicePages.map((service) => service.shortTitle);
 
 type FormState = {
   name: string;
@@ -36,8 +19,6 @@ type FormState = {
   phone: string;
   company: string;
   service: string;
-  budget: string;
-  timeline: string;
   message: string;
   botcheck: string;
 };
@@ -48,8 +29,6 @@ const initialForm: FormState = {
   phone: "",
   company: "",
   service: "",
-  budget: "",
-  timeline: "",
   message: "",
   botcheck: "",
 };
@@ -108,8 +87,6 @@ export function Contact() {
       phone: form.phone.trim() || "Not provided",
       company: form.company.trim() || "Not provided",
       service: form.service,
-      budget: form.budget || "Not provided",
-      timeline: form.timeline || "Not provided",
       message: form.message.trim(),
     };
 
@@ -306,47 +283,6 @@ export function Contact() {
                       </option>
                     ))}
                   </select>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-                  <div>
-                    <label htmlFor="inquiry-budget" className="theme-label">
-                      Estimated budget
-                    </label>
-                    <select
-                      id="inquiry-budget"
-                      name="budget"
-                      value={form.budget}
-                      onChange={(e) => updateField("budget", e.target.value)}
-                      className="theme-input"
-                    >
-                      <option value="">Select a range</option>
-                      {budgetOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="inquiry-timeline" className="theme-label">
-                      Preferred timeline
-                    </label>
-                    <select
-                      id="inquiry-timeline"
-                      name="timeline"
-                      value={form.timeline}
-                      onChange={(e) => updateField("timeline", e.target.value)}
-                      className="theme-input"
-                    >
-                      <option value="">Select a timeline</option>
-                      {timelineOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
                 </div>
 
                 <div>
