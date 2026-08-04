@@ -8,8 +8,10 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+/** Web3Forms access keys are designed to be public in client forms. */
 const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
+  "b41fc261-5a2b-4518-b75a-d5c28eb2c306";
 
 const serviceOptions = servicePages.map((service) => service.shortTitle);
 
