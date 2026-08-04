@@ -1,25 +1,123 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { siteConfig, getWhatsAppUrl } from "@/lib/site-config";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
-function WhatsAppIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-    </svg>
-  );
+const serviceOptions = [
+  ...siteConfig.services.map((service) => service.title),
+  "Other / Not sure yet",
+];
+
+const budgetOptions = [
+  "Under $1,000",
+  "$1,000 – $5,000",
+  "$5,000 – $15,000",
+  "$15,000+",
+  "Not sure yet",
+] as const;
+
+const timelineOptions = [
+  "ASAP",
+  "1 – 2 months",
+  "3 – 6 months",
+  "Flexible",
+] as const;
+
+type FormState = {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  service: string;
+  budget: string;
+  timeline: string;
+  message: string;
+};
+
+const initialForm: FormState = {
+  name: "",
+  email: "",
+  phone: "",
+  company: "",
+  service: "",
+  budget: "",
+  timeline: "",
+  message: "",
+};
+
+function buildInquiryBody(data: FormState) {
+  const lines = [
+    "New project inquiry from zyntaks.lk",
+    "",
+    `Name: ${data.name}`,
+    `Email: ${data.email}`,
+    data.phone ? `Phone / WhatsApp: ${data.phone}` : null,
+    data.company ? `Company: ${data.company}` : null,
+    `Service: ${data.service}`,
+    data.budget ? `Budget: ${data.budget}` : null,
+    data.timeline ? `Timeline: ${data.timeline}` : null,
+    "",
+    "Project details:",
+    data.message,
+  ];
+
+  return lines.filter((line) => line !== null).join("\n");
+}
+
+function formatWhatsAppDisplay(number: string) {
+  if (number.length < 11) return `+${number}`;
+  return `+${number.slice(0, 2)} ${number.slice(2, 4)} ${number.slice(4, 7)} ${number.slice(7)}`;
 }
 
 export function Contact() {
   const whatsappUrl = getWhatsAppUrl();
+  const whatsappDisplay = formatWhatsAppDisplay(siteConfig.whatsappNumber);
+  const [form, setForm] = useState<FormState>(initialForm);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle"
+  );
+
+  function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (
+      !form.name.trim() ||
+      !form.email.trim() ||
+      !form.service ||
+      !form.message.trim()
+    ) {
+      setStatus("error");
+      return;
+    }
+
+    setStatus("sending");
+
+    const subject = `Project inquiry — ${form.name.trim()}${
+      form.service ? ` · ${form.service}` : ""
+    }`;
+    const body = buildInquiryBody({
+      ...form,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      company: form.company.trim(),
+      message: form.message.trim(),
+    });
+
+    const mailto = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailto;
+    setStatus("sent");
+  }
 
   return (
     <AnimatedSection
@@ -47,7 +145,7 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mx-auto mt-10 max-w-xl sm:mt-16"
+          className="mx-auto mt-10 max-w-2xl sm:mt-16"
         >
           <div className="theme-card rounded-2xl p-5 backdrop-blur-sm sm:p-8 md:p-10">
             <div className="space-y-5 sm:space-y-6">
@@ -80,21 +178,201 @@ export function Contact() {
 
               <div className="section-divider my-6 sm:my-8" />
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex w-full items-center justify-center gap-2 rounded-full border border-[#39ff88]/35 bg-[#00e676]/70 px-6 py-3.5 text-sm font-medium text-[#04140c] transition-all hover:bg-[#00e676]/85 hover:shadow-[0_0_40px_rgba(0,230,118,0.35)] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
-              >
-                <WhatsAppIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
-                Start a Project
-                <span className="transition-transform group-hover:translate-x-0.5">
-                  →
-                </span>
-              </a>
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5" noValidate>
+                <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                  <div>
+                    <label htmlFor="inquiry-name" className="theme-label">
+                      Full name *
+                    </label>
+                    <input
+                      id="inquiry-name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      required
+                      value={form.name}
+                      onChange={(e) => updateField("name", e.target.value)}
+                      className="theme-input"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="inquiry-email" className="theme-label">
+                      Email *
+                    </label>
+                    <input
+                      id="inquiry-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => updateField("email", e.target.value)}
+                      className="theme-input"
+                      placeholder="you@company.com"
+                    />
+                  </div>
+                </div>
 
-              <p className="text-center text-[11px] leading-relaxed text-zinc-600 sm:text-xs">
-                Opens WhatsApp with a pre-filled message — edit before sending.
+                <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                  <div>
+                    <label htmlFor="inquiry-phone" className="theme-label">
+                      Phone / WhatsApp
+                    </label>
+                    <input
+                      id="inquiry-phone"
+                      name="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      value={form.phone}
+                      onChange={(e) => updateField("phone", e.target.value)}
+                      className="theme-input"
+                      placeholder="+94 7X XXX XXXX"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="inquiry-company" className="theme-label">
+                      Company
+                    </label>
+                    <input
+                      id="inquiry-company"
+                      name="company"
+                      type="text"
+                      autoComplete="organization"
+                      value={form.company}
+                      onChange={(e) => updateField("company", e.target.value)}
+                      className="theme-input"
+                      placeholder="Company or brand"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="inquiry-service" className="theme-label">
+                    Service interested in *
+                  </label>
+                  <select
+                    id="inquiry-service"
+                    name="service"
+                    required
+                    value={form.service}
+                    onChange={(e) => updateField("service", e.target.value)}
+                    className="theme-input"
+                  >
+                    <option value="" disabled>
+                      Select a service
+                    </option>
+                    {serviceOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                  <div>
+                    <label htmlFor="inquiry-budget" className="theme-label">
+                      Estimated budget
+                    </label>
+                    <select
+                      id="inquiry-budget"
+                      name="budget"
+                      value={form.budget}
+                      onChange={(e) => updateField("budget", e.target.value)}
+                      className="theme-input"
+                    >
+                      <option value="">Select a range</option>
+                      {budgetOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="inquiry-timeline" className="theme-label">
+                      Preferred timeline
+                    </label>
+                    <select
+                      id="inquiry-timeline"
+                      name="timeline"
+                      value={form.timeline}
+                      onChange={(e) => updateField("timeline", e.target.value)}
+                      className="theme-input"
+                    >
+                      <option value="">Select a timeline</option>
+                      {timelineOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="inquiry-message" className="theme-label">
+                    Project details *
+                  </label>
+                  <textarea
+                    id="inquiry-message"
+                    name="message"
+                    required
+                    value={form.message}
+                    onChange={(e) => updateField("message", e.target.value)}
+                    className="theme-input"
+                    placeholder="Goals, features, audience, links, or anything that helps us understand the build…"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="theme-btn-primary group flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:h-[3.25rem] sm:px-8 sm:text-base"
+                >
+                  {status === "sending" ? "Preparing inquiry…" : "Send inquiry"}
+                  {status !== "sending" && (
+                    <span className="transition-transform group-hover:translate-x-0.5">
+                      →
+                    </span>
+                  )}
+                </button>
+
+                {status === "sent" && (
+                  <p className="text-center text-[11px] leading-relaxed text-[var(--accent)] sm:text-xs">
+                    Your email app should open with the inquiry ready to send.
+                    If it didn&apos;t, email us at {siteConfig.email}.
+                  </p>
+                )}
+
+                {status === "error" && (
+                  <p className="text-center text-[11px] leading-relaxed text-red-400 sm:text-xs">
+                    Please fill in your name, email, service, and project
+                    details.
+                  </p>
+                )}
+
+                {status === "idle" && (
+                  <p className="text-center text-[11px] leading-relaxed text-zinc-600 sm:text-xs">
+                    Opens your email app with a structured project brief — edit
+                    before sending.
+                  </p>
+                )}
+              </form>
+
+              <div className="section-divider my-2 sm:my-3" />
+
+              <p className="text-center text-[11px] leading-relaxed text-zinc-500 sm:text-xs">
+                Prefer WhatsApp?{" "}
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-foreground underline decoration-[var(--border-hover)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                >
+                  Message us at {whatsappDisplay}
+                </a>
               </p>
             </div>
           </div>
