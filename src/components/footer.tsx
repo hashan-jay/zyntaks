@@ -12,15 +12,15 @@ export function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden border-t border-theme bg-background pt-12 transition-colors duration-500 sm:pt-16"
+      className="relative overflow-x-clip border-t border-theme bg-background pt-12 transition-colors duration-500 sm:pt-16"
       style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom, 0px))" }}
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-            <SiteLogo className="site-logo h-6 w-auto sm:h-7" />
-            <nav aria-label="Footer">
-              <ul className="flex flex-wrap items-center gap-x-5 gap-y-2.5 sm:justify-end sm:gap-x-6">
+          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+            <SiteLogo className="site-logo h-6 w-auto max-w-full shrink-0 self-start sm:h-7" />
+            <nav aria-label="Footer" className="w-full min-w-0 sm:w-auto">
+              <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 sm:justify-end sm:gap-x-6 sm:gap-y-2.5">
                 {siteConfig.nav.map((item) => (
                   <li key={item.href}>
                     <Link
@@ -42,13 +42,15 @@ export function Footer() {
               </ul>
             </nav>
           </div>
-          <p className="text-sm text-zinc-500">{siteConfig.tagline}</p>
+          <p className="max-w-md text-sm leading-relaxed text-zinc-500">
+            {siteConfig.tagline}
+          </p>
         </div>
       </div>
 
       <p
         aria-hidden
-        className="pointer-events-none relative z-0 mx-auto mt-2 w-full select-none text-center font-display text-[clamp(3.5rem,18vw,11rem)] font-semibold leading-[0.75] tracking-[-0.07em] text-foreground opacity-10 sm:mt-3"
+        className="pointer-events-none relative z-0 mx-auto mt-2 w-full max-w-full select-none overflow-hidden px-2 text-center font-display text-[clamp(2.75rem,17vw,11rem)] font-semibold leading-none tracking-[-0.06em] text-foreground opacity-10 sm:mt-3 sm:px-0 sm:text-[clamp(3.5rem,18vw,11rem)] sm:leading-[0.75] sm:tracking-[-0.07em]"
       >
         {siteConfig.name}
       </p>

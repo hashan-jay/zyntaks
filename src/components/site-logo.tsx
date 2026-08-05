@@ -23,6 +23,7 @@ export function SiteLogo({ className, priority = false }: SiteLogoProps) {
       decoding="async"
       fetchPriority={priority ? "high" : "auto"}
       draggable={false}
+      style={{ aspectRatio: `${logoMeta.width} / ${logoMeta.height}` }}
     />
   );
 }

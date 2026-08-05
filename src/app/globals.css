@@ -306,6 +306,12 @@ html[data-theme="day"] .hero-shimmer-text {
 }
 
 .site-logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 0;
   filter: var(--logo-filter);
 }
 
