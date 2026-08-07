@@ -69,6 +69,39 @@ export const siteConfig = {
 
   blog: [
     {
+      slug: "zyntaks-rnd-zyntaksgenai",
+      name: "Zyntaks R&D — ZyntaksGenAI",
+      /** Month + year only (no day) — shown on blog entries */
+      created: "2026-08",
+      role: "Research & development · Offline generative AI",
+      category: "Research & Development",
+      status: "in-development" as const,
+      stack: [
+        "Generative AI",
+        "Offline inference",
+        "Education",
+        "Maths",
+        "Science",
+        "Sri Lanka",
+      ],
+      intro:
+        "Zyntaks R&D (Research & Development) is exploring ZyntaksGenAI — a generative AI learning companion for students in Sri Lanka. The focus is Maths, Science, and core educational content that can run fully offline on a PC or mobile device, so study time does not depend on an always-on internet connection.",
+      problem:
+        "When children study on a phone or computer with open internet access, parents often cannot tell whether the device is being used for learning or for distraction. At the same time, many households face uneven connectivity — so cloud-only tutoring tools are unreliable, expensive to keep online, or simply unavailable when students need them most. Families need a way to give kids a capable study tool without handing them the entire open web.",
+      solution:
+        "ZyntaksGenAI is being designed as an offline-first generative AI for education: explanations, practice, and guided help in Maths, Science, and related school content — without requiring live internet during use. Parents can allow device access for studying with clearer boundaries: the tool supports learning locally, instead of depending on browsers, chats, and apps that pull attention elsewhere. The project is under active research and development; there is no public demo or live product yet.",
+      outcome: [
+        "The intended outcome is a practical offline GenAI study environment that Sri Lankan students can use for Maths, Science, and educational content — even when the network is off — while giving parents more confidence that study devices stay focused on learning.",
+        "As research continues, Zyntaks R&D is refining model scope, subject coverage, device performance, and the product experience before any public release. Updates will appear here as milestones land.",
+      ],
+      delivered: [
+        "Research brief for an offline generative AI focused on Maths, Science, and educational content for students in Sri Lanka.",
+        "Product direction for ZyntaksGenAI: local-first use so studying does not require continuous internet access.",
+        "Parent-centered framing: support learning on PCs and phones without exposing children to open-web distraction during study time.",
+        "Active R&D status — no public live site or product images yet while the model and experience are under development.",
+      ],
+    },
+    {
       slug: "fit-with-shyama",
       name: "Fit with Shyama",
       url: "https://fitwithshyama.xyz/",
@@ -76,6 +109,7 @@ export const siteConfig = {
       created: "2026-07",
       role: "Product design & full-stack build",
       category: "Web Application",
+      status: "live" as const,
       stack: ["React", "Vite", "TypeScript", "Responsive UI", "WhatsApp CTA"],
       heroImage: "/blog/fitwithshyama-hero.jpg",
       heroAlt:
@@ -86,6 +120,16 @@ export const siteConfig = {
         "Shyama's studio relied on informal social messaging and word of mouth. Interested members had no clear digital home to understand the brand, see class energy, compare packages, or get directions — so inquiries were scattered and hard to convert into booked members. Without a dedicated site, every new lead needed a manual explanation of what the studio offers, where it is, and how to join.",
       solution:
         "Zyntaks designed and shipped a focused marketing web app with a high-energy hero, studio storytelling, package cards, social proof, map and location context, and a direct WhatsApp join flow. The result is a single shareable destination that turns curiosity into conversations with Shyama, while keeping the experience fast, responsive, and easy to update as class packages evolve.",
+      outcome: [
+        "The launched product gives the client a professional, shareable web presence with clear calls to action, package discovery, and a direct WhatsApp path for new members. It demonstrates how Zyntaks turns an offline or social-only business into a conversion-ready digital experience — designed, engineered, and deployed end to end.",
+        "For visitors, the site answers the essentials quickly: what the studio offers, who it is for, where sessions happen, and how to start. For the business, it creates a durable brand asset that can be shared in chats, maps listings, and local marketing — without relying on temporary social posts alone.",
+      ],
+      delivered: [
+        "Responsive marketing website with a clear hero, brand story, and conversion-focused layout.",
+        "Package and class presentation that helps prospects compare options before reaching out.",
+        "Location and contact flows that reduce friction for first-time visitors in Wattala and nearby areas.",
+        "Production deployment with a WhatsApp-first inquiry path for faster follow-up.",
+      ],
     },
   ],
 

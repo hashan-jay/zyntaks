@@ -7,10 +7,11 @@ import {
   WEBSITE_ID,
   JsonLdScript,
 } from "@/components/json-ld";
+import { sortBlogByCreatedDesc } from "@/lib/blog-date";
 import { siteConfig } from "@/lib/site-config";
 
 const blogDescription =
-  "The Zyntaks blog — product launches and ship-log incidents marked by month and year, including Fit with Shyama and more entries covering problem, solution, and live results.";
+  "The Zyntaks blog — product launches and R&D incidents marked by month and year, including ZyntaksGenAI offline education research and Fit with Shyama.";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -53,6 +54,7 @@ export const metadata: Metadata = {
 
 function BlogJsonLd() {
   const pageUrl = `${siteConfig.url}/blog`;
+  const entries = sortBlogByCreatedDesc(siteConfig.blog);
 
   const graph = {
     "@context": "https://schema.org",
@@ -81,8 +83,8 @@ function BlogJsonLd() {
         "@type": "ItemList",
         "@id": `${pageUrl}#entries`,
         name: "Zyntaks blog incidents",
-        numberOfItems: siteConfig.blog.length,
-        itemListElement: siteConfig.blog.map((project, index) => ({
+        numberOfItems: entries.length,
+        itemListElement: entries.map((project, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item: {
@@ -91,13 +93,19 @@ function BlogJsonLd() {
             name: project.name,
             headline: project.name,
             description: project.intro,
-            url: project.url,
+            url: project.url ?? `${pageUrl}#${project.slug}`,
             datePublished: project.created,
-            image: `${siteConfig.url}${project.heroImage}`,
+            ...(project.heroImage
+              ? { image: `${siteConfig.url}${project.heroImage}` }
+              : {}),
             creator: { "@id": ORG_ID },
             author: { "@id": ORG_ID },
             about: project.category,
             keywords: project.stack.join(", "),
+            creativeWorkStatus:
+              project.status === "in-development"
+                ? "Incomplete"
+                : "Published",
           },
         })),
       },

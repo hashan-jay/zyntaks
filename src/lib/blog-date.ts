@@ -9,3 +9,10 @@ export function formatBlogCreated(created: string): string {
     timeZone: "UTC",
   }).format(new Date(Date.UTC(year, month - 1, 1)));
 }
+
+/** Newest first — `created` is `YYYY-MM` so string compare is chronological. */
+export function sortBlogByCreatedDesc<T extends { created: string }>(
+  entries: readonly T[]
+): T[] {
+  return [...entries].sort((a, b) => b.created.localeCompare(a.created));
+}

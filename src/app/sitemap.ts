@@ -10,9 +10,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  const blogImages = siteConfig.blog.map(
-    (project) => `${siteConfig.url}${project.heroImage}`
-  );
+  const blogImages = siteConfig.blog
+    .filter((project) => Boolean(project.heroImage))
+    .map((project) => `${siteConfig.url}${project.heroImage}`);
 
   return [
     {
