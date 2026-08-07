@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "technology",
-  classification: "Software Development Studio",
+  classification: "Software Company in Sri Lanka",
   manifest: "/site.webmanifest",
   formatDetection: {
     telephone: false,

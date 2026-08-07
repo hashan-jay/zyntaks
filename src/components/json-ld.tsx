@@ -43,6 +43,13 @@ function organizationNode(orgId: string = ORG_ID) {
       },
     ],
     knowsAbout: [
+      "Software Company in Sri Lanka",
+      "Web Application development",
+      "SEO optimization development",
+      "Custom Software development",
+      "Mobile Application development",
+      "AI & Automation",
+      "Business Digital Transformations",
       "Software development",
       "Web development",
       "AI automation",
