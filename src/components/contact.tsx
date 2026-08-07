@@ -35,14 +35,8 @@ const initialForm: FormState = {
   botcheck: "",
 };
 
-function formatWhatsAppDisplay(number: string) {
-  if (number.length < 11) return `+${number}`;
-  return `+${number.slice(0, 2)} ${number.slice(2, 4)} ${number.slice(4, 7)} ${number.slice(7)}`;
-}
-
 export function Contact() {
   const whatsappUrl = getWhatsAppUrl();
-  const whatsappDisplay = formatWhatsAppDisplay(siteConfig.whatsappNumber);
   const [form, setForm] = useState<FormState>(initialForm);
   const [status, setStatus] = useState<
     "idle" | "sending" | "sent" | "validation" | "error"
@@ -351,9 +345,9 @@ export function Contact() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-foreground underline decoration-[var(--border-hover)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                  className="font-semibold text-foreground underline decoration-[var(--border-hover)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                 >
-                  Message us at {whatsappDisplay}
+                  Chat with Zyntaks
                 </a>
               </p>
             </div>
