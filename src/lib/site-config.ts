@@ -70,7 +70,7 @@ export const siteConfig = {
   blog: [
     {
       slug: "zyntaks-rnd-zyntaksgenai",
-      name: "Zyntaks R&D — ZyntaksGenAI",
+      name: "ZyntaksGenAI",
       /** Month + year only (no day) — shown on blog entries */
       created: "2026-08",
       role: "Research & development · Offline generative AI",

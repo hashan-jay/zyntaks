@@ -35,8 +35,7 @@ export function BlogView() {
             Blog
           </TextReveal>
           <FadeUp className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400 sm:mt-5 sm:text-lg">
-            Products, launches, and R&D from Zyntaks — each incident marked by
-            the month and year it was logged.
+            Products, launches, and R&D from Zyntaks.
           </FadeUp>
           <FadeUp
             delay={0.08}
