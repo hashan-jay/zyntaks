@@ -72,7 +72,8 @@ export const siteConfig = {
       slug: "fit-with-shyama",
       name: "Fit with Shyama",
       url: "https://fitwithshyama.xyz/",
-      year: "2026",
+      /** Month + year only (no day) — shown on blog entries */
+      created: "2026-07",
       role: "Product design & full-stack build",
       category: "Web Application",
       stack: ["React", "Vite", "TypeScript", "Responsive UI", "WhatsApp CTA"],

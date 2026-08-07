@@ -3,13 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { formatBlogCreated } from "@/lib/blog-date";
 import { siteConfig } from "@/lib/site-config";
 import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export function BlogView() {
-  const projects = siteConfig.blog;
+  const entries = siteConfig.blog;
 
   return (
     <main id="main-content" className="relative flex-1">
@@ -25,7 +26,7 @@ export function BlogView() {
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.28em] text-[var(--accent-yellow)] sm:text-sm">
-            Selected work
+            Blog
           </p>
           <TextReveal
             as="h1"
@@ -34,35 +35,33 @@ export function BlogView() {
             Blog
           </TextReveal>
           <FadeUp className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400 sm:mt-5 sm:text-lg">
-            Real products designed, built, and deployed by Zyntaks — from first
-            conversation to a live site your customers can use. This blog
-            highlights production web applications shipped for clients who needed
-            a clear digital presence, stronger conversion paths, and reliable
-            modern engineering.
+            Products and launches from Zyntaks — each incident marked by the
+            month and year it went live.
           </FadeUp>
           <FadeUp
             delay={0.08}
             className="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-500 sm:text-base"
           >
-            Each case study below explains the business problem, the product
-            approach we took, and the live result. As Zyntaks grows, this page
-            will expand with more launched products across web development,
-            mobile experiences, and digital transformation work.
+            Browse the entries below for the problem, the approach, and the live
+            result. New launches get added as we ship.
           </FadeUp>
         </div>
       </header>
 
       <section
-        aria-labelledby="blog-cases-heading"
+        aria-labelledby="blog-entries-heading"
         className="relative pb-20 sm:pb-28 lg:pb-32"
       >
         <div className="section-divider absolute top-0 right-0 left-0" />
-        <h2 id="blog-cases-heading" className="sr-only">
-          Blog case studies
+        <h2 id="blog-entries-heading" className="sr-only">
+          Blog incidents
         </h2>
 
         <div className="mx-auto max-w-6xl space-y-20 px-4 pt-14 sm:space-y-28 sm:px-6 sm:pt-20 lg:px-8">
-          {projects.map((project, index) => (
+          {entries.map((project, index) => {
+            const createdLabel = formatBlogCreated(project.created);
+
+            return (
             <article
               key={project.slug}
               id={project.slug}
@@ -76,14 +75,19 @@ export function BlogView() {
               >
                 <header className="flex flex-wrap items-end justify-between gap-4">
                   <div>
-                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-zinc-500">
-                      {String(index + 1).padStart(2, "0")} · {project.category}
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--accent-yellow)]">
+                      <time dateTime={project.created}>{createdLabel}</time>
+                      <span className="text-zinc-500">
+                        {" "}
+                        · {String(index + 1).padStart(2, "0")} ·{" "}
+                        {project.category}
+                      </span>
                     </p>
                     <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl">
                       {project.name}
                     </h3>
                     <p className="mt-2 text-sm text-zinc-500">
-                      {project.year} · {project.role}
+                      {project.role}
                     </p>
                   </div>
                   <a
@@ -200,7 +204,8 @@ export function BlogView() {
                 </ul>
               </motion.div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </section>
 

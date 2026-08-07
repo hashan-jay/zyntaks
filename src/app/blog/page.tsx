@@ -10,7 +10,7 @@ import {
 import { siteConfig } from "@/lib/site-config";
 
 const blogDescription =
-  "Selected web applications and digital products designed, built, and deployed by Zyntaks — including Fit with Shyama and more case studies covering problem, solution, and live results.";
+  "The Zyntaks blog — product launches and ship-log incidents marked by month and year, including Fit with Shyama and more entries covering problem, solution, and live results.";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Blog | ${siteConfig.titleBrand}`,
     description:
-      "Case studies of products shipped by Zyntaks — problem, solution, and live results.",
+      "Zyntaks blog incidents — products shipped, marked by month and year.",
     url: `${siteConfig.url}/blog`,
     type: "website",
     locale: "en_LK",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Blog | ${siteConfig.titleBrand}`,
     description:
-      "Case studies of products shipped by Zyntaks — problem, solution, and live results.",
+      "Zyntaks blog incidents — products shipped, marked by month and year.",
     images: ["/og.png"],
   },
 };
@@ -63,7 +63,7 @@ function BlogJsonLd() {
         url: pageUrl,
         name: `Blog | ${siteConfig.titleBrand}`,
         description:
-          "Selected web applications and digital products designed, built, and deployed by Zyntaks.",
+          "Zyntaks blog — product launches and ship-log incidents marked by month and year.",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": ORG_ID },
         inLanguage: "en-LK",
@@ -74,26 +74,28 @@ function BlogJsonLd() {
           height: 630,
         },
         mainEntity: {
-          "@id": `${pageUrl}#projects`,
+          "@id": `${pageUrl}#entries`,
         },
       },
       {
         "@type": "ItemList",
-        "@id": `${pageUrl}#projects`,
-        name: "Zyntaks blog projects",
+        "@id": `${pageUrl}#entries`,
+        name: "Zyntaks blog incidents",
         numberOfItems: siteConfig.blog.length,
         itemListElement: siteConfig.blog.map((project, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item: {
-            "@type": "CreativeWork",
+            "@type": "BlogPosting",
             "@id": `${pageUrl}#${project.slug}`,
             name: project.name,
+            headline: project.name,
             description: project.intro,
             url: project.url,
-            datePublished: project.year,
+            datePublished: project.created,
             image: `${siteConfig.url}${project.heroImage}`,
             creator: { "@id": ORG_ID },
+            author: { "@id": ORG_ID },
             about: project.category,
             keywords: project.stack.join(", "),
           },
