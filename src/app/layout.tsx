@@ -15,6 +15,7 @@ const display = Syne({
   subsets: ["latin"],
   weight: ["600", "700"],
   display: "swap",
+  // commented here
   preload: false,
 });
 
