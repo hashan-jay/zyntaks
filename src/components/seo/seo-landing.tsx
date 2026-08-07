@@ -183,7 +183,7 @@ export function SeoLanding() {
               Start a project
             </a>
             <Link
-              href="/portfolio"
+              href="/blog"
               className="inline-flex h-11 items-center rounded-full border border-theme px-6 text-sm font-medium text-foreground transition-colors hover:bg-surface"
             >
               See our work

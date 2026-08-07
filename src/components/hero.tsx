@@ -231,7 +231,7 @@ export function Hero() {
           </motion.a>
 
           <motion.a
-            href="/portfolio"
+            href="/blog"
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.98 }}
             className="theme-btn-secondary inline-flex h-12 w-full items-center justify-center rounded-full border px-8 text-sm font-semibold backdrop-blur-sm transition-all duration-500 hover:border-[var(--border-hover)] sm:w-auto"

@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         destination: "https://www.zyntaks.lk/:path*",
         permanent: true,
       },
+      {
+        source: "/portfolio",
+        destination: "/blog",
+        permanent: true,
+      },
     ];
   },
   async headers() {

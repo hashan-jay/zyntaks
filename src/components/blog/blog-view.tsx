@@ -8,8 +8,8 @@ import { TextReveal, FadeUp } from "@/components/ui/text-reveal";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-export function PortfolioView() {
-  const projects = siteConfig.portfolio;
+export function BlogView() {
+  const projects = siteConfig.blog;
 
   return (
     <main id="main-content" className="relative flex-1">
@@ -31,11 +31,11 @@ export function PortfolioView() {
             as="h1"
             className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-[-0.04em] sm:mt-4 sm:text-5xl md:text-6xl"
           >
-            Portfolio
+            Blog
           </TextReveal>
           <FadeUp className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400 sm:mt-5 sm:text-lg">
             Real products designed, built, and deployed by Zyntaks — from first
-            conversation to a live site your customers can use. This portfolio
+            conversation to a live site your customers can use. This blog
             highlights production web applications shipped for clients who needed
             a clear digital presence, stronger conversion paths, and reliable
             modern engineering.
@@ -53,12 +53,12 @@ export function PortfolioView() {
       </header>
 
       <section
-        aria-labelledby="portfolio-cases-heading"
+        aria-labelledby="blog-cases-heading"
         className="relative pb-20 sm:pb-28 lg:pb-32"
       >
         <div className="section-divider absolute top-0 right-0 left-0" />
-        <h2 id="portfolio-cases-heading" className="sr-only">
-          Portfolio case studies
+        <h2 id="blog-cases-heading" className="sr-only">
+          Blog case studies
         </h2>
 
         <div className="mx-auto max-w-6xl space-y-20 px-4 pt-14 sm:space-y-28 sm:px-6 sm:pt-20 lg:px-8">
@@ -205,12 +205,12 @@ export function PortfolioView() {
       </section>
 
       <section
-        aria-labelledby="portfolio-cta-heading"
+        aria-labelledby="blog-cta-heading"
         className="relative border-t border-theme py-16 sm:py-20"
       >
         <div className="mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
           <h2
-            id="portfolio-cta-heading"
+            id="blog-cta-heading"
             className="font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl"
           >
             Have a product to ship?

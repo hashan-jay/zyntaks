@@ -55,8 +55,8 @@ export function Navbar() {
             {navItems.map((item) => {
               const href = resolveNavHref(item.href, pathname);
               const isActive =
-                item.href === "/portfolio"
-                  ? pathname === "/portfolio"
+                item.href === "/blog"
+                  ? pathname === "/blog"
                   : false;
 
               return (

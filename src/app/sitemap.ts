@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  const portfolioImages = siteConfig.portfolio.map(
+  const blogImages = siteConfig.blog.map(
     (project) => `${siteConfig.url}${project.heroImage}`
   );
 
@@ -23,11 +23,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [`${siteConfig.url}/og.png`],
     },
     {
-      url: `${siteConfig.url}/portfolio`,
+      url: `${siteConfig.url}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
-      images: portfolioImages,
+      images: blogImages,
     },
     {
       url: `${siteConfig.url}/seo`,

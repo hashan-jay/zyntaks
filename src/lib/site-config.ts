@@ -56,11 +56,11 @@ export const siteConfig = {
     { label: "Services", href: "#services" },
     { label: "Work", href: "#work" },
     { label: "Process", href: "#process" },
-    { label: "Portfolio", href: "/portfolio" },
+    { label: "Blog", href: "/blog" },
     { label: "Contact", href: "#contact" },
   ],
 
-  portfolio: [
+  blog: [
     {
       slug: "fit-with-shyama",
       name: "Fit with Shyama",
@@ -69,7 +69,7 @@ export const siteConfig = {
       role: "Product design & full-stack build",
       category: "Web Application",
       stack: ["React", "Vite", "TypeScript", "Responsive UI", "WhatsApp CTA"],
-      heroImage: "/portfolio/fitwithshyama-hero.jpg",
+      heroImage: "/blog/fitwithshyama-hero.jpg",
       heroAlt:
         "Fit with Shyama homepage hero — Zumba and women's fitness in Wattala",
       intro:

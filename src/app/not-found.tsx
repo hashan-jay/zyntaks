@@ -29,7 +29,7 @@ export default function NotFound() {
         </h1>
         <p className="mt-4 max-w-md text-base leading-relaxed text-zinc-400">
           That URL is not part of {siteConfig.name}. Head home or explore our
-          services and portfolio.
+          services and blog.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
           <Link
@@ -39,10 +39,10 @@ export default function NotFound() {
             Back to home
           </Link>
           <Link
-            href="/portfolio"
+            href="/blog"
             className="theme-btn-secondary inline-flex h-12 items-center justify-center rounded-full border px-8 text-sm font-semibold"
           >
-            View portfolio
+            View blog
           </Link>
         </div>
       </main>
