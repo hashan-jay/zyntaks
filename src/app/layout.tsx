@@ -10,6 +10,7 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { JsonLd } from "@/components/json-ld";
 
+// Base font of Zyntaks
 const display = Syne({
   variable: "--font-display",
   subsets: ["latin"],
