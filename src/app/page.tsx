@@ -6,6 +6,7 @@ import { Services } from "@/components/services";
 import { Showcase } from "@/components/showcase";
 import { Stats } from "@/components/stats";
 import { Process } from "@/components/process";
+import { BlogPreview } from "@/components/blog/blog-preview";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { HomeJsonLd } from "@/components/json-ld";
@@ -62,6 +63,7 @@ export default function Home() {
         <Showcase />
         <Stats />
         <Process />
+        <BlogPreview />
         <Contact />
       </main>
       <Footer />

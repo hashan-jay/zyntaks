@@ -7,7 +7,7 @@ import {
   WEBSITE_ID,
   JsonLdScript,
 } from "@/components/json-ld";
-import { sortBlogByCreatedDesc } from "@/lib/blog-date";
+import { blogPath, getBlogEntries } from "@/lib/blog";
 import { siteConfig } from "@/lib/site-config";
 
 const blogDescription =
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 
 function BlogJsonLd() {
   const pageUrl = `${siteConfig.url}/blog`;
-  const entries = sortBlogByCreatedDesc(siteConfig.blog);
+  const entries = getBlogEntries();
 
   const graph = {
     "@context": "https://schema.org",
@@ -82,19 +82,19 @@ function BlogJsonLd() {
       {
         "@type": "ItemList",
         "@id": `${pageUrl}#entries`,
-        name: "Zyntaks blog incidents",
+        name: "Zyntaks blog articles",
         numberOfItems: entries.length,
         itemListElement: entries.map((project, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item: {
             "@type": "BlogPosting",
-            "@id": `${pageUrl}#${project.slug}`,
+            "@id": `${siteConfig.url}${blogPath(project.slug)}#article`,
             name: project.name,
             headline: project.name,
-            description: project.intro,
-            url: project.url ?? `${pageUrl}#${project.slug}`,
-            datePublished: project.created,
+            description: project.summary,
+            url: `${siteConfig.url}${blogPath(project.slug)}`,
+            datePublished: `${project.created}-01`,
             ...(project.heroImage
               ? { image: `${siteConfig.url}${project.heroImage}` }
               : {}),

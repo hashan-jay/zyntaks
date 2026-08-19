@@ -10,6 +10,7 @@ type TextRevealProps = {
   children: string;
   className?: string;
   as?: ElementType;
+  id?: string;
   delay?: number;
   stagger?: number;
 };
@@ -18,6 +19,7 @@ export function TextReveal({
   children,
   className,
   as: Tag = "h2",
+  id,
   delay = 0,
   stagger = 0.04,
 }: TextRevealProps) {
@@ -44,7 +46,7 @@ export function TextReveal({
 
   return (
     <div ref={ref}>
-      <Tag className={cn(className)} aria-label={children}>
+      <Tag id={id} className={cn(className)} aria-label={children}>
         <motion.span
           className="inline-flex flex-wrap"
           initial="hidden"

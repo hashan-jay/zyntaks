@@ -11,6 +11,8 @@ export type BlogEntry = {
   stack: readonly string[];
   heroImage?: string;
   heroAlt?: string;
+  /** One-sentence highlight shown on blog cards */
+  summary: string;
   intro: string;
   problem: string;
   solution: string;
@@ -34,6 +36,8 @@ const blogEntries: BlogEntry[] = [
       "Science",
       "Sri Lanka",
     ],
+    summary:
+      "An offline generative AI study companion for Maths and Science students in Sri Lanka.",
     intro:
       "Zyntaks R&D (Research & Development) is exploring ZyntaksGenAI — a generative AI learning companion for students in Sri Lanka. The focus is Maths, Science, and core educational content that can run fully offline on a PC or mobile device, so study time does not depend on an always-on internet connection.",
     problem:
@@ -63,6 +67,8 @@ const blogEntries: BlogEntry[] = [
     heroImage: "/blog/fitwithshyama-hero.jpg",
     heroAlt:
       "Fit with Shyama homepage hero — Zumba and women's fitness in Wattala",
+    summary:
+      "A mobile-first studio website that turns class interest into WhatsApp bookings.",
     intro:
       "A brand website for Fitness with Shyama — a women-focused Zumba and fitness studio in Nayakakanda, Wattala. The product helps prospective members discover classes, packages, and location details, then convert through WhatsApp. It is a practical example of how Zyntaks turns a local service business into a clear, mobile-first digital product that supports trust and bookings.",
     problem:

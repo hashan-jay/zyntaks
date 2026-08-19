@@ -56,7 +56,7 @@ export function Navbar() {
               const href = resolveNavHref(item.href, pathname);
               const isActive =
                 item.href === "/blog"
-                  ? pathname === "/blog"
+                  ? pathname === "/blog" || pathname.startsWith("/blog/")
                   : false;
 
               return (

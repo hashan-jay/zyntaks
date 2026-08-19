@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { getServicePageSlugs } from "@/lib/service-pages";
+import { blogPath, getBlogEntries } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const serviceEntries = getServicePageSlugs().map((slug) => ({
@@ -10,9 +11,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  const blogImages = siteConfig.blog
+  const blogEntries = getBlogEntries();
+  const blogImages = blogEntries
     .filter((project) => Boolean(project.heroImage))
-    .map((project) => `${siteConfig.url}${project.heroImage}`);
+    .map((project) => `${siteConfig.url}${project.heroImage!}`);
+  const blogArticleEntries = blogEntries.map((entry) => ({
+    url: `${siteConfig.url}${blogPath(entry.slug)}`,
+    lastModified: new Date(`${entry.created}-01T00:00:00Z`),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+    ...(entry.heroImage
+      ? { images: [`${siteConfig.url}${entry.heroImage}`] }
+      : {}),
+  }));
 
   return [
     {
@@ -36,5 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     ...serviceEntries,
+    ...blogArticleEntries,
   ];
 }
