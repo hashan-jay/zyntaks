@@ -41,14 +41,28 @@ export function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
         className={cn(
-          "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
-          scrolled ? "nav-scrolled" : "bg-transparent"
+          "fixed z-50 transition-all duration-500 ease-out",
+          scrolled
+            ? "inset-x-3 top-[max(0.75rem,env(safe-area-inset-top,0px))] sm:inset-x-4 sm:top-[max(1rem,env(safe-area-inset-top,0px))]"
+            : "inset-x-0 top-0 pt-[env(safe-area-inset-top,0px)]"
         )}
-        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
       >
-        <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
+        <nav
+          className={cn(
+            "mx-auto flex items-center justify-between transition-all duration-500 ease-out",
+            scrolled
+              ? "nav-scrolled h-11 max-w-5xl rounded-2xl px-3.5 sm:h-14 sm:px-6 lg:px-8"
+              : "h-16 max-w-6xl bg-transparent px-4 sm:h-20 sm:px-6 lg:px-8"
+          )}
+        >
           <Link href="/" className="relative flex shrink-0 items-center gap-2">
-            <SiteLogo className="site-logo h-6 w-auto sm:h-7" priority />
+            <SiteLogo
+              className={cn(
+                "site-logo w-auto transition-all duration-500 ease-out",
+                scrolled ? "h-5 sm:h-6" : "h-6 sm:h-7"
+              )}
+              priority
+            />
           </Link>
 
           <ul className="hidden items-center gap-6 lg:gap-8 md:flex">
@@ -80,7 +94,10 @@ export function Navbar() {
           <div className="hidden md:block">
             <Link
               href={contactHref}
-              className="nav-cta group h-9 px-4"
+              className={cn(
+                "nav-cta group px-4 transition-all duration-500 ease-out",
+                scrolled ? "h-8" : "h-9"
+              )}
             >
               <span className="nav-cta-dot" aria-hidden />
               <span className="relative">Get in touch</span>

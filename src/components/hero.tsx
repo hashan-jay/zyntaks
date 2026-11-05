@@ -121,7 +121,7 @@ export function Hero() {
   return (
     <header
       ref={heroRef}
-      className="relative min-h-dvh overflow-hidden bg-background pt-14 transition-colors duration-500 sm:pt-16"
+      className="relative min-h-dvh overflow-hidden bg-background pt-16 transition-colors duration-500 sm:pt-20"
     >
       {showStars ? (
         <motion.div
@@ -146,7 +146,7 @@ export function Hero() {
         style={{ background: cursorGlow }}
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-3.5rem)] max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[calc(100dvh-4rem)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[calc(100dvh-5rem)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
