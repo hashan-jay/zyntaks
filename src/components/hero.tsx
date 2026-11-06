@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
 import { HeroStarfield } from "@/components/hero-starfield";
+import { HeroVisual } from "@/components/hero-visual";
 import { useTheme } from "@/components/theme-provider";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -33,7 +34,7 @@ function MottoWords() {
         hidden: {},
         visible: { transition: { staggerChildren: 0.12, delayChildren: 0.85 } },
       }}
-      className="hero-display mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-medium lowercase tracking-[-0.03em] text-2xl sm:mt-3 sm:gap-x-4 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+      className="hero-display mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-medium lowercase tracking-[-0.03em] text-2xl sm:mt-3 sm:gap-x-4 sm:text-3xl md:text-4xl lg:justify-start lg:text-4xl xl:text-5xl 2xl:text-6xl"
     >
       {siteConfig.motto.map((word, i) => (
         <motion.span
@@ -146,7 +147,8 @@ export function Hero() {
         style={{ background: cursorGlow }}
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[calc(100dvh-5rem)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-4rem)] max-w-6xl items-center px-4 py-16 sm:min-h-[calc(100dvh-5rem)] sm:px-6 sm:py-20 lg:max-w-7xl lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,0.95fr)] lg:gap-8 lg:px-8 lg:py-16">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -161,7 +163,7 @@ export function Hero() {
           <span className="truncate sm:whitespace-normal">{siteConfig.heroBadge}</span>
         </motion.div>
 
-        <h1 className="hero-display max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
+        <h1 className="hero-display max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl 2xl:text-8xl">
           <motion.span
             initial="hidden"
             animate="visible"
@@ -170,7 +172,7 @@ export function Hero() {
               visible: { transition: { staggerChildren: 0.05, delayChildren: 0.2 } },
             }}
             aria-label={siteConfig.name}
-            className="hero-brand inline-flex justify-center"
+            className="hero-brand inline-flex justify-center lg:justify-start"
           >
             {siteConfig.name.split("").map((char, i) => (
               <motion.span
@@ -209,7 +211,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.15 }}
-          className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4"
+          className="mt-8 flex w-full max-w-md flex-col gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4 lg:justify-start"
         >
           <motion.a
             href="#contact"
@@ -239,6 +241,8 @@ export function Hero() {
             View our work
           </motion.a>
         </motion.div>
+        </div>
+        <HeroVisual />
       </div>
     </header>
   );

@@ -339,6 +339,123 @@ html[data-theme="day"] .hero-shimmer-text {
   -webkit-text-fill-color: transparent;
 }
 
+.hero-visual {
+  --hx: 0;
+  --hy: 0;
+  --hv-line: rgba(224, 250, 255, 0.88);
+  --hv-dim: rgba(103, 232, 249, 0.32);
+  --hv-node: #67e8f9;
+  --hv-core: #ecfeff;
+  --hv-glow: rgba(103, 232, 249, 0.28);
+}
+
+html[data-theme="day"] .hero-visual {
+  --hv-line: rgba(8, 80, 102, 0.82);
+  --hv-dim: rgba(8, 145, 178, 0.34);
+  --hv-node: #0891b2;
+  --hv-core: #0e7490;
+  --hv-glow: rgba(8, 145, 178, 0.2);
+}
+
+.hero-visual-glow {
+  background: radial-gradient(
+    circle at calc(50% + var(--hx) * 28%) calc(50% + var(--hy) * 28%),
+    var(--hv-glow),
+    transparent 62%
+  );
+  transition: background 0.45s ease;
+}
+
+.hero-visual-shift {
+  transform: translate3d(calc(var(--hx) * 16px), calc(var(--hy) * 16px), 0);
+  transition: transform 0.45s ease-out;
+}
+
+.hv-orbit,
+.hv-scan {
+  transform-origin: 200px 200px;
+}
+
+.hv-orbit-slow {
+  animation: hv-spin 28s linear infinite;
+}
+
+.hv-orbit-rev {
+  animation: hv-spin 18s linear infinite reverse;
+}
+
+.hv-orbit-mid {
+  animation: hv-spin 12s linear infinite;
+}
+
+.hv-scan {
+  animation: hv-spin 7s linear infinite;
+}
+
+.hv-dash {
+  stroke-dashoffset: 0;
+  animation: hv-dash 10s linear infinite;
+}
+
+.hv-pulse {
+  transform-origin: 200px 200px;
+  animation: hv-pulse 3.2s ease-in-out infinite;
+}
+
+.hv-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hv-node 2.8s ease-in-out infinite;
+}
+
+@keyframes hv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hv-dash {
+  to {
+    stroke-dashoffset: -180;
+  }
+}
+
+@keyframes hv-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hv-node {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hv-orbit,
+  .hv-scan,
+  .hv-dash,
+  .hv-pulse,
+  .hv-node {
+    animation: none;
+  }
+
+  .hero-visual-shift {
+    transform: none;
+  }
+}
+
 .site-logo {
   display: block;
   width: auto;
