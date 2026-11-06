@@ -1502,6 +1502,36 @@ html[data-theme="night"] .marquee-fade-r {
   );
 }
 
+.footer-wordmark-clip {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  height: 13vw;
+  margin-top: 2.5rem;
+}
+
+.footer-wordmark {
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--font-display), var(--font-body), sans-serif;
+  font-size: 20vw;
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.065em;
+  color: transparent;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--foreground) 42%, transparent) 0%,
+    color-mix(in srgb, var(--foreground) 20%, transparent) 42%,
+    transparent 88%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* ── Section scroll atmospheres (unique per section; not Services cyber) ── */
 .section-atm {
   pointer-events: none;
