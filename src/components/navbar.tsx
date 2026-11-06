@@ -36,10 +36,7 @@ export function Navbar() {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+      <header
         className={cn(
           "fixed z-50 transition-all duration-500 ease-out",
           scrolled
@@ -140,7 +137,7 @@ export function Navbar() {
             </div>
           </button>
         </nav>
-      </motion.header>
+      </header>
 
       <motion.div
         initial={false}
