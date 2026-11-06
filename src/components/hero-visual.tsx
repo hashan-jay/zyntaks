@@ -1,8 +1,16 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NODES = [0, 45, 90, 135, 180, 225, 270, 315];
+const CENTER = 200;
+const BIG_CIRCLE_RADIUS = 188;
+
+type Shot = {
+  id: number;
+  x: number;
+  y: number;
+};
 
 function point(radius: number, angle: number) {
   const rad = ((angle - 90) * Math.PI) / 180;
@@ -14,6 +22,10 @@ function point(radius: number, angle: number) {
 
 export function HeroVisual() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const shotId = useRef(0);
+  const lastShotAt = useRef(0);
+  const [shots, setShots] = useState<Shot[]>([]);
 
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -28,17 +40,62 @@ export function HeroVisual() {
     event.currentTarget.style.setProperty("--hy", "0");
   };
 
+  const spawnShot = (clientX: number, clientY: number, button: number) => {
+    if (button !== 0) return;
+    const svg = svgRef.current;
+    if (!svg) return;
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return;
+
+    const point = svg.createSVGPoint();
+    point.x = clientX;
+    point.y = clientY;
+    const local = point.matrixTransform(matrix.inverse());
+    const dx = local.x - CENTER;
+    const dy = local.y - CENTER;
+    if (dx * dx + dy * dy > BIG_CIRCLE_RADIUS * BIG_CIRCLE_RADIUS) return;
+    if (Math.hypot(dx, dy) < 14) return;
+
+    const now = performance.now();
+    if (now - lastShotAt.current < 40) return;
+    lastShotAt.current = now;
+
+    const id = shotId.current++;
+    setShots((current) => [...current.slice(-15), { id, x: local.x, y: local.y }]);
+  };
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    const onDown = (event: PointerEvent) => {
+      spawnShot(event.clientX, event.clientY, event.button);
+    };
+
+    svg.addEventListener("pointerdown", onDown);
+    return () => svg.removeEventListener("pointerdown", onDown);
+  }, []);
+
+  const removeShot = (id: number) => {
+    setShots((current) => current.filter((shot) => shot.id !== id));
+  };
+
   return (
     <div
       ref={rootRef}
       aria-hidden
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
+      onPointerDown={(event) => spawnShot(event.clientX, event.clientY, event.button)}
       className="hero-visual relative mx-auto hidden aspect-square w-full max-w-[520px] lg:block"
     >
       <div className="hero-visual-glow pointer-events-none absolute inset-[8%] rounded-full" />
       <div className="hero-visual-shift relative h-full w-full">
-        <svg viewBox="0 0 400 400" className="h-full w-full overflow-visible">
+        <svg
+          ref={svgRef}
+          viewBox="0 0 400 400"
+          className="hv-stage h-full w-full overflow-visible"
+        >
           <g className="hv-frame" fill="none" stroke="var(--hv-dim)" strokeWidth="1.25">
             <path d="M48 92 V52 H88" />
             <path d="M312 52 H352 V92" />
@@ -134,6 +191,17 @@ export function HeroVisual() {
             />
           </g>
         </svg>
+        {shots.map((shot) => (
+          <span
+            key={shot.id}
+            className="hv-shot"
+            style={{
+              left: `${(shot.x / 400) * 100}%`,
+              top: `${(shot.y / 400) * 100}%`,
+            }}
+            onAnimationEnd={() => removeShot(shot.id)}
+          />
+        ))}
       </div>
     </div>
   );
