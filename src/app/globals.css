@@ -1965,338 +1965,29 @@ html[data-theme="day"] .section-atm-radar-sweep {
   }
 }
 
-/* ── Services atmosphere (orbits/arcs — no costly blur filters) ── */
-.svc-atm-root {
+/* Services reuses the hero sky, faded at the edges so it sits in the section */
+.sky-scene--section {
   contain: paint;
-}
-
-.svc-atm {
-  pointer-events: none;
-  contain: paint;
-  transform: translateZ(0);
-}
-
-.svc-atm-aurora {
-  position: absolute;
-  border-radius: 50%;
-  /* Soft glow via gradient falloff — avoids filter:blur paint cost */
-}
-
-.svc-atm-aurora--a {
-  top: -12%;
-  left: -10%;
-  width: min(70vw, 560px);
-  height: min(70vw, 560px);
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--accent-yellow) 32%, transparent) 0%,
-    color-mix(in srgb, var(--accent-yellow) 12%, transparent) 36%,
-    transparent 70%
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 16%,
+    #000 84%,
+    transparent 100%
   );
-  animation: svc-atm-aurora-drift 22s ease-in-out infinite;
-}
-
-.svc-atm-aurora--b {
-  top: 18%;
-  right: -14%;
-  width: min(55vw, 440px);
-  height: min(55vw, 440px);
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--accent-yellow) 20%, transparent) 0%,
-    color-mix(in srgb, var(--accent-yellow) 8%, transparent) 38%,
-    transparent 72%
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 16%,
+    #000 84%,
+    transparent 100%
   );
-  animation: svc-atm-aurora-drift 28s ease-in-out infinite reverse;
 }
 
-.svc-atm-aurora--c {
-  bottom: -18%;
-  left: 28%;
-  width: min(60vw, 500px);
-  height: min(48vw, 380px);
-  background: radial-gradient(
-    ellipse,
-    color-mix(in srgb, var(--accent-yellow) 14%, transparent) 0%,
-    color-mix(in srgb, var(--accent-yellow) 5%, transparent) 40%,
-    transparent 72%
-  );
-  animation: svc-atm-aurora-drift 32s ease-in-out infinite;
-  animation-delay: -6s;
+.sky-scene--section .sky-bg {
+  opacity: 0.55;
 }
 
-.svc-atm-sheen {
-  position: absolute;
-  inset: -20% -30%;
-  background: linear-gradient(
-    115deg,
-    transparent 34%,
-    color-mix(in srgb, var(--accent-yellow) 8%, transparent) 48%,
-    rgba(255, 255, 255, 0.06) 50%,
-    color-mix(in srgb, var(--accent-yellow) 8%, transparent) 52%,
-    transparent 66%
-  );
-  background-size: 220% 100%;
-  opacity: 0.45;
-  animation: svc-atm-sheen-sweep 14s ease-in-out infinite;
-}
-
-.svc-atm-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--accent-yellow) 22%, transparent);
-  opacity: 0.5;
-}
-
-.svc-atm-ring--lg {
-  top: 6%;
-  right: 2%;
-  width: min(42vw, 340px);
-  height: min(42vw, 340px);
-  border-style: dashed;
-  border-color: color-mix(in srgb, var(--accent-yellow) 28%, transparent);
-  animation: svc-atm-ring-spin 40s linear infinite;
-}
-
-.svc-atm-ring--md {
-  top: 18%;
-  right: 10%;
-  width: min(28vw, 220px);
-  height: min(28vw, 220px);
-  opacity: 0.38;
-  animation: svc-atm-ring-spin 28s linear infinite reverse;
-}
-
-.svc-atm-ring--sm {
-  right: 16%;
-  bottom: 12%;
-  width: min(16vw, 130px);
-  height: min(16vw, 130px);
-  opacity: 0.32;
-  border-color: color-mix(in srgb, var(--accent-yellow) 35%, transparent);
-  animation: svc-atm-ring-spin 18s linear infinite;
-}
-
-.svc-atm-arcs {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-}
-
-.svc-atm-arc {
-  stroke: color-mix(in srgb, var(--accent-yellow) 35%, transparent);
-  stroke-width: 0.35;
-  stroke-linecap: round;
-  stroke-dasharray: 8 14;
-  animation: svc-atm-arc-dash 22s linear infinite;
-}
-
-.svc-atm-arc--2 {
-  stroke: color-mix(in srgb, var(--accent-yellow) 22%, transparent);
-  stroke-dasharray: 4 10;
-  animation-duration: 28s;
-  animation-direction: reverse;
-}
-
-.svc-atm-comet {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-yellow);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-yellow) 55%, transparent);
-  opacity: 0;
-}
-
-.svc-atm-comet--1 {
-  top: 30%;
-  left: -5%;
-  animation: svc-atm-comet-path-a 12s ease-in-out infinite;
-}
-
-.svc-atm-comet--2 {
-  top: 58%;
-  left: -8%;
-  width: 4px;
-  height: 4px;
-  animation: svc-atm-comet-path-b 16s ease-in-out infinite;
-  animation-delay: 3s;
-}
-
-.svc-atm-spark {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--accent-yellow) 90%, white);
-  animation: svc-atm-spark-twinkle 5.5s ease-in-out infinite;
-}
-
-.svc-atm-spark--1 { top: 16%; left: 18%; animation-delay: 0s; }
-.svc-atm-spark--2 { top: 28%; left: 62%; animation-delay: 0.8s; }
-.svc-atm-spark--3 { top: 46%; left: 34%; animation-delay: 1.6s; }
-.svc-atm-spark--4 { top: 58%; left: 78%; animation-delay: 2.4s; }
-.svc-atm-spark--5 { top: 72%; left: 22%; animation-delay: 3.2s; }
-
-.svc-atm-glyph {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 1px solid color-mix(in srgb, var(--accent-yellow) 40%, transparent);
-  opacity: 0.4;
-  animation: svc-atm-glyph-pulse-diamond 8s ease-in-out infinite;
-}
-
-.svc-atm-glyph--a {
-  top: 24%;
-  left: 12%;
-  border-radius: 2px;
-}
-
-@keyframes svc-atm-aurora-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.55;
-  }
-  50% {
-    transform: translate3d(14px, -12px, 0) scale(1.05);
-    opacity: 0.8;
-  }
-}
-
-@keyframes svc-atm-sheen-sweep {
-  0%,
-  100% {
-    background-position: 120% 0;
-    opacity: 0.2;
-  }
-  50% {
-    background-position: -20% 0;
-    opacity: 0.5;
-  }
-}
-
-@keyframes svc-atm-ring-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes svc-atm-arc-dash {
-  to {
-    stroke-dashoffset: -180;
-  }
-}
-
-@keyframes svc-atm-comet-path-a {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  8% {
-    opacity: 0.9;
-  }
-  70% {
-    opacity: 0.75;
-  }
-  100% {
-    transform: translate3d(110vw, 18vh, 0);
-    opacity: 0;
-  }
-}
-
-@keyframes svc-atm-comet-path-b {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate3d(115vw, -22vh, 0);
-    opacity: 0;
-  }
-}
-
-@keyframes svc-atm-spark-twinkle {
-  0%,
-  100% {
-    opacity: 0.15;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.2);
-  }
-}
-
-@keyframes svc-atm-glyph-pulse-diamond {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: rotate(45deg) scale(0.92);
-  }
-  50% {
-    opacity: 0.65;
-    transform: rotate(45deg) scale(1.06);
-  }
-}
-
-html[data-theme="day"] .svc-atm-aurora--a,
-html[data-theme="day"] .svc-atm-aurora--b,
-html[data-theme="day"] .svc-atm-aurora--c {
-  opacity: 0.5;
-}
-
-html[data-theme="day"] .svc-atm-ring {
-  border-color: color-mix(in srgb, var(--accent-yellow) 28%, transparent);
-}
-
-html[data-theme="day"] .svc-atm-sheen {
-  opacity: 0.35;
-}
-
-@media (max-width: 640px) {
-  .svc-atm-ring--lg {
-    width: min(56vw, 220px);
-    height: min(56vw, 220px);
-    opacity: 0.32;
-  }
-
-  .svc-atm-ring--md,
-  .svc-atm-comet--2,
-  .svc-atm-spark--4,
-  .svc-atm-spark--5,
-  .svc-atm-sheen {
-    display: none;
-  }
-
-  .svc-atm-aurora--a,
-  .svc-atm-aurora--b,
-  .svc-atm-aurora--c {
-    animation: none;
-    opacity: 0.55;
-  }
-}
-
-/* Freeze decorative motion while scrolling for smooth Services scroll */
-html.is-scrolling .svc-atm-sheen,
-html.is-scrolling .svc-atm-ring,
-html.is-scrolling .svc-atm-arc,
-html.is-scrolling .svc-atm-comet,
-html.is-scrolling .svc-atm-spark,
-html.is-scrolling .svc-atm-glyph {
-  visibility: hidden;
-}
-
-html.is-scrolling .svc-atm-aurora,
 html.is-scrolling .section-atm-aurora-band,
 html.is-scrolling .section-atm-sweep,
 html.is-scrolling .section-atm-ring,
@@ -2315,13 +2006,6 @@ html.is-scrolling .marquee-track {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .svc-atm-aurora,
-  .svc-atm-sheen,
-  .svc-atm-ring,
-  .svc-atm-arc,
-  .svc-atm-comet,
-  .svc-atm-spark,
-  .svc-atm-glyph,
   .section-atm-aurora-band,
   .section-atm-sweep,
   .section-atm-ring,

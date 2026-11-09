@@ -61,24 +61,36 @@ function createStars(count: number, layer: number): Star[] {
   });
 }
 
+function brighten(stars: Star[]) {
+  return stars.map((s) => {
+    const size = 2.5 + pseudoRandom(s.id) * 2;
+    return {
+      ...s,
+      bright: true,
+      size: px(size),
+    };
+  });
+}
+
+function createShootingStars(count: number, seed: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    id: seed + i,
+    top: pct(8 + pseudoRandom(seed + i + 20) * 55),
+    left: pct(pseudoRandom(seed + i + 30) * 70),
+    delay: sec(i * 9 + pseudoRandom(seed + i + 40) * 6),
+    duration: sec(14 + pseudoRandom(seed + i + 50) * 4),
+  }));
+}
+
 const smallStars = createStars(70, 1);
 const mediumStars = createStars(22, 2);
-const brightStars = createStars(8, 3).map((s) => {
-  const size = 2.5 + pseudoRandom(s.id) * 2;
-  return {
-    ...s,
-    bright: true,
-    size: px(size),
-  };
-});
+const brightStars = brighten(createStars(8, 3));
+const shootingStars = createShootingStars(2, 0);
 
-const shootingStars = Array.from({ length: 2 }, (_, i) => ({
-  id: i,
-  top: pct(8 + pseudoRandom(i + 20) * 35),
-  left: pct(pseudoRandom(i + 30) * 70),
-  delay: sec(i * 9 + pseudoRandom(i + 40) * 6),
-  duration: sec(14 + pseudoRandom(i + 50) * 4),
-}));
+const sectionSmallStars = createStars(48, 4);
+const sectionMediumStars = createStars(16, 5);
+const sectionBrightStars = brighten(createStars(6, 6));
+const sectionShootingStars = createShootingStars(1, 80);
 
 function StarSpan({ star }: { star: Star }) {
   return (
@@ -98,31 +110,46 @@ function StarSpan({ star }: { star: Star }) {
   );
 }
 
-export function HeroStarfield() {
+export function HeroStarfield({
+  variant = "hero",
+}: {
+  variant?: "hero" | "section";
+}) {
+  const isSection = variant === "section";
+  const small = isSection ? sectionSmallStars : smallStars;
+  const medium = isSection ? sectionMediumStars : mediumStars;
+  const bright = isSection ? sectionBrightStars : brightStars;
+  const shooting = isSection ? sectionShootingStars : shootingStars;
+
   return (
-    <div aria-hidden className="sky-scene pointer-events-none absolute inset-0 overflow-hidden">
+    <div
+      aria-hidden
+      className={`sky-scene pointer-events-none absolute inset-0 overflow-hidden${
+        isSection ? " sky-scene--section" : ""
+      }`}
+    >
       <div className="sky-bg absolute inset-0 transition-colors duration-700" />
       <div className="sky-glow absolute inset-0 transition-opacity duration-700" />
 
       <div className="star-layer-small absolute inset-0">
-        {smallStars.map((star) => (
+        {small.map((star) => (
           <StarSpan key={star.id} star={star} />
         ))}
       </div>
 
       <div className="star-layer-medium absolute inset-0">
-        {mediumStars.map((star) => (
+        {medium.map((star) => (
           <StarSpan key={star.id} star={star} />
         ))}
       </div>
 
       <div className="star-layer-bright absolute inset-0">
-        {brightStars.map((star) => (
+        {bright.map((star) => (
           <StarSpan key={star.id} star={star} />
         ))}
       </div>
 
-      {shootingStars.map((s) => (
+      {shooting.map((s) => (
         <span
           key={s.id}
           className="shooting-star"
@@ -135,7 +162,7 @@ export function HeroStarfield() {
         />
       ))}
 
-      <div className="sky-horizon" />
+      {isSection ? null : <div className="sky-horizon" />}
     </div>
   );
 }
